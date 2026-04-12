@@ -1,20 +1,65 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# project-a-team04-frontend
 
-# Run and deploy your AI Studio app
+WIS 2026 행사 소개 페이지 형태로 구성된 React + Vite 프론트엔드 프로젝트입니다.
 
-This contains everything you need to run your app locally.
+현재 구현에는 다음이 포함됩니다.
+- 메가 메뉴 헤더, 히어로 섹션, 뉴스레터 구독 섹션 등 랜딩 페이지 UI
+- `shadcn/ui` 컴포넌트 기반 UI 구성
+- Tailwind CSS 기반 스타일링
 
-View your app in AI Studio: https://ai.studio/apps/c82ef1fc-2948-4c12-8af9-d4ac45c67b10
+## 기술 스택
 
-## Run Locally
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- lucide-react
+- motion
 
-**Prerequisites:**  Node.js
+## 사전 요구사항
 
+- Node.js 18 이상 권장
+- npm
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 설치
+
+```bash
+npm install
+```
+
+## 환경 변수 설정
+
+프로젝트 루트에 `.env.local` 파일을 만들고 아래 값을 설정하세요.
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+`GEMINI_API_KEY`는 빌드 시 주입되도록 설정되어 있습니다.
+
+## 개발 서버 실행
+
+```bash
+npm run dev
+```
+
+개발 서버 정보:
+- 주소: `http://localhost:4000`
+- 포트: `4000`
+- `strictPort: true` 설정으로, 4000 포트가 사용 중이면 다른 포트로 자동 변경되지 않고 실행이 실패합니다.
+
+## 빌드 및 미리보기
+
+```bash
+npm run build
+npm run preview
+```
+
+## 스크립트
+
+- `npm run dev`: 개발 서버 실행 (`--port=4000 --host=0.0.0.0`)
+- `npm run build`: 프로덕션 빌드
+- `npm run preview`: 빌드 결과 미리보기
+- `npm run clean`: `dist` 폴더 삭제
+- `npm run lint`: TypeScript 타입 체크
