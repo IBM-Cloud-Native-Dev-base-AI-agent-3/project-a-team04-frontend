@@ -41,7 +41,7 @@ function HomePage() {
           <iframe
             className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100svh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 object-cover"
             src="https://www.youtube.com/embed/1rEzjdrfdxk?autoplay=1&mute=1&controls=0&loop=1&playlist=1rEzjdrfdxk&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1"
-            title="WIS 2026 Background Video"
+            title="WIC 2020 Background Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
@@ -60,8 +60,8 @@ function HomePage() {
           >
             <div className="flex flex-col items-center justify-center">
               <div className="flex items-center justify-center mb-4">
-                <span className="font-black text-7xl md:text-[120px] tracking-tighter text-white drop-shadow-2xl">WIS</span>
-                <span className="font-black text-7xl md:text-[120px] tracking-tighter text-[#00d1ff] drop-shadow-2xl">2026</span>
+                <span className="font-black text-7xl md:text-[120px] tracking-tighter text-white drop-shadow-2xl">WIC</span>
+                <span className="font-black text-7xl md:text-[120px] tracking-tighter text-[#00d1ff] drop-shadow-2xl">2020</span>
               </div>
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
@@ -70,7 +70,7 @@ function HomePage() {
                 className="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-3 rounded-full inline-block"
               >
                 <p className="text-xl md:text-3xl font-bold tracking-widest">
-                  2026. 04. 15(WED) - 17(FRI) | COEX
+                  2020. 04. 15(WED) - 17(FRI) | COEX
                 </p>
               </motion.div>
             </div>
@@ -219,11 +219,11 @@ function HomePage() {
             <div className="col-span-1 lg:col-span-2">
               <div className="flex items-center space-x-2 mb-6 grayscale opacity-70">
                 <div className="w-8 h-8 bg-slate-700 rounded flex items-center justify-center text-white font-bold">W</div>
-                <span className="font-extrabold text-xl tracking-tighter text-white">WORLD IT SHOW</span>
+                <span className="font-extrabold text-xl tracking-tighter text-white">WIC 2020</span>
               </div>
               <p className="mb-4 text-sm leading-relaxed">
                 (06164) 서울특별시 강남구 영동대로 511 (삼성동) 코엑스<br />
-                사업자등록번호 : 120-81-27235 | 대표자 : 구자열
+                사업자등록번호 : 123-45-78910 | 대표자 : 코엑스
               </p>
               <div className="flex space-x-4">
                 <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
@@ -243,9 +243,9 @@ function HomePage() {
             <div>
               <h4 className="text-white font-bold mb-6">전시회 문의</h4>
               <ul className="space-y-3 text-sm">
-                <li>참가문의: 02-551-7131</li>
-                <li>참관문의: 02-551-7132</li>
-                <li>이메일: wis@worlditshow.co.kr</li>
+                <li>참가문의: 02-123-4567</li>
+                <li>참관문의: 02-123-4567</li>
+                <li>이메일: wlc@worlditconference.co.kr</li>
               </ul>
             </div>
             <div>
