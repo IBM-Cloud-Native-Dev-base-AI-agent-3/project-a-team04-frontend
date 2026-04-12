@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
@@ -274,13 +275,24 @@ function HomePage() {
 }
 
 function FreeBoardPage() {
-  const posts = [
-    { id: 18, title: 'WIS 2026 기대 포인트 공유해요', author: 'admin', date: '2026.04.12', views: 124, likes: 31 },
-    { id: 17, title: '코엑스 주차 정보 아시는 분?', author: 'itlover', date: '2026.04.11', views: 89, likes: 12 },
-    { id: 16, title: '현장 참가 꿀팁 정리', author: 'visitor01', date: '2026.04.10', views: 203, likes: 45 },
-    { id: 15, title: '관람 사전등록 질문 있습니다', author: 'newbie', date: '2026.04.09', views: 67, likes: 9 },
-    { id: 14, title: '작년 전시 후기 모음', author: 'techdaily', date: '2026.04.08', views: 158, likes: 27 },
-  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+
+  const posts = Array.from({ length: 50 }, (_, index) => {
+    const number = 50 - index;
+    return {
+      id: number,
+      title: `WIC 2020 자유게시판 샘플 글 ${number}`,
+      author: ['admin', 'itlover', 'visitor01', 'newbie', 'techdaily'][index % 5],
+      date: `2026.04.${String((index % 28) + 1).padStart(2, '0')}`,
+      views: 50 + index * 7,
+      likes: 5 + index * 2,
+    };
+  });
+
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visiblePosts = posts.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
@@ -291,7 +303,7 @@ function FreeBoardPage() {
             <h1 className="text-4xl font-black text-slate-900">자유게시판</h1>
             <p className="text-slate-500 mt-2">자유롭게 의견을 나누는 공간입니다.</p>
           </div>
-          <Button style={{ backgroundColor: WIS_LOGO_BLUE }} className="text-slate-900 font-bold hover:brightness-95">
+          <Button style={{ backgroundColor: WIS_BLUE }} className="text-white font-bold hover:brightness-95">
             글쓰기
           </Button>
         </div>
@@ -310,7 +322,7 @@ function FreeBoardPage() {
                 </tr>
               </thead>
               <tbody>
-                {posts.map((post) => (
+                {visiblePosts.map((post) => (
                   <tr key={post.id} className="border-t border-slate-200 hover:bg-slate-50 cursor-pointer transition-colors">
                     <td className="px-4 py-3 text-slate-600">{post.id}</td>
                     <td className="px-4 py-3 font-medium text-slate-800">{post.title}</td>
@@ -322,6 +334,184 @@ function FreeBoardPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-col items-center gap-4">
+          <p className="text-sm text-slate-500 text-center">
+            총 {posts.length}개 글 중 {startIndex + 1}-{Math.min(startIndex + itemsPerPage, posts.length)}개 표시
+          </p>
+
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <Button
+              variant="outline"
+              className="h-9 px-3 bg-white"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+            >
+              이전
+            </Button>
+
+            {Array.from({ length: totalPages }, (_, index) => {
+              const page = index + 1;
+              return (
+                <Button
+                  key={page}
+                  variant={currentPage === page ? 'default' : 'outline'}
+                  className={`h-9 w-9 p-0 ${currentPage === page ? 'text-white' : 'bg-white'}`}
+                  style={currentPage === page ? { backgroundColor: WIS_BLUE } : undefined}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </Button>
+              );
+            })}
+
+            <Button
+              variant="outline"
+              className="h-9 px-3 bg-white"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+            >
+              다음
+            </Button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function ForumGuidePage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
+  const forumThemes = [
+    'AI',
+    '스타트업',
+    '클라우드',
+    '보안',
+    '데이터',
+    '네트워킹',
+    'DX',
+    '로보틱스',
+    '스마트팩토리',
+    '핀테크',
+  ];
+
+  const forumPlaces = ['COEX Hall A', 'COEX Hall B', 'COEX Hall C', 'COEX Conference Room'];
+  const forumDates = ['2026.04.15', '2026.04.16', '2026.04.17'];
+  const forumStatuses = ['등록가능', '모집중', '준비', '예정', '마감'];
+
+  const forums = Array.from({ length: 30 }, (_, index) => {
+    const number = index + 1;
+    const theme = forumThemes[index % forumThemes.length];
+    const secondaryTheme = forumThemes[(index + 3) % forumThemes.length];
+
+    return {
+      id: `F-${String(number).padStart(2, '0')}`,
+      title: `${theme} 포럼 ${number}`,
+      date: forumDates[index % forumDates.length],
+      place: forumPlaces[index % forumPlaces.length],
+      status: forumStatuses[index % forumStatuses.length],
+      desc: `${theme}와 ${secondaryTheme} 트렌드를 중심으로 한 포럼 등록 샘플 데이터입니다.`,
+      thumbnail: `https://picsum.photos/seed/forum-${number}/640/360`,
+    };
+  });
+
+  const totalPages = Math.ceil(forums.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visibleForums = forums.slice(startIndex, startIndex + itemsPerPage);
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      <SiteHeader />
+      <main className="container mx-auto px-4 pt-44 pb-20">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-4xl font-black text-slate-900">포럼안내</h1>
+            <p className="text-slate-500 mt-2">포럼을 카드 또는 그리드 형식으로 등록하고 확인할 수 있습니다.</p>
+          </div>
+          <Button style={{ backgroundColor: WIS_BLUE }} className="text-white font-bold hover:brightness-95">
+            포럼 등록하기
+          </Button>
+        </div>
+
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            {visibleForums.map((forum) => (
+              <Card key={forum.id} className="rounded-none overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-shadow bg-white *:[img:first-child]:!rounded-none *:[img:last-child]:!rounded-none">
+                <CardContent className="p-6 flex flex-col h-full">
+                  <div className="mb-4 overflow-hidden rounded-none">
+                    <img
+                      src={forum.thumbnail}
+                      alt={forum.title}
+                      className="h-[calc(14rem*1.3)] w-full rounded-none object-cover transition-transform duration-500 hover:scale-105"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+
+                  <h2 className="text-xl font-black text-slate-900 mb-2 leading-snug">{forum.title}</h2>
+                  <p className="text-sm text-slate-500 mb-4 flex-1">{forum.desc}</p>
+
+                  <div className="space-y-2 text-sm text-slate-600">
+                    <div className="flex justify-between gap-3">
+                      <span className="font-medium text-slate-500">일정</span>
+                      <span className="font-semibold text-slate-800 text-right">{forum.date}</span>
+                    </div>
+                    <div className="flex justify-between gap-3">
+                      <span className="font-medium text-slate-500">장소</span>
+                      <span className="font-semibold text-slate-800 text-right">{forum.place}</span>
+                    </div>
+                    <div className="flex justify-between gap-3">
+                      <span className="font-medium text-slate-500">상태</span>
+                      <span className="font-semibold text-slate-800 text-right">{forum.status}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <p className="text-sm text-slate-500 text-center">
+              총 {forums.length}개 포럼 중 {startIndex + 1}-{Math.min(startIndex + itemsPerPage, forums.length)}개 표시
+            </p>
+
+            <div className="flex items-center justify-center gap-2 flex-wrap">
+              <Button
+                variant="outline"
+                className="h-9 px-3 bg-white"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+              >
+                이전
+              </Button>
+
+              {Array.from({ length: totalPages }, (_, index) => {
+                const page = index + 1;
+                return (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? 'default' : 'outline'}
+                    className={`h-9 w-9 p-0 ${currentPage === page ? 'text-white' : 'bg-white'}`}
+                    style={currentPage === page ? { backgroundColor: WIS_BLUE } : undefined}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </Button>
+                );
+              })}
+
+              <Button
+                variant="outline"
+                className="h-9 px-3 bg-white"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+              >
+                다음
+              </Button>
+            </div>
           </div>
         </div>
       </main>
@@ -377,6 +567,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/free-board" element={<FreeBoardPage />} />
+      <Route path="/forum-guide" element={<ForumGuidePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
     </Routes>
