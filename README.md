@@ -1,5 +1,7 @@
 # project-a-team04-frontend
 
+https://www.worlditshow.co.kr/main/main.php        
+
 WIS 2026 행사 소개 페이지 형태로 구성된 React + Vite 프론트엔드 프로젝트입니다.
 
 현재 구현에는 다음이 포함됩니다.
