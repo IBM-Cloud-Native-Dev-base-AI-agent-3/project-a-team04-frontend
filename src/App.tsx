@@ -3,13 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { Routes, Route } from 'react-router-dom';
+import { motion } from 'motion/react';
 import {
-  Search,
-  Menu,
   ChevronRight,
-  Globe,
   Bell,
   Newspaper,
   LayoutGrid,
@@ -19,141 +16,23 @@ import {
   Facebook,
   Instagram,
   Youtube,
-  Linkedin
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
+  Linkedin,
+} from 'lucide-react';
+import SiteHeader from '@/components/SiteHeader';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
-const WIS_BLUE = "#0054A6";
-const WIS_LOGO_BLUE = "#00d1ff";
-const WIS_ORANGE = "#F68B1E";
+const WIS_BLUE = '#0054A6';
+const WIS_ORANGE = '#F68B1E';
+const WIS_LOGO_BLUE = '#00d1ff';
 
-const NAV_ITEMS = [
-  { 
-    title: "WIS 소개", 
-    items: ["전시회 개요", "전시품목", "부대행사", "동시개최행사", "지난행사결과", "Contact Us"] 
-  },
-  { 
-    title: "참가안내", 
-    items: ["참가신청 안내", "참가업체 로그인", "스폰서쉽 패키지 프로그램"] 
-  },
-  { 
-    title: "관람안내", 
-    items: ["관람안내", "온라인 사전등록", "참가업체 리스트", "부스배치도"] 
-  },
-  { 
-    title: "Mingling Zone", 
-    items: ["Mingling Zone"] 
-  },
-  { 
-    title: "미디어", 
-    items: ["공지사항", "보도자료", "뉴스레터", "갤러리"] 
-  },
-];
-
-export default function App() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isNavHovered, setIsNavHovered] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+function HomePage() {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900">
-      {/* Header & Mega Menu */}
-      <header 
-        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || isNavHovered ? "bg-white shadow-lg" : "bg-white/90 backdrop-blur-sm"}`}
-        onMouseEnter={() => setIsNavHovered(true)}
-        onMouseLeave={() => setIsNavHovered(false)}
-      >
-        {/* Top Bar (Now inside fixed header) */}
-        <div className="bg-[#f8f9fa] border-b border-slate-200 py-2 hidden md:block">
-          <div className="container mx-auto px-4 flex justify-end items-center space-x-6 text-[11px] font-bold text-[#666]">
-            <div className="flex items-center space-x-1 cursor-pointer hover:text-[#0054A6]">
-              <Globe size={12} />
-              <span>KOR / ENG</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="cursor-pointer hover:text-[#0054A6]">로그인</span>
-              <span className="cursor-pointer hover:text-[#0054A6]">회원가입</span>
-              <span className="cursor-pointer hover:text-[#0054A6]">마이페이지</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <div className="flex items-center cursor-pointer">
-              <span className="font-black text-3xl tracking-tighter text-[#1a3a6c]">WIS</span>
-              <span className="font-black text-3xl tracking-tighter" style={{ color: WIS_LOGO_BLUE }}>2026</span>
-            </div>
-
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center space-x-12">
-              {NAV_ITEMS.map((item) => (
-                <div key={item.title} className="relative group h-20 flex items-center">
-                  <button className="text-[17px] font-bold text-[#333] hover:text-[#0054A6] transition-colors">
-                    {item.title}
-                  </button>
-                </div>
-              ))}
-            </nav>
-
-            {/* Right Side Icons */}
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" className="hidden lg:flex">
-                <Search size={22} className="text-[#333]" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Menu size={28} className="text-[#333]" />
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mega Menu Panel */}
-        <AnimatePresence>
-          {isNavHovered && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute top-full left-0 w-full bg-black/80 backdrop-blur-md border-t border-white/10 overflow-hidden shadow-2xl"
-            >
-              <div className="container mx-auto px-4 py-12">
-                <div className="flex justify-center items-start space-x-20">
-                  {NAV_ITEMS.map((item) => (
-                    <div key={item.title} className="flex flex-col items-center w-32">
-                      <ul className="space-y-4 text-center">
-                        {item.items.map((subItem) => (
-                          <li key={subItem}>
-                            <a href="#" className="text-[15px] font-medium text-white/80 hover:text-white hover:font-bold transition-all block whitespace-nowrap">
-                              {subItem}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+      <SiteHeader />
 
       {/* Hero Section with YouTube Video Background */}
       <section className="relative min-h-[100svh] overflow-hidden flex items-center justify-center">
@@ -391,5 +270,115 @@ export default function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function FreeBoardPage() {
+  const posts = [
+    { id: 18, title: 'WIS 2026 기대 포인트 공유해요', author: 'admin', date: '2026.04.12', views: 124, likes: 31 },
+    { id: 17, title: '코엑스 주차 정보 아시는 분?', author: 'itlover', date: '2026.04.11', views: 89, likes: 12 },
+    { id: 16, title: '현장 참가 꿀팁 정리', author: 'visitor01', date: '2026.04.10', views: 203, likes: 45 },
+    { id: 15, title: '관람 사전등록 질문 있습니다', author: 'newbie', date: '2026.04.09', views: 67, likes: 9 },
+    { id: 14, title: '작년 전시 후기 모음', author: 'techdaily', date: '2026.04.08', views: 158, likes: 27 },
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      <SiteHeader />
+      <main className="container mx-auto px-4 pt-44 pb-20">
+        <div className="flex justify-between items-end mb-6">
+          <div>
+            <h1 className="text-4xl font-black text-slate-900">자유게시판</h1>
+            <p className="text-slate-500 mt-2">자유롭게 의견을 나누는 공간입니다.</p>
+          </div>
+          <Button style={{ backgroundColor: WIS_LOGO_BLUE }} className="text-slate-900 font-bold hover:brightness-95">
+            글쓰기
+          </Button>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[860px] text-sm">
+              <thead className="bg-slate-100 text-slate-700">
+                <tr>
+                  <th className="px-4 py-3 text-left font-bold w-24">번호</th>
+                  <th className="px-4 py-3 text-left font-bold">제목</th>
+                  <th className="px-4 py-3 text-left font-bold w-32">작성자</th>
+                  <th className="px-4 py-3 text-left font-bold w-32">작성일</th>
+                  <th className="px-4 py-3 text-left font-bold w-24">조회수</th>
+                  <th className="px-4 py-3 text-left font-bold w-24">좋아요</th>
+                </tr>
+              </thead>
+              <tbody>
+                {posts.map((post) => (
+                  <tr key={post.id} className="border-t border-slate-200 hover:bg-slate-50 cursor-pointer transition-colors">
+                    <td className="px-4 py-3 text-slate-600">{post.id}</td>
+                    <td className="px-4 py-3 font-medium text-slate-800">{post.title}</td>
+                    <td className="px-4 py-3 text-slate-600">{post.author}</td>
+                    <td className="px-4 py-3 text-slate-600">{post.date}</td>
+                    <td className="px-4 py-3 text-slate-600">{post.views}</td>
+                    <td className="px-4 py-3 text-slate-600">{post.likes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function LoginPage() {
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      <SiteHeader />
+      <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
+        <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+          <h1 className="text-3xl font-black mb-2">로그인</h1>
+          <p className="text-slate-500 mb-6">계정 정보를 입력해 주세요.</p>
+          <div className="space-y-4">
+            <Input placeholder="이메일" type="email" />
+            <Input placeholder="비밀번호" type="password" />
+            <Button className="w-full h-11 text-white font-bold" style={{ backgroundColor: WIS_BLUE }}>
+              로그인
+            </Button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function SignupPage() {
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+      <SiteHeader />
+      <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
+        <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+          <h1 className="text-3xl font-black mb-2">회원가입</h1>
+          <p className="text-slate-500 mb-6">간단한 정보를 입력해 가입하세요.</p>
+          <div className="space-y-4">
+            <Input placeholder="이름" />
+            <Input placeholder="이메일" type="email" />
+            <Input placeholder="비밀번호" type="password" />
+            <Button className="w-full h-11 text-white font-bold" style={{ backgroundColor: WIS_BLUE }}>
+              회원가입
+            </Button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/free-board" element={<FreeBoardPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
+    </Routes>
   );
 }
