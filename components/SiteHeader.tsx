@@ -75,9 +75,9 @@ export default function SiteHeader() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center cursor-pointer">
-            <span className="font-black text-3xl tracking-tighter text-[#1a3a6c]">WIS</span>
+            <span className="font-black text-3xl tracking-tighter text-[#1a3a6c]">WIC</span>
             <span className="font-black text-3xl tracking-tighter" style={{ color: WIS_LOGO_BLUE }}>
-              2026
+              2020
             </span>
           </Link>
 

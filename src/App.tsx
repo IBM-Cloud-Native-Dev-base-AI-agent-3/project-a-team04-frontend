@@ -265,7 +265,7 @@ function HomePage() {
               <span className="hover:text-white cursor-pointer">이용약관</span>
               <span className="hover:text-white cursor-pointer">이메일무단수집거부</span>
             </div>
-            <p>© WORLD IT SHOW. All Rights Reserved.</p>
+            <p>© WIC 2020. All Rights Reserved.</p>
           </div>
         </div>
       </footer>
