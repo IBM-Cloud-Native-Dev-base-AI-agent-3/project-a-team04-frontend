@@ -17,11 +17,12 @@ const NAV_ITEMS = [
   },
   {
     title: '관람안내',
-    items: ['관람안내', '온라인 사전등록', '참가업체 리스트', '부스배치도'],
+    items: ['관람안내', '포럼안내', '온라인 사전등록', '참가업체 리스트', '부스배치도'],
   },
   {
-    title: 'Mingling Zone',
-    items: ['Mingling Zone'],
+    title: '포럼안내',
+    path: '/forum-guide',
+    items: ['포럼안내'],
   },
   {
     title: '미디어',
