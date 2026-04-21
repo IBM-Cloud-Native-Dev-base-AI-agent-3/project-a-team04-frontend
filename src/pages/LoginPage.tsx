@@ -19,11 +19,8 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
   const handleLogin = () => {
     if (email === 'user@example.com' && password === 'password') {
-      setAlert({ tone: 'success', message: '로그인에 성공했습니다. 메인 페이지로 이동합니다.' });
-      setTimeout(() => {
-        onLogin();
-        navigate('/');
-      }, 800);
+      onLogin();
+      navigate('/');
       return;
     }
 
@@ -35,7 +32,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       <SiteHeader isLoggedIn={false} />
       <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-          <h1 className="text-3xl font-black mb-2">로그인</h1>
+          <h1 className={APP_THEME.classes.authFormTitle}>로그인</h1>
           <p className="text-slate-500 mb-6">계정 정보를 입력해 주세요.</p>
           {alert && <AppAlert tone={alert.tone} message={alert.message} />}
           <div className="space-y-4">
@@ -46,9 +43,9 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               onClick={() => navigate('/password-reset')}
               type="button"
             >
-              비밀번호를 잊으셨나요? 비밀번호 재설정
+              비밀번호 재설정
             </button>
-            <Button 
+            <Button
               className="w-full h-11 text-white font-bold" 
               style={APP_STYLES.primaryButton}
               onClick={handleLogin}
