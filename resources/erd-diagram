@@ -1,0 +1,121 @@
+erDiagram
+
+    USERS {
+        BIGINT id PK
+        VARCHAR email
+        VARCHAR password
+        VARCHAR nickname
+        VARCHAR profile_image_url
+        VARCHAR role
+        BOOLEAN is_active
+        BOOLEAN email_verified
+        BOOLEAN is_deleted
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    EMAIL_VERIFICATIONS {
+        BIGINT id PK
+        BIGINT user_id FK
+        VARCHAR token
+        DATETIME expired_at
+        BOOLEAN verified
+        DATETIME created_at
+    }
+
+    PASSWORD_RESETS {
+        BIGINT id PK
+        BIGINT user_id FK
+        VARCHAR token
+        DATETIME expired_at
+        BOOLEAN used
+        DATETIME created_at
+    }
+
+    REFRESH_TOKENS {
+        BIGINT id PK
+        BIGINT user_id FK
+        VARCHAR token
+        DATETIME expired_at
+        DATETIME created_at
+    }
+
+    POSTS {
+        BIGINT id PK
+        BIGINT user_id FK
+        VARCHAR title
+        TEXT content
+        INT view_count
+        VARCHAR attachment_url
+        BOOLEAN is_deleted
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    FORUMS {
+        BIGINT id PK
+        VARCHAR slug
+        VARCHAR status
+        DATETIME event_date
+        VARCHAR location
+        VARCHAR thumbnail_url
+        INT max_participants
+        BIGINT created_by FK
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    FORUM_TRANSLATIONS {
+        BIGINT id PK
+        BIGINT forum_id FK
+        VARCHAR locale
+        VARCHAR title
+        TEXT description
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    FORUM_MEDIA {
+        BIGINT id PK
+        BIGINT forum_id FK
+        VARCHAR media_type
+        VARCHAR url
+        VARCHAR thumbnail_url
+        INT sort_order
+        DATETIME created_at
+    }
+
+    FORUM_APPLICATIONS {
+        BIGINT id PK
+        BIGINT forum_id FK
+        BIGINT applicant_id FK
+        VARCHAR status
+        TEXT applicant_note
+        TEXT reject_reason
+        BIGINT reviewed_by FK
+        DATETIME reviewed_at
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+    FORUM_PARTICIPANTS {
+        BIGINT id PK
+        BIGINT forum_id FK
+        BIGINT user_id FK
+        VARCHAR status
+        DATETIME created_at
+        DATETIME updated_at
+    }
+
+
+    USERS ||--o{ EMAIL_VERIFICATIONS : "has"
+    USERS ||--o{ PASSWORD_RESETS : "has"
+    USERS ||--o{ REFRESH_TOKENS : "has"
+    USERS ||--o{ POSTS : "writes"
+    USERS ||--o{ FORUMS : "creates"
+    USERS ||--o{ FORUM_PARTICIPANTS : "joins"
+    USERS ||--o{ FORUM_APPLICATIONS : "applies"
+    FORUMS ||--o{ FORUM_TRANSLATIONS : "translated into"
+    FORUMS ||--o{ FORUM_MEDIA : "has media"
+    FORUMS ||--o{ FORUM_PARTICIPANTS : "has participants"
+    FORUMS ||--o{ FORUM_APPLICATIONS : "receives"
