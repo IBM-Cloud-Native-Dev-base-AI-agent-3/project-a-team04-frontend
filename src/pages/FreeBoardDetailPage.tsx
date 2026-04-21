@@ -5,6 +5,7 @@ import BackButton from '@/components/shared/BackButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FREE_POSTS } from '@/data/freePosts';
+import { APP_THEME } from '@/constants/theme';
 
 interface FreeBoardDetailPageProps {
   isLoggedIn: boolean;
@@ -17,7 +18,7 @@ export default function FreeBoardDetailPage({ isLoggedIn }: FreeBoardDetailPageP
   const post = FREE_POSTS.find(p => p.id === id) || FREE_POSTS[0];
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">

@@ -6,6 +6,7 @@ import PageHeader from '@/components/shared/PageHeader';
 import Pagination from '@/components/shared/Pagination';
 import PostTable from '@/components/freeboard/PostTable';
 import { FREE_POSTS } from '@/data/freePosts';
+import { APP_THEME } from '@/constants/theme';
 
 interface FreeBoardPageProps {
   isLoggedIn: boolean;
@@ -21,7 +22,7 @@ export default function FreeBoardPage({ isLoggedIn }: FreeBoardPageProps) {
   const visiblePosts = FREE_POSTS.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">

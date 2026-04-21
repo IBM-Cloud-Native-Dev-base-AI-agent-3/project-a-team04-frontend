@@ -4,8 +4,7 @@ import Footer from '@/components/layout/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-const WIS_BLUE = '#0054A6';
+import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 interface FreeBoardCreatePageProps {
   isLoggedIn: boolean;
@@ -15,7 +14,7 @@ export default function FreeBoardCreatePage({ isLoggedIn }: FreeBoardCreatePageP
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-2xl mx-auto">
@@ -41,7 +40,7 @@ export default function FreeBoardCreatePage({ isLoggedIn }: FreeBoardCreatePageP
                 <div className="flex gap-3 pt-4">
                   <Button 
                     className="flex-1 h-11 text-white font-bold" 
-                    style={{ backgroundColor: WIS_BLUE }}
+                    style={APP_STYLES.primaryButton}
                     onClick={() => navigate('/free-board')}
                   >
                     작성하기
