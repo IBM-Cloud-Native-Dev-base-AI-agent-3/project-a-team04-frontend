@@ -1,6 +1,6 @@
 # project-a-team04-frontend
 
-WIS 2026 행사 소개 페이지 형태로 구성된 React + Vite 프론트엔드 프로젝트입니다.     
+WIS 2026 행사 소개 페이지 형태로 구성된 React + Vite 프론트엔드 프로젝트입니다.
 
 ## 사전 요구사항
 
@@ -20,6 +20,7 @@ npm run dev
 ```
 
 개발 서버 정보:
+
 - 주소: `http://localhost:4000`
 - 포트: `4000`
 - `strictPort: true` 설정으로, 4000 포트가 사용 중이면 다른 포트로 자동 변경되지 않고 실행이 실패합니다.
@@ -41,7 +42,42 @@ npm run preview
 - lucide-react
 - motion
 
+## 사용 라이브러리 설명
 
-## 참고 링크 
+### Dependencies
 
-https://www.worlditshow.co.kr/main/main.php                 
+- `react`: UI 컴포넌트 기반 화면 구성을 위한 핵심 라이브러리입니다.
+- `react-dom`: React 컴포넌트를 브라우저 DOM에 렌더링합니다.
+- `react-router-dom`: 페이지 라우팅과 URL 기반 화면 전환을 처리합니다.
+- `vite`: 빠른 개발 서버와 번들링을 제공하는 빌드 도구입니다.
+- `@vitejs/plugin-react`: Vite에서 React(특히 Fast Refresh)를 지원합니다.
+- `tailwindcss`: 유틸리티 클래스 기반 스타일링 프레임워크입니다.
+- `@tailwindcss/vite`: Vite 환경에서 Tailwind CSS 통합을 돕는 플러그인입니다.
+- `shadcn`: shadcn/ui 컴포넌트 생성을 위한 CLI 도구 패키지입니다.
+- `@base-ui/react`: 접근성을 고려한 저수준 UI 프리미티브 컴포넌트 모음입니다.
+- `class-variance-authority`: 컴포넌트 variant별 class 조합을 타입 안전하게 관리합니다.
+- `clsx`: 조건에 따라 className 문자열을 간결하게 합칩니다.
+- `tailwind-merge`: 중복/충돌하는 Tailwind 클래스를 병합 정리합니다.
+- `tw-animate-css`: Tailwind와 함께 쓰는 애니메이션 유틸리티 스타일을 제공합니다.
+- `motion`: React에서 선언형 애니메이션을 구현합니다.
+- `lucide-react`: 아이콘 컴포넌트를 제공합니다.
+- `@fontsource-variable/geist`: Geist 가변 폰트를 로컬 패키지로 로드합니다.
+- `@google/genai`: Google GenAI API 연동을 위한 SDK입니다.
+- `dotenv`: 환경변수(`.env`)를 로드합니다.
+- `express`: Node.js 웹 서버 및 API 라우팅을 위한 프레임워크입니다.
+
+### DevDependencies
+
+- `typescript`: 정적 타입 검사를 위한 TypeScript 컴파일러입니다.
+- `tsx`: TypeScript 파일을 빠르게 실행하는 런타임 도구입니다.
+- `@types/node`: Node.js API 타입 정의입니다.
+- `@types/express`: Express 타입 정의입니다.
+- `autoprefixer`: CSS에 브라우저 벤더 프리픽스를 자동 추가합니다.
+
+### 디자인 
+
+- 스타일/컴포넌트 축은 `Tailwind CSS + shadcn/ui + Base UI` 조합입니다.
+
+## 참고 링크
+
+https://www.worlditshow.co.kr/main/main.php
