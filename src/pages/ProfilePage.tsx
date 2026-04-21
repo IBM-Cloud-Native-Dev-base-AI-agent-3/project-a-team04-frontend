@@ -5,9 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-
-const WIS_BLUE = '#0054A6';
-const WIS_ORANGE = '#F68B1E';
+import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 interface ProfilePageProps {
   isLoggedIn: boolean;
@@ -25,7 +23,7 @@ export default function ProfilePage({ isLoggedIn, onLogout }: ProfilePageProps) 
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -86,7 +84,7 @@ export default function ProfilePage({ isLoggedIn, onLogout }: ProfilePageProps) 
                     />
                   </div>
                   <div className="flex gap-3 pt-4">
-                    <Button className="flex-1 h-11 text-white font-bold" style={{ backgroundColor: WIS_BLUE }}>
+                    <Button className="flex-1 h-11 text-white font-bold" style={APP_STYLES.primaryButton}>
                       저장
                     </Button>
                     <Button variant="outline" className="flex-1 h-11 font-bold">
@@ -112,7 +110,7 @@ export default function ProfilePage({ isLoggedIn, onLogout }: ProfilePageProps) 
                       <label className="block text-sm font-bold text-slate-700 mb-2">새로운 비밀번호 확인</label>
                       <Input placeholder="새로운 비밀번호 확인" type="password" />
                     </div>
-                    <Button className="w-full h-11 text-white font-bold" style={{ backgroundColor: WIS_ORANGE }}>
+                    <Button className="w-full h-11 text-white font-bold" style={APP_STYLES.secondaryButton}>
                       변경
                     </Button>
                   </div>
@@ -127,7 +125,7 @@ export default function ProfilePage({ isLoggedIn, onLogout }: ProfilePageProps) 
                   </p>
                   <Button 
                     className="w-full h-11 text-white font-bold" 
-                    style={{ backgroundColor: '#ef4444' }}
+                    style={APP_STYLES.dangerButton}
                     onClick={handleWithdraw}
                   >
                     회원 탈퇴

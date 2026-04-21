@@ -3,12 +3,11 @@ import Footer from '@/components/layout/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-const WIS_BLUE = '#0054A6';
+import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 export default function SignupPage() {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={false} />
       <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
@@ -22,7 +21,7 @@ export default function SignupPage() {
             </p>
             <Input placeholder="비밀번호" type="password" />
             <Input placeholder="비밀번호 확인" type="password" />
-            <Button className="w-full h-11 text-white font-bold" style={{ backgroundColor: WIS_BLUE }}>
+            <Button className="w-full h-11 text-white font-bold" style={APP_STYLES.primaryButton}>
               회원가입
             </Button>
           </div>

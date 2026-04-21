@@ -5,8 +5,7 @@ import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AppAlert from '@/components/shared/AppAlert';
-
-const WIS_BLUE = '#0054A6';
+import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -32,7 +31,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={false} />
       <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
@@ -43,7 +42,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             <Input placeholder="이메일" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
             <Input placeholder="비밀번호" type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
             <button
-              className="text-sm font-semibold text-[#0054A6] hover:underline"
+              className="text-sm font-semibold text-brand-primary hover:underline"
               onClick={() => navigate('/password-reset')}
               type="button"
             >
@@ -51,7 +50,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             </button>
             <Button 
               className="w-full h-11 text-white font-bold" 
-              style={{ backgroundColor: WIS_BLUE }}
+              style={APP_STYLES.primaryButton}
               onClick={handleLogin}
             >
               로그인
