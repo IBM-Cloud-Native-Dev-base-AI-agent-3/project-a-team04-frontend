@@ -25,13 +25,9 @@ export default function ForumGuidePage({ isLoggedIn }: ForumGuidePageProps) {
     <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 pt-44 pb-20">
-        <PageHeader 
+        <PageHeader
           title="포럼안내"
-          description="포럼을 카드 또는 그리드 형식으로 등록하고 확인할 수 있습니다."
-          actionButton={{
-            label: '포럼 등록하기',
-            onClick: () => navigate('/forum/create'),
-          }}
+          description="포럼을 카드 또는 그리드 형식으로 확인할 수 있습니다."
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
