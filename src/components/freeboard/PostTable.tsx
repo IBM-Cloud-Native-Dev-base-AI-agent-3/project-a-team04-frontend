@@ -5,7 +5,6 @@ interface PostTableProps {
     author: string;
     date: string;
     views: number;
-    likes: number;
   }>;
   onRowClick: (id: number) => void;
 }
@@ -14,7 +13,7 @@ export default function PostTable({ posts, onRowClick }: PostTableProps) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[860px] text-sm">
+        <table className="w-full min-w-[720px] text-sm">
           <thead className="bg-slate-100 text-slate-700">
             <tr>
               <th className="px-4 py-3 text-left font-bold w-24">번호</th>
@@ -22,7 +21,6 @@ export default function PostTable({ posts, onRowClick }: PostTableProps) {
               <th className="px-4 py-3 text-left font-bold w-32">작성자</th>
               <th className="px-4 py-3 text-left font-bold w-32">작성일</th>
               <th className="px-4 py-3 text-left font-bold w-24">조회수</th>
-              <th className="px-4 py-3 text-left font-bold w-24">좋아요</th>
             </tr>
           </thead>
           <tbody>
@@ -37,7 +35,6 @@ export default function PostTable({ posts, onRowClick }: PostTableProps) {
                 <td className="px-4 py-3 text-slate-600">{post.author}</td>
                 <td className="px-4 py-3 text-slate-600">{post.date}</td>
                 <td className="px-4 py-3 text-slate-600">{post.views}</td>
-                <td className="px-4 py-3 text-slate-600">{post.likes}</td>
               </tr>
             ))}
           </tbody>

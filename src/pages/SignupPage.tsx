@@ -13,11 +13,15 @@ export default function SignupPage() {
       <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <h1 className="text-3xl font-black mb-2">회원가입</h1>
-          <p className="text-slate-500 mb-6">간단한 정보를 입력해 가입하세요.</p>
+          <p className="text-slate-500 mb-6">회원 정보를 입력해 가입을 완료하세요.</p>
           <div className="space-y-4">
-            <Input placeholder="이름" />
+            <Input placeholder="닉네임" />
             <Input placeholder="이메일" type="email" />
+            <p className="-mt-2 text-xs font-medium text-slate-500">
+              회원가입 성공을 위한 이메일 검증 메일이 발송됩니다.
+            </p>
             <Input placeholder="비밀번호" type="password" />
+            <Input placeholder="비밀번호 확인" type="password" />
             <Button className="w-full h-11 text-white font-bold" style={{ backgroundColor: WIS_BLUE }}>
               회원가입
             </Button>

@@ -24,29 +24,31 @@ export default function FreeBoardPage({ isLoggedIn }: FreeBoardPageProps) {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       <SiteHeader isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 pt-44 pb-20">
-        <PageHeader 
-          title="자유게시판"
-          description="자유롭게 의견을 나누는 공간입니다."
-          actionButton={{
-            label: '글쓰기',
-            onClick: () => navigate('/free-board/create'),
-          }}
-        />
+        <div className="max-w-4xl mx-auto">
+          <PageHeader 
+            title="자유게시판"
+            description="자유롭게 의견을 나누는 공간입니다."
+            actionButton={{
+              label: '글쓰기',
+              onClick: () => navigate('/free-board/create'),
+            }}
+          />
 
-        <PostTable 
-          posts={visiblePosts}
-          onRowClick={(id) => navigate(`/free-board/${id}`)}
-        />
+          <PostTable 
+            posts={visiblePosts}
+            onRowClick={(id) => navigate(`/free-board/${id}`)}
+          />
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPrevClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
-          onNextClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
-          onPageClick={setCurrentPage}
-          itemsPerPage={itemsPerPage}
-          totalItems={FREE_POSTS.length}
-        />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPrevClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+            onNextClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+            onPageClick={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={FREE_POSTS.length}
+          />
+        </div>
       </main>
       <Footer />
     </div>

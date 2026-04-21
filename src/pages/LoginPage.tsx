@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import AppAlert from '@/components/shared/AppAlert';
 
 const WIS_BLUE = '#0054A6';
 
@@ -13,10 +14,21 @@ interface LoginPageProps {
 
 export default function LoginPage({ onLogin }: LoginPageProps) {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('user@example.com');
+  const [password, setPassword] = useState('password');
+  const [alert, setAlert] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 
   const handleLogin = () => {
-    onLogin();
-    navigate('/');
+    if (email === 'user@example.com' && password === 'password') {
+      setAlert({ tone: 'success', message: '로그인에 성공했습니다. 메인 페이지로 이동합니다.' });
+      setTimeout(() => {
+        onLogin();
+        navigate('/');
+      }, 800);
+      return;
+    }
+
+    setAlert({ tone: 'error', message: '이메일 또는 비밀번호가 올바르지 않습니다.' });
   };
 
   return (
@@ -26,9 +38,17 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <h1 className="text-3xl font-black mb-2">로그인</h1>
           <p className="text-slate-500 mb-6">계정 정보를 입력해 주세요.</p>
+          {alert && <AppAlert tone={alert.tone} message={alert.message} />}
           <div className="space-y-4">
-            <Input placeholder="이메일" type="email" defaultValue="user@example.com" />
-            <Input placeholder="비밀번호" type="password" defaultValue="password" />
+            <Input placeholder="이메일" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+            <Input placeholder="비밀번호" type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+            <button
+              className="text-sm font-semibold text-[#0054A6] hover:underline"
+              onClick={() => navigate('/password-reset')}
+              type="button"
+            >
+              비밀번호를 잊으셨나요? 비밀번호 재설정
+            </button>
             <Button 
               className="w-full h-11 text-white font-bold" 
               style={{ backgroundColor: WIS_BLUE }}
