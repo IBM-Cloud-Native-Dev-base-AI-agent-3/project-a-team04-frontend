@@ -1,4 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
+import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from '@/constants/forum';
 
 interface ForumCardProps {
   id: string;
@@ -14,29 +15,6 @@ interface ForumCardProps {
   onClick: () => void;
 }
 
-const statusMap: Record<string, { label: string; className: string }> = {
-  OPEN: {
-    label: '모집중',
-    className: 'border-emerald-300 text-emerald-700 bg-emerald-50',
-  },
-  IN_PROGRESS: {
-    label: '진행중',
-    className: 'border-blue-300 text-blue-700 bg-blue-50',
-  },
-  UPCOMING: {
-    label: '예정',
-    className: 'border-violet-300 text-violet-700 bg-violet-50',
-  },
-  CLOSED: {
-    label: '모집마감',
-    className: 'border-amber-300 text-amber-700 bg-amber-50',
-  },
-  ENDED: {
-    label: '종료',
-    className: 'border-slate-300 text-slate-600 bg-slate-100',
-  },
-};
-
 export default function ForumCard({
   title,
   desc,
@@ -49,10 +27,7 @@ export default function ForumCard({
   maxParticipants,
   onClick,
 }: ForumCardProps) {
-  const statusBadge = statusMap[status] ?? {
-    label: status,
-    className: 'border-slate-300 text-slate-700 bg-white',
-  };
+  const statusBadge = FORUM_STATUS_MAP[status] ?? { label: status, ...DEFAULT_STATUS_BADGE };
 
   return (
     <Card 
@@ -82,12 +57,6 @@ export default function ForumCard({
             <span className="font-semibold text-slate-800 text-right">{place}</span>
           </div>
           <div className="flex justify-between gap-3">
-            <span className="font-medium text-slate-500">상태</span>
-            <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ${statusBadge.className}`}>
-              {statusBadge.label}
-            </span>
-          </div>
-          <div className="flex justify-between gap-3">
             <span className="font-medium text-slate-500">연사</span>
             <span className="font-semibold text-slate-800 text-right">{speaker}</span>
           </div>
@@ -95,6 +64,12 @@ export default function ForumCard({
             <span className="font-medium text-slate-500">신청 현황</span>
             <span className="font-semibold text-slate-800 text-right">
               {applicantCount} / {maxParticipants}
+            </span>
+          </div>
+          <div className="flex justify-between gap-3">
+            <span className="font-medium text-slate-500">상태</span>
+            <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ${statusBadge.className}`}>
+              {statusBadge.label}
             </span>
           </div>
         </div>
