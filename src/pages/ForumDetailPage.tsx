@@ -5,8 +5,7 @@ import BackButton from '@/components/shared/BackButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FORUMS } from '@/data/forums';
-
-const WIS_BLUE = '#0054A6';
+import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 interface ForumDetailPageProps {
   isLoggedIn: boolean;
@@ -54,7 +53,7 @@ export default function ForumDetailPage({ isLoggedIn }: ForumDetailPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">
@@ -108,7 +107,7 @@ export default function ForumDetailPage({ isLoggedIn }: ForumDetailPageProps) {
               </div>
 
               <div className="flex gap-3">
-                <Button className="flex-1 h-11 text-white font-bold" style={{ backgroundColor: WIS_BLUE }}>
+                <Button className="flex-1 h-11 text-white font-bold" style={APP_STYLES.primaryButton}>
                   포럼 등록
                 </Button>
                 <Button variant="outline" className="h-11 px-6 font-bold">

@@ -4,8 +4,7 @@ import Footer from '@/components/layout/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-const WIS_BLUE = '#0054A6';
+import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 const forumThemes = ['AI', '스타트업', '클라우드', '보안', '데이터', '네트워킹', 'DX', '로보틱스', '스마트팩토리', '핀테크'];
 const forumPlaces = ['COEX Hall A', 'COEX Hall B', 'COEX Hall C', 'COEX Conference Room'];
@@ -18,7 +17,7 @@ export default function ForumCreatePage({ isLoggedIn }: ForumCreatePageProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-2xl mx-auto">
@@ -79,7 +78,7 @@ export default function ForumCreatePage({ isLoggedIn }: ForumCreatePageProps) {
                 <div className="flex gap-3 pt-4">
                   <Button 
                     className="flex-1 h-11 text-white font-bold" 
-                    style={{ backgroundColor: WIS_BLUE }}
+                    style={APP_STYLES.primaryButton}
                     onClick={() => navigate('/forum-guide')}
                   >
                     등록하기
