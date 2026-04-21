@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
-
-const WIS_BLUE = '#0054A6';
+import { APP_STYLES } from '@/constants/theme';
 
 interface PaginationProps {
   currentPage: number;
@@ -46,7 +45,7 @@ export default function Pagination({
               key={page}
               variant={currentPage === page ? 'default' : 'outline'}
               className={`h-9 w-9 p-0 ${currentPage === page ? 'text-white' : 'bg-white'}`}
-              style={currentPage === page ? { backgroundColor: WIS_BLUE } : undefined}
+              style={currentPage === page ? APP_STYLES.primaryButton : undefined}
               onClick={() => onPageClick(page)}
             >
               {page}

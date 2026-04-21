@@ -3,8 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Globe, Menu, Search, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-const WIS_LOGO_BLUE = '#00d1ff';
+import { APP_STYLES } from '@/constants/theme';
 
 const NAV_ITEMS = [
   {
@@ -64,27 +63,27 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }) 
     >
       <div className="bg-[#f8f9fa] border-b border-slate-200 py-2 hidden md:block">
         <div className="container mx-auto px-4 flex justify-end items-center space-x-6 text-[11px] font-bold text-[#666]">
-          <div className="flex items-center space-x-1 cursor-pointer hover:text-[#0054A6]">
+          <div className="flex items-center space-x-1 cursor-pointer hover:text-brand-primary">
             <Globe size={12} />
             <span>KOR / ENG</span>
           </div>
           <div className="flex items-center space-x-4">
             {isLoggedIn ? (
               <>
-                <Link to="/profile" className="cursor-pointer hover:text-[#0054A6]">
+                <Link to="/profile" className="cursor-pointer hover:text-brand-primary">
                   프로필
                 </Link>
-                <button onClick={handleLogout} className="cursor-pointer hover:text-[#0054A6] flex items-center gap-1">
+                <button onClick={handleLogout} className="cursor-pointer hover:text-brand-primary flex items-center gap-1">
                   <LogOut size={11} />
                   로그아웃
                 </button>
               </>
             ) : (
               <>
-                <Link to="/login" className="cursor-pointer hover:text-[#0054A6]">
+                <Link to="/login" className="cursor-pointer hover:text-brand-primary">
                   로그인
                 </Link>
-                <Link to="/signup" className="cursor-pointer hover:text-[#0054A6]">
+                <Link to="/signup" className="cursor-pointer hover:text-brand-primary">
                   회원가입
                 </Link>
               </>
@@ -97,7 +96,7 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }) 
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center cursor-pointer">
             <span className="font-black text-3xl tracking-tighter text-[#1a3a6c]">WIC</span>
-            <span className="font-black text-3xl tracking-tighter" style={{ color: WIS_LOGO_BLUE }}>
+            <span className="font-black text-3xl tracking-tighter" style={APP_STYLES.logoAccent}>
               2020
             </span>
           </Link>
@@ -106,11 +105,11 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }) 
             {NAV_ITEMS.map((item) => (
               <div key={item.title} className="relative group h-20 flex items-center">
                 {item.path ? (
-                  <Link to={item.path} className="text-[17px] font-bold text-[#333] hover:text-[#0054A6] transition-colors">
+                  <Link to={item.path} className="text-[17px] font-bold text-[#333] hover:text-brand-primary transition-colors">
                     {item.title}
                   </Link>
                 ) : (
-                  <button className="text-[17px] font-bold text-[#333] hover:text-[#0054A6] transition-colors">
+                  <button className="text-[17px] font-bold text-[#333] hover:text-brand-primary transition-colors">
                     {item.title}
                   </button>
                 )}

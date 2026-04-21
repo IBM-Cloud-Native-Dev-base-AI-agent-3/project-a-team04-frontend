@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
+import { APP_STYLES } from '@/constants/theme';
 
 interface PageHeaderProps {
   title: string;
@@ -19,7 +20,7 @@ export default function PageHeader({ title, description, actionButton }: PageHea
       </div>
       {actionButton && (
         <Button 
-          style={{ backgroundColor: '#0054A6' }} 
+          style={APP_STYLES.primaryButton}
           className="text-white font-bold hover:brightness-95"
           onClick={actionButton.onClick}
         >

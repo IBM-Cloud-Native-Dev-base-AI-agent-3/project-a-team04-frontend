@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
-
-const WIS_LOGO_BLUE = '#00d1ff';
+import { APP_THEME } from '@/constants/theme';
 
 export default function HeroSection() {
   return (
@@ -28,7 +27,12 @@ export default function HeroSection() {
           <div className="flex flex-col items-center justify-center">
             <div className="flex items-center justify-center mb-4">
               <span className="font-black text-7xl md:text-[120px] tracking-tighter text-white drop-shadow-2xl">WIC</span>
-              <span className="font-black text-7xl md:text-[120px] tracking-tighter text-[#00d1ff] drop-shadow-2xl">2020</span>
+              <span
+                className="font-black text-7xl md:text-[120px] tracking-tighter drop-shadow-2xl"
+                style={{ color: APP_THEME.colors.logoBlue }}
+              >
+                2020
+              </span>
             </div>
             <motion.div
               initial={{ y: 20, opacity: 0 }}
