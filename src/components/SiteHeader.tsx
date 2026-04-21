@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Link } from 'react-router-dom';
-import { Globe, Menu, Search } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Globe, Menu, Search, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const WIS_LOGO_BLUE = '#00d1ff';
@@ -35,9 +35,10 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function SiteHeader() {
+export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isNavHovered, setIsNavHovered] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,6 +50,11 @@ export default function SiteHeader() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const handleLogout = () => {
+    onLogout?.();
+    navigate('/');
+  };
 
   return (
     <header
@@ -63,12 +69,26 @@ export default function SiteHeader() {
             <span>KOR / ENG</span>
           </div>
           <div className="flex items-center space-x-4">
-            <Link to="/login" className="cursor-pointer hover:text-[#0054A6]">
-              로그인
-            </Link>
-            <Link to="/signup" className="cursor-pointer hover:text-[#0054A6]">
-              회원가입
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/profile" className="cursor-pointer hover:text-[#0054A6]">
+                  프로필
+                </Link>
+                <button onClick={handleLogout} className="cursor-pointer hover:text-[#0054A6] flex items-center gap-1">
+                  <LogOut size={11} />
+                  로그아웃
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="cursor-pointer hover:text-[#0054A6]">
+                  로그인
+                </Link>
+                <Link to="/signup" className="cursor-pointer hover:text-[#0054A6]">
+                  회원가입
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
