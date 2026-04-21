@@ -26,7 +26,7 @@ export default function FreeBoardDetailPage({ isLoggedIn }: FreeBoardDetailPageP
 
           <Card className="border border-slate-200 shadow-sm mb-8">
             <CardContent className="p-8">
-              <h1 className="text-3xl font-black mb-4">{post.title}</h1>
+              <h1 className="text-xl font-black mb-4">{post.title}</h1>
               
               <div className="flex flex-wrap items-center gap-4 pb-6 border-b border-slate-200">
                 <span className="text-sm text-slate-600 font-medium">작성자: <span className="font-bold text-slate-800">{post.author}</span></span>
