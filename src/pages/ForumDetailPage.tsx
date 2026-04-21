@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FORUMS } from '@/data/forums';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
+import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from '@/constants/forum';
 
 interface ForumDetailPageProps {
   isLoggedIn: boolean;
@@ -17,33 +18,7 @@ export default function ForumDetailPage({ isLoggedIn }: ForumDetailPageProps) {
   const id = pathname.split('/')[2];
   const forum = FORUMS.find(f => f.id === id) || FORUMS[0];
 
-  const statusMap: Record<string, { label: string; className: string }> = {
-    OPEN: {
-      label: '모집중',
-      className: 'border-emerald-300 text-emerald-700 bg-emerald-50',
-    },
-    IN_PROGRESS: {
-      label: '진행중',
-      className: 'border-blue-300 text-blue-700 bg-blue-50',
-    },
-    UPCOMING: {
-      label: '예정',
-      className: 'border-violet-300 text-violet-700 bg-violet-50',
-    },
-    CLOSED: {
-      label: '모집마감',
-      className: 'border-amber-300 text-amber-700 bg-amber-50',
-    },
-    ENDED: {
-      label: '종료',
-      className: 'border-slate-300 text-slate-600 bg-slate-100',
-    },
-  };
-
-  const statusBadge = statusMap[forum.status] ?? {
-    label: forum.status,
-    className: 'border-slate-300 text-slate-700 bg-white',
-  };
+  const statusBadge = FORUM_STATUS_MAP[forum.status] ?? { label: forum.status, ...DEFAULT_STATUS_BADGE };
 
   const getYouTubeEmbedUrl = (url: string) => {
     if (url.includes('watch?v=')) {
@@ -83,7 +58,6 @@ export default function ForumDetailPage({ isLoggedIn }: ForumDetailPageProps) {
               </div>
 
               <div className="mb-8 space-y-4">
-                <h2 className="text-xl font-bold">포럼 미디어</h2>
                 {forum.media.map((media, index) => (
                   <div key={`${media.type}-${media.url}-${index}`} className="overflow-hidden rounded-lg border border-slate-200 bg-white">
                     {media.type === 'youtube' ? (
@@ -108,13 +82,7 @@ export default function ForumDetailPage({ isLoggedIn }: ForumDetailPageProps) {
 
               <div className="flex gap-3">
                 <Button className="flex-1 h-11 text-white font-bold" style={APP_STYLES.primaryButton}>
-                  포럼 등록
-                </Button>
-                <Button variant="outline" className="h-11 px-6 font-bold">
-                  수정
-                </Button>
-                <Button variant="outline" className="h-11 px-6 font-bold text-red-600 border-red-200">
-                  삭제
+                  신청하기
                 </Button>
               </div>
             </CardContent>
