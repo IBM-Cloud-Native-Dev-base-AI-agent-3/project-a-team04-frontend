@@ -8,6 +8,8 @@ export const APP_THEME = {
   classes: {
     pageShellMuted: 'min-h-screen bg-slate-50 font-sans text-slate-900',
     pageShellPlain: 'min-h-screen bg-white font-sans text-slate-900',
+    authFormTitle: 'text-3xl font-black mb-2',
+    formInput: 'h-10 rounded',
   },
 } as const;
 
