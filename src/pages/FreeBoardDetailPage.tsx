@@ -9,9 +9,10 @@ import { APP_THEME } from '@/constants/theme';
 
 interface FreeBoardDetailPageProps {
   isLoggedIn: boolean;
+  onLogout?: () => void;
 }
 
-export default function FreeBoardDetailPage({ isLoggedIn }: FreeBoardDetailPageProps) {
+export default function FreeBoardDetailPage({ isLoggedIn, onLogout }: FreeBoardDetailPageProps) {
   const navigate = useNavigate();
   const pathname = window.location.pathname;
   const id = parseInt(pathname.split('/')[2]);
@@ -19,7 +20,7 @@ export default function FreeBoardDetailPage({ isLoggedIn }: FreeBoardDetailPageP
 
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
-      <SiteHeader isLoggedIn={isLoggedIn} />
+      <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">
           <BackButton onClick={() => navigate('/free-board')} />

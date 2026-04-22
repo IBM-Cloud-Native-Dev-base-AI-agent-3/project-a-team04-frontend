@@ -26,26 +26,26 @@ function App() {
   return (
     <Routes>
       {/* Home & Authentication Routes */}
-      <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
+      <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
       <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/password-reset" element={<PasswordResetPage />} />
       <Route path="/profile" element={<ProfilePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Forum Routes */}
-      <Route path="/forum-guide" element={<ForumGuidePage isLoggedIn={isLoggedIn} />} />
-      <Route path="/forum/:id" element={<ForumDetailPage isLoggedIn={isLoggedIn} />} />
-      <Route path="/forum/create" element={<ForumCreatePage isLoggedIn={isLoggedIn} />} />
+      <Route path="/forum-guide" element={<ForumGuidePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/forum/:id" element={<ForumDetailPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/forum/create" element={<ForumCreatePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Free Board Routes */}
-      <Route path="/free-board" element={<FreeBoardPage isLoggedIn={isLoggedIn} />} />
-      <Route path="/free-board/:id" element={<FreeBoardDetailPage isLoggedIn={isLoggedIn} />} />
-      <Route path="/free-board/create" element={<FreeBoardCreatePage isLoggedIn={isLoggedIn} />} />
+      <Route path="/free-board" element={<FreeBoardPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/free-board/:id" element={<FreeBoardDetailPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/free-board/create" element={<FreeBoardCreatePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Backward-compatible legacy freeboard routes */}
       <Route path="/freeboard" element={<Navigate to="/free-board" replace />} />
       <Route path="/freeboard/create" element={<Navigate to="/free-board/create" replace />} />
-      <Route path="/freeboard/:id" element={<FreeBoardDetailPage isLoggedIn={isLoggedIn} />} />
+      <Route path="/freeboard/:id" element={<FreeBoardDetailPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
     </Routes>
   );
 }

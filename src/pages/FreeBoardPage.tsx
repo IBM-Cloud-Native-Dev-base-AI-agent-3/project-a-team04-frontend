@@ -10,9 +10,10 @@ import { APP_THEME } from '@/constants/theme';
 
 interface FreeBoardPageProps {
   isLoggedIn: boolean;
+  onLogout?: () => void;
 }
 
-export default function FreeBoardPage({ isLoggedIn }: FreeBoardPageProps) {
+export default function FreeBoardPage({ isLoggedIn, onLogout }: FreeBoardPageProps) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
@@ -23,7 +24,7 @@ export default function FreeBoardPage({ isLoggedIn }: FreeBoardPageProps) {
 
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
-      <SiteHeader isLoggedIn={isLoggedIn} />
+      <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">
           <PageHeader 

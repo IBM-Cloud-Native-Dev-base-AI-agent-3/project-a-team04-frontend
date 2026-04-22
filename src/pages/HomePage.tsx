@@ -7,12 +7,13 @@ import { APP_THEME } from '@/constants/theme';
 
 interface HomePageProps {
   isLoggedIn: boolean;
+  onLogout?: () => void;
 }
 
-export default function HomePage({ isLoggedIn }: HomePageProps) {
+export default function HomePage({ isLoggedIn, onLogout }: HomePageProps) {
   return (
     <div className={APP_THEME.classes.pageShellPlain}>
-      <SiteHeader isLoggedIn={isLoggedIn} />
+      <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <HeroSection />
       <QuickLinksSection />
       <NoticeAndNewsSection />

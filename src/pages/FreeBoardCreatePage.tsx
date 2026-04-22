@@ -9,14 +9,15 @@ import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 interface FreeBoardCreatePageProps {
   isLoggedIn: boolean;
+  onLogout?: () => void;
 }
 
-export default function FreeBoardCreatePage({ isLoggedIn }: FreeBoardCreatePageProps) {
+export default function FreeBoardCreatePage({ isLoggedIn, onLogout }: FreeBoardCreatePageProps) {
   const navigate = useNavigate();
 
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
-      <SiteHeader isLoggedIn={isLoggedIn} />
+      <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">
           <BackButton onClick={() => navigate('/free-board')} />

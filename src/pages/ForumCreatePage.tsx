@@ -11,14 +11,15 @@ const forumPlaces = ['COEX Hall A', 'COEX Hall B', 'COEX Hall C', 'COEX Conferen
 
 interface ForumCreatePageProps {
   isLoggedIn: boolean;
+  onLogout?: () => void;
 }
 
-export default function ForumCreatePage({ isLoggedIn }: ForumCreatePageProps) {
+export default function ForumCreatePage({ isLoggedIn, onLogout }: ForumCreatePageProps) {
   const navigate = useNavigate();
 
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
-      <SiteHeader isLoggedIn={isLoggedIn} />
+      <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-4xl font-black text-slate-900 mb-2">포럼 등록</h1>

@@ -34,7 +34,12 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }) {
+interface SiteHeaderProps {
+  isLoggedIn?: boolean;
+  onLogout?: () => void;
+}
+
+export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isNavHovered, setIsNavHovered] = useState(false);
   const navigate = useNavigate();
@@ -71,9 +76,9 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }) 
             {isLoggedIn ? (
               <>
                 <Link to="/profile" className="cursor-pointer hover:text-brand-primary">
-                  프로필
+                  마이페이지
                 </Link>
-                <button onClick={handleLogout} className="cursor-pointer hover:text-brand-primary flex items-center gap-1">
+                <button type="button" onClick={handleLogout} className="cursor-pointer hover:text-brand-primary flex items-center gap-1">
                   <LogOut size={11} />
                   로그아웃
                 </button>

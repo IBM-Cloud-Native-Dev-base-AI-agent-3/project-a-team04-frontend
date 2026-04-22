@@ -10,9 +10,10 @@ import { APP_THEME } from '@/constants/theme';
 
 interface ForumGuidePageProps {
   isLoggedIn: boolean;
+  onLogout?: () => void;
 }
 
-export default function ForumGuidePage({ isLoggedIn }: ForumGuidePageProps) {
+export default function ForumGuidePage({ isLoggedIn, onLogout }: ForumGuidePageProps) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
@@ -23,7 +24,7 @@ export default function ForumGuidePage({ isLoggedIn }: ForumGuidePageProps) {
 
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
-      <SiteHeader isLoggedIn={isLoggedIn} />
+      <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <PageHeader
           title="포럼안내"
