@@ -10,6 +10,7 @@ export const APP_THEME = {
     pageShellPlain: 'min-h-screen bg-white font-sans text-slate-900',
     authFormTitle: 'text-3xl font-black mb-2',
     formInput: 'h-10 rounded',
+    bodyText: 'text-sm text-slate-800',
   },
 } as const;
 
