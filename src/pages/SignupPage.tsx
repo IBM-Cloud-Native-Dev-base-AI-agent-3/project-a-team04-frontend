@@ -32,7 +32,6 @@ export default function SignupPage() {
         isOpen={dialog.isOpen}
         title={dialog.title}
         message={dialog.message}
-        tone="success"
         primaryButtonLabel="확인"
         onPrimaryClick={() => navigate('/')}
         onClose={() => setDialog({ isOpen: false, message: '', title: '' })}

@@ -63,7 +63,6 @@ export default function PasswordResetPage() {
         isOpen={dialog.isOpen}
         title={dialog.title}
         message={dialog.message}
-        tone={dialog.isValid ? 'success' : 'error'}
         primaryButtonLabel={dialog.isValid ? '비밀번호 설정하기' : '확인'}
         onPrimaryClick={handleDialogConfirm}
         onClose={() => setDialog({ ...dialog, isOpen: false })}
