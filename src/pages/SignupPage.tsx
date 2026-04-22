@@ -21,7 +21,7 @@ export default function SignupPage() {
     setDialog({
       isOpen: true,
       title: '회원가입 완료',
-      message: '가입이 완료되었습니다. 검증 이메일을 확인해 주세요.',
+      message: '가입이 완료되었습니다. 입력하신 이메일 주소로 인증 링크가 포함된 메일이 발송되었습니다. 해당 이메일의 받은 편지함, 스팸함, 또는 프로모션 탭을 확인하여 인증을 완료해 주시기 바랍니다.',
     });
   };
 
