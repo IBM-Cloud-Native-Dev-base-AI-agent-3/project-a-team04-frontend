@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { APP_STYLES } from '@/constants/theme';
+import { useTranslation } from 'react-i18next';
 
 interface PaginationProps {
   currentPage: number;
@@ -20,12 +21,18 @@ export default function Pagination({
   itemsPerPage,
   totalItems,
 }: PaginationProps) {
+  const { t } = useTranslation();
   const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
   return (
     <div className="mt-8 flex flex-col items-center gap-4">
       <p className="text-sm text-slate-500 text-center">
-        총 {totalItems}개 중 {startIndex + 1}-{Math.min(startIndex + itemsPerPage, totalItems)}개 표시
+        {t('pagination.summary', {
+          total: totalItems,
+          start: startIndex + 1,
+          end: endIndex,
+        })}
       </p>
 
       <div className="flex items-center justify-center gap-2 flex-wrap">
@@ -35,7 +42,7 @@ export default function Pagination({
           disabled={currentPage === 1}
           onClick={onPrevClick}
         >
-          이전
+          {t('common.back')}
         </Button>
 
         {Array.from({ length: totalPages }, (_, index) => {
@@ -59,7 +66,7 @@ export default function Pagination({
           disabled={currentPage === totalPages}
           onClick={onNextClick}
         >
-          다음
+          {t('common.next')}
         </Button>
       </div>
     </div>

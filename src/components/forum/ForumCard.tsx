@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from '@/constants/forum';
+import { useTranslation } from 'react-i18next';
 
 interface ForumCardProps {
   id: string;
@@ -27,7 +28,9 @@ export default function ForumCard({
   maxParticipants,
   onClick,
 }: ForumCardProps) {
-  const statusBadge = FORUM_STATUS_MAP[status] ?? { label: status, ...DEFAULT_STATUS_BADGE };
+  const { t } = useTranslation();
+  const statusBadge = FORUM_STATUS_MAP[status] ?? DEFAULT_STATUS_BADGE;
+  const statusLabel = t(`forum.statuses.${status}`, { defaultValue: status });
 
   return (
     <Card 
@@ -49,27 +52,27 @@ export default function ForumCard({
 
         <div className="space-y-2 text-sm text-slate-600">
           <div className="flex justify-between gap-3">
-            <span className="font-medium text-slate-500">일정</span>
+            <span className="font-medium text-slate-500">{t('forum.schedule')}</span>
             <span className="font-semibold text-slate-800 text-right">{date}</span>
           </div>
           <div className="flex justify-between gap-3">
-            <span className="font-medium text-slate-500">장소</span>
+            <span className="font-medium text-slate-500">{t('forum.location')}</span>
             <span className="font-semibold text-slate-800 text-right">{place}</span>
           </div>
           <div className="flex justify-between gap-3">
-            <span className="font-medium text-slate-500">연사</span>
+            <span className="font-medium text-slate-500">{t('forum.speaker')}</span>
             <span className="font-semibold text-slate-800 text-right">{speaker}</span>
           </div>
           <div className="flex justify-between gap-3">
-            <span className="font-medium text-slate-500">신청 현황</span>
+            <span className="font-medium text-slate-500">{t('forum.applicantStatus')}</span>
             <span className="font-semibold text-slate-800 text-right">
               {applicantCount} / {maxParticipants}
             </span>
           </div>
           <div className="flex justify-between gap-3">
-            <span className="font-medium text-slate-500">상태</span>
+            <span className="font-medium text-slate-500">{t('forum.status')}</span>
             <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ${statusBadge.className}`}>
-              {statusBadge.label}
+              {statusLabel}
             </span>
           </div>
         </div>

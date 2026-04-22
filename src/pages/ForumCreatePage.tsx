@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,6 +16,7 @@ interface ForumCreatePageProps {
 }
 
 export default function ForumCreatePage({ isLoggedIn, onLogout }: ForumCreatePageProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
@@ -22,22 +24,22 @@ export default function ForumCreatePage({ isLoggedIn, onLogout }: ForumCreatePag
       <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-4xl font-black text-slate-900 mb-2">포럼 등록</h1>
-          <p className="text-slate-500 mb-8">새로운 포럼을 등록해주세요.</p>
+          <h1 className="text-4xl font-black text-slate-900 mb-2">{t('forum.forumCreate')}</h1>
+          <p className="text-slate-500 mb-8">{t('forum.forumCreateDescription')}</p>
 
           <Card className="border border-slate-200 shadow-sm">
             <CardContent className="p-8">
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">포럼 제목 *</label>
-                  <Input placeholder="포럼 제목을 입력해 주세요." />
+                  <label className="block text-sm font-bold text-slate-700 mb-2">{t('forum.title')} *</label>
+                  <Input placeholder={t('forum.titlePlaceholder')} />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">주제 *</label>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t('forum.theme')} *</label>
                     <select className="w-full h-11 px-4 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                      <option>주제를 선택해 주세요.</option>
+                      <option>{t('forum.selectTheme')}</option>
                       {forumThemes.map((theme) => (
                         <option key={theme} value={theme}>{theme}</option>
                       ))}
@@ -45,15 +47,15 @@ export default function ForumCreatePage({ isLoggedIn, onLogout }: ForumCreatePag
                   </div>
 
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">일시 *</label>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t('forum.date')} *</label>
                     <Input type="datetime-local" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">장소 *</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">{t('forum.location')} *</label>
                   <select className="w-full h-11 px-4 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option>장소를 선택해 주세요.</option>
+                    <option>{t('forum.selectLocation')}</option>
                     {forumPlaces.map((place) => (
                       <option key={place} value={place}>{place}</option>
                     ))}
@@ -61,18 +63,18 @@ export default function ForumCreatePage({ isLoggedIn, onLogout }: ForumCreatePag
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">설명 *</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">{t('forum.description')} *</label>
                   <textarea 
                     className="w-full h-32 px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="포럼에 대한 설명을 입력해 주세요."
+                    placeholder={t('forum.descriptionPlaceholder')}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">포럼 대표 이미지</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">{t('forum.image')}</label>
                   <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/50 transition-colors">
-                    <p className="text-slate-600 font-medium">이미지를 드래그하거나 클릭하여 선택</p>
-                    <p className="text-sm text-slate-500 mt-1">최대 5MB까지 가능합니다.</p>
+                    <p className="text-slate-600 font-medium">{t('forum.imageDragHint')}</p>
+                    <p className="text-sm text-slate-500 mt-1">{t('forum.imageMaxSize')}</p>
                   </div>
                 </div>
 
@@ -82,14 +84,14 @@ export default function ForumCreatePage({ isLoggedIn, onLogout }: ForumCreatePag
                     style={APP_STYLES.primaryButton}
                     onClick={() => navigate('/forum-guide')}
                   >
-                    등록하기
+                    {t('forum.register')}
                   </Button>
                   <Button 
                     variant="outline" 
                     className="flex-1 h-11 font-bold"
                     onClick={() => navigate('/forum-guide')}
                   >
-                    취소
+                    {t('common.cancel')}
                   </Button>
                 </div>
               </div>

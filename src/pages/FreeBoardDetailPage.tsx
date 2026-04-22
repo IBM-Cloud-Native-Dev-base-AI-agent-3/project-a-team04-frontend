@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import BackButton from '@/components/shared/BackButton';
@@ -13,6 +14,7 @@ interface FreeBoardDetailPageProps {
 }
 
 export default function FreeBoardDetailPage({ isLoggedIn, onLogout }: FreeBoardDetailPageProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const pathname = window.location.pathname;
   const id = parseInt(pathname.split('/')[2]);
@@ -30,9 +32,9 @@ export default function FreeBoardDetailPage({ isLoggedIn, onLogout }: FreeBoardD
               <h1 className="text-xl font-black mb-4">{post.title}</h1>
               
               <div className="flex flex-wrap items-center gap-4 pb-6 border-b border-slate-200">
-                <span className="text-sm text-slate-600 font-medium">작성자: <span className="font-bold text-slate-800">{post.author}</span></span>
-                <span className="text-sm text-slate-600 font-medium">작성일: <span className="font-bold text-slate-800">{post.date}</span></span>
-                <span className="text-sm text-slate-600 font-medium">조회수: <span className="font-bold text-slate-800">{post.views}</span></span>
+                <span className="text-sm text-slate-600 font-medium">{t('freeBoard.author')}: <span className="font-bold text-slate-800">{post.author}</span></span>
+                <span className="text-sm text-slate-600 font-medium">{t('freeBoard.date')}: <span className="font-bold text-slate-800">{post.date}</span></span>
+                <span className="text-sm text-slate-600 font-medium">{t('freeBoard.views')}: <span className="font-bold text-slate-800">{post.views}</span></span>
               </div>
 
               <div className="py-8 mb-8 border-b border-slate-200">
@@ -43,10 +45,10 @@ export default function FreeBoardDetailPage({ isLoggedIn, onLogout }: FreeBoardD
 
               <div className="flex gap-3 mb-8">
                 <Button variant="outline" className="h-11 px-6 font-bold">
-                  수정
+                  {t('common.edit')}
                 </Button>
                 <Button variant="outline" className="h-11 px-6 font-bold text-red-600 border-red-200">
-                  삭제
+                  {t('common.delete')}
                 </Button>
               </div>
             </CardContent>

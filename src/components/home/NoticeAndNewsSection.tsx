@@ -1,9 +1,33 @@
+import { useTranslation } from 'react-i18next';
 import { ChevronRight, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 export default function NoticeAndNewsSection() {
+  const { t } = useTranslation();
+
+  // 샘플 데이터 - 실제로는 서버에서 불러와야 함
+  const notices = [
+    { title: t('home.news.notices.title1'), date: "2025.04.10", category: t('home.news.category.notice') },
+    { title: t('home.news.notices.title2'), date: "2024.12.20", category: t('home.news.category.data') },
+    { title: t('home.news.notices.title3'), date: "2024.11.15", category: t('home.news.category.guide') },
+    { title: t('home.news.notices.title4'), date: "2024.10.05", category: t('home.news.category.event') },
+  ];
+
+  const pressReleases = [
+    { 
+      title: t('home.news.title1'),
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400&h=250",
+      date: "2025.04.11"
+    },
+    { 
+      title: t('home.news.title2'),
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=400&h=250",
+      date: "2025.04.09"
+    },
+  ];
+
   return (
     <section className="py-24 bg-slate-50">
       <div className="container mx-auto px-4">
@@ -11,20 +35,15 @@ export default function NoticeAndNewsSection() {
           <div>
             <div className="flex justify-between items-end mb-8">
               <div>
-                <h2 className="text-3xl font-black text-slate-900 mb-2">공지사항</h2>
-                <p className="text-slate-500 font-medium">WIS 2025의 새로운 소식을 전해드립니다.</p>
+                <h2 className="text-3xl font-black text-slate-900 mb-2">{t('home.announcements')}</h2>
+                <p className="text-slate-500 font-medium">{t('home.announcementsDescription')}</p>
               </div>
               <Button variant="ghost" className="text-blue-600 font-bold">
-                전체보기 <ChevronRight size={16} />
+                {t('home.viewAll')} <ChevronRight size={16} />
               </Button>
             </div>
             <div className="space-y-4">
-              {[
-                { title: "World IT Show 2025 참가업체 모집 안내", date: "2025.04.10", category: "공지" },
-                { title: "WIS 2024 결과보고서 및 사진 자료실 업데이트", date: "2024.12.20", category: "자료" },
-                { title: "전시장 오시는 길 및 주차 안내 (코엑스)", date: "2024.11.15", category: "안내" },
-                { title: "WIS 혁신상(Innovation Awards) 신청 안내", date: "2024.10.05", category: "이벤트" },
-              ].map((item, idx) => (
+              {notices.map((item, idx) => (
                 <div key={idx} className="bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer flex justify-between items-center group">
                   <div className="flex items-center space-x-4">
                     <Badge variant="outline" className="text-blue-600 border-blue-200 bg-blue-50">{item.category}</Badge>
@@ -39,26 +58,15 @@ export default function NoticeAndNewsSection() {
           <div>
             <div className="flex justify-between items-end mb-8">
               <div>
-                <h2 className="text-3xl font-black text-slate-900 mb-2">보도자료</h2>
-                <p className="text-slate-500 font-medium">미디어에 비친 World IT Show</p>
+                <h2 className="text-3xl font-black text-slate-900 mb-2">{t('home.pressReleases')}</h2>
+                <p className="text-slate-500 font-medium">{t('home.pressReleasesDescription')}</p>
               </div>
               <Button variant="ghost" className="text-blue-600 font-bold">
-                전체보기 <ChevronRight size={16} />
+                {t('home.viewAll')} <ChevronRight size={16} />
               </Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                { 
-                  title: "AI와 디지털 트랜스포메이션의 총집합, WIS 2025 개최", 
-                  image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400&h=250",
-                  date: "2025.04.11"
-                },
-                { 
-                  title: "글로벌 빅테크 기업들, WIS 2025 대거 참가 확정", 
-                  image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=400&h=250",
-                  date: "2025.04.09"
-                },
-              ].map((item, idx) => (
+              {pressReleases.map((item, idx) => (
                 <Card key={idx} className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
                   <div className="relative h-48 overflow-hidden">
                     <img 

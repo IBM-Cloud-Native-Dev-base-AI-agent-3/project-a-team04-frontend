@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import BackButton from '@/components/shared/BackButton';
@@ -14,12 +15,14 @@ interface ForumDetailPageProps {
 }
 
 export default function ForumDetailPage({ isLoggedIn, onLogout }: ForumDetailPageProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const pathname = window.location.pathname;
   const id = pathname.split('/')[2];
   const forum = FORUMS.find(f => f.id === id) || FORUMS[0];
 
-  const statusBadge = FORUM_STATUS_MAP[forum.status] ?? { label: forum.status, ...DEFAULT_STATUS_BADGE };
+  const statusBadge = FORUM_STATUS_MAP[forum.status] ?? DEFAULT_STATUS_BADGE;
+  const statusLabel = t(`forum.statuses.${forum.status}`, { defaultValue: forum.status });
 
   const getYouTubeEmbedUrl = (url: string) => {
     if (url.includes('watch?v=')) {
@@ -41,18 +44,18 @@ export default function ForumDetailPage({ isLoggedIn, onLogout }: ForumDetailPag
 
               <div className="flex flex-wrap items-center gap-3 mb-6 pb-6 border-b border-slate-200">
                 <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ${statusBadge.className}`}>
-                  {statusBadge.label}
+                  {statusLabel}
                 </span>
-                <span className="text-sm text-slate-600 font-medium">일시: {forum.date} | 13:00 ~ 15:00</span>
-                <span className="text-sm text-slate-600 font-medium">장소: {forum.place}</span>
-                <span className="text-sm text-slate-600 font-medium">연사: {forum.speaker}</span>
+                <span className="text-sm text-slate-600 font-medium">{t('forum.date')}: {forum.date} | 13:00 ~ 15:00</span>
+                <span className="text-sm text-slate-600 font-medium">{t('forum.location')}: {forum.place}</span>
+                <span className="text-sm text-slate-600 font-medium">{t('forum.speaker')}: {forum.speaker}</span>
                 <span className="text-sm text-slate-600 font-medium">
-                  신청 현황: {forum.applicantCount} / {forum.maxParticipants}
+                  {t('forum.applicantStatus')}: {forum.applicantCount} / {forum.maxParticipants}
                 </span>
               </div>
 
               <div className="mb-8">
-                <h2 className="text-xl font-bold mb-4">포럼 소개</h2>
+                <h2 className="text-xl font-bold mb-4">{t('forum.forumIntroduction')}</h2>
                 <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">
                   {forum.content}
                 </p>
@@ -72,7 +75,7 @@ export default function ForumDetailPage({ isLoggedIn, onLogout }: ForumDetailPag
                     ) : (
                       <img
                         src={media.url}
-                        alt={`포럼 미디어 ${index + 1}`}
+                        alt={t('forum.forumMedia')}
                         className="w-full object-cover"
                         referrerPolicy="no-referrer"
                       />
@@ -83,7 +86,7 @@ export default function ForumDetailPage({ isLoggedIn, onLogout }: ForumDetailPag
 
               <div className="flex gap-3">
                 <Button className="flex-1 h-11 text-white font-bold" style={APP_STYLES.primaryButton}>
-                  신청하기
+                  {t('forum.apply')}
                 </Button>
               </div>
             </CardContent>

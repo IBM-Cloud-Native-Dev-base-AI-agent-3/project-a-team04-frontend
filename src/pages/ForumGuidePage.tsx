@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/shared/PageHeader';
@@ -14,6 +15,7 @@ interface ForumGuidePageProps {
 }
 
 export default function ForumGuidePage({ isLoggedIn, onLogout }: ForumGuidePageProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
@@ -27,8 +29,8 @@ export default function ForumGuidePage({ isLoggedIn, onLogout }: ForumGuidePageP
       <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <PageHeader
-          title="포럼안내"
-          description="포럼을 카드 또는 그리드 형식으로 확인할 수 있습니다."
+          title={t('forum.forumGuide')}
+          description={t('forum.forumGuideDescription')}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">

@@ -8,30 +8,43 @@ import { APP_STYLES } from '@/constants/theme';
 
 const NAV_ITEMS = [
   {
-    title: 'WIS 소개',
-    items: ['전시회 개요', '전시품목', '부대행사', '동시개최행사', '지난행사결과', 'Contact Us'],
+    titleKey: 'navigation.wisAbout',
+    items: [
+      'navigation.exhibitionOverview',
+      'navigation.exhibitionItems',
+      'navigation.sideEvents',
+      'navigation.coLocatedEvents',
+      'navigation.previousResults',
+      'navigation.contactUs',
+    ],
   },
   {
-    title: '참가안내',
-    items: ['참가신청 안내', '참가업체 로그인', '스폰서쉽 패키지 프로그램'],
+    titleKey: 'navigation.participationGuide',
+    items: ['navigation.applicationGuide', 'navigation.exhibitorLogin', 'navigation.sponsorshipProgram'],
   },
   {
-    title: '관람안내',
-    items: ['관람안내', '포럼안내', '온라인 사전등록', '참가업체 리스트', '부스배치도'],
+    titleKey: 'navigation.visitorGuide',
+    items: [
+      'navigation.visitorGuide',
+      'navigation.forumGuide',
+      'navigation.onlinePreRegistration',
+      'navigation.exhibitorList',
+      'navigation.boothLayout',
+    ],
   },
   {
-    title: '포럼안내',
+    titleKey: 'navigation.forumGuide',
     path: '/forum-guide',
-    items: ['포럼안내'],
+    items: ['navigation.forumGuide'],
   },
   {
-    title: '미디어',
-    items: ['공지사항', '보도자료', '뉴스레터', '갤러리'],
+    titleKey: 'navigation.media',
+    items: ['navigation.announcements', 'navigation.pressReleases', 'navigation.newsletter', 'navigation.gallery'],
   },
   {
-    title: '자유게시판',
+    titleKey: 'navigation.freeBoard',
     path: '/free-board',
-    items: ['자유게시판'],
+    items: ['navigation.freeBoard'],
   },
 ];
 
@@ -138,14 +151,14 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: 
 
           <nav className="hidden lg:flex items-center space-x-12">
             {NAV_ITEMS.map((item) => (
-              <div key={item.title} className="relative group h-20 flex items-center">
+              <div key={item.titleKey} className="relative group h-20 flex items-center">
                 {item.path ? (
                   <Link to={item.path} className="text-[17px] font-bold text-[#333] hover:text-brand-primary transition-colors">
-                    {item.title}
+                    {t(item.titleKey)}
                   </Link>
                 ) : (
                   <button className="text-[17px] font-bold text-[#333] hover:text-brand-primary transition-colors">
-                    {item.title}
+                    {t(item.titleKey)}
                   </button>
                 )}
               </div>
@@ -175,17 +188,17 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: 
             <div className="container mx-auto px-4 py-12">
               <div className="flex justify-center items-start space-x-20">
                 {NAV_ITEMS.map((item) => (
-                  <div key={item.title} className="flex flex-col items-center w-32">
+                  <div key={item.titleKey} className="flex flex-col items-center w-32">
                     <ul className="space-y-4 text-center">
-                      {item.items.map((subItem) => (
+                      {item.items.map((subItem, index) => (
                         <li key={subItem}>
-                          {item.path && subItem === '자유게시판' ? (
+                          {item.path && index === 0 ? (
                             <Link to={item.path} className="text-[15px] font-medium text-white/80 hover:text-white hover:font-bold transition-all block whitespace-nowrap">
-                              {subItem}
+                              {t(subItem)}
                             </Link>
                           ) : (
                             <a href="#" className="text-[15px] font-medium text-white/80 hover:text-white hover:font-bold transition-all block whitespace-nowrap">
-                              {subItem}
+                              {t(subItem)}
                             </a>
                           )}
                         </li>

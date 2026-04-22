@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { Facebook, Instagram, Youtube, Linkedin } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="bg-slate-900 text-slate-400 py-16">
       <div className="container mx-auto px-4">
@@ -12,8 +14,8 @@ export default function Footer() {
               <span className="font-extrabold text-xl tracking-tighter text-white">WIC 2020</span>
             </div>
             <p className="mb-4 text-sm leading-relaxed">
-              (06164) 서울특별시 강남구 영동대로 511 (삼성동) 코엑스<br />
-              사업자등록번호 : 123-45-78910 | 대표자 : 코엑스
+              {t('footer.address')}<br />
+              {t('footer.businessNumber')} | {t('footer.representative')}
             </p>
             <div className="flex space-x-4">
               <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
@@ -31,31 +33,31 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-6">전시회 문의</h4>
+            <h4 className="text-white font-bold mb-6">{t('footer.inquiry')}</h4>
             <ul className="space-y-3 text-sm">
-              <li>참가문의: 02-123-4567</li>
-              <li>참관문의: 02-123-4567</li>
-              <li>이메일: wlc@worlditconference.co.kr</li>
+              <li>{t('footer.exhibitorInquiry')}: 02-123-4567</li>
+              <li>{t('footer.visitorInquiry')}: 02-123-4567</li>
+              <li>{t('footer.email')}: wlc@worlditconference.co.kr</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-6">관련 사이트</h4>
+            <h4 className="text-white font-bold mb-6">{t('footer.relatedSites')}</h4>
             <ul className="space-y-3 text-sm">
-              <li className="hover:text-white cursor-pointer transition-colors">한국정보통신진흥협회</li>
-              <li className="hover:text-white cursor-pointer transition-colors">한국무역협회</li>
-              <li className="hover:text-white cursor-pointer transition-colors">코엑스</li>
-              <li className="hover:text-white cursor-pointer transition-colors">전자신문</li>
+              <li className="hover:text-white cursor-pointer transition-colors">{t('footer.koreanICT')}</li>
+              <li className="hover:text-white cursor-pointer transition-colors">{t('footer.koreanTrade')}</li>
+              <li className="hover:text-white cursor-pointer transition-colors">{t('footer.coex')}</li>
+              <li className="hover:text-white cursor-pointer transition-colors">{t('footer.electronicTimes')}</li>
             </ul>
           </div>
         </div>
         <Separator className="bg-slate-800 mb-8" />
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium">
           <div className="flex space-x-6">
-            <span className="hover:text-white cursor-pointer">개인정보처리방침</span>
-            <span className="hover:text-white cursor-pointer">이용약관</span>
-            <span className="hover:text-white cursor-pointer">이메일무단수집거부</span>
+            <span className="hover:text-white cursor-pointer">{t('footer.privacyPolicy')}</span>
+            <span className="hover:text-white cursor-pointer">{t('footer.termsOfUse')}</span>
+            <span className="hover:text-white cursor-pointer">{t('footer.emailSpamRefusal')}</span>
           </div>
-          <p>© WIC 2020. All Rights Reserved.</p>
+          <p>{t('footer.copyright')}</p>
         </div>
       </div>
     </footer>

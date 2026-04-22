@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/shared/PageHeader';
@@ -14,6 +15,7 @@ interface FreeBoardPageProps {
 }
 
 export default function FreeBoardPage({ isLoggedIn, onLogout }: FreeBoardPageProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
@@ -28,10 +30,10 @@ export default function FreeBoardPage({ isLoggedIn, onLogout }: FreeBoardPagePro
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">
           <PageHeader 
-            title="자유게시판"
-            description="자유롭게 의견을 나누는 공간입니다."
+            title={t('freeBoard.freeBoard')}
+            description={t('freeBoard.description')}
             actionButton={{
-              label: '글쓰기',
+              label: t('freeBoard.write'),
               onClick: () => navigate('/free-board/create'),
             }}
           />

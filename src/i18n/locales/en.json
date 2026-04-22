@@ -6,6 +6,7 @@
     "cancel": "Cancel",
     "back": "Back",
     "next": "Next",
+    "list": "Back to List",
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",
@@ -22,7 +23,28 @@
     "signup": "Sign Up",
     "mypage": "My Page",
     "forum": "Forum",
-    "freeBoard": "Free Board"
+    "freeBoard": "Free Board",
+    "wisAbout": "About WIS",
+    "participationGuide": "Participation Guide",
+    "visitorGuide": "Visitor Guide",
+    "media": "Media",
+    "exhibitionOverview": "Exhibition Overview",
+    "exhibitionItems": "Exhibition Items",
+    "sideEvents": "Side Events",
+    "coLocatedEvents": "Co-located Events",
+    "previousResults": "Past Event Results",
+    "contactUs": "Contact Us",
+    "applicationGuide": "Application Guide",
+    "exhibitorLogin": "Exhibitor Login",
+    "sponsorshipProgram": "Sponsorship Package Program",
+    "onlinePreRegistration": "Online Pre-registration",
+    "exhibitorList": "Exhibitor List",
+    "boothLayout": "Booth Layout",
+    "announcements": "Announcements",
+    "pressReleases": "Press Releases",
+    "newsletter": "Newsletter",
+    "gallery": "Gallery",
+    "forumGuide": "Forum Guide"
   },
   "auth": {
     "login": "Login",
@@ -50,7 +72,9 @@
     "resetPassword": "Reset",
     "resetPasswordComplete": "Complete Reset",
     "enterEmail": "Please enter your email.",
-    "enterNewPassword": "Please enter your new password."
+    "enterNewPassword": "Please enter your new password.",
+    "showPassword": "Show Password",
+    "hidePassword": "Hide Password"
   },
   "profile": {
     "profileInfo": "Profile Information",
@@ -59,12 +83,18 @@
     "changePassword": "Change Password",
     "passwordChangeConfirm": "Password Change Confirmation",
     "withdraw": "Withdraw Membership",
-    "withdrawMessage": "Are you sure you want to withdraw? This action cannot be undone."
+    "withdrawMessage": "Are you sure you want to withdraw? This action cannot be undone.",
+    "withdrawDescription": "When you withdraw as a member, all personal information and posts you have written will be deleted. This action cannot be undone."
   },
   "forum": {
     "forum": "Forum",
     "forumGuide": "Forum Guide",
+    "forumGuideDescription": "You can view forums in card or grid format.",
     "forumCreate": "Create Forum",
+    "forumCreateDescription": "Please register a new forum.",
+    "forumIntroduction": "Forum Introduction",
+    "forumMedia": "Forum Media",
+    "schedule": "Schedule",
     "theme": "Theme",
     "selectTheme": "Select a theme.",
     "date": "Date",
@@ -72,6 +102,9 @@
     "selectLocation": "Select a location.",
     "description": "Description",
     "descriptionPlaceholder": "Enter a description for the forum.",
+    "image": "Forum Featured Image",
+    "imageDragHint": "Drag and drop an image or click to select",
+    "imageMaxSize": "Maximum 5MB is allowed.",
     "register": "Register",
     "apply": "Apply",
     "speaker": "Speaker",
@@ -105,7 +138,11 @@
   },
   "freeBoard": {
     "freeBoard": "Free Board",
+    "description": "A space to share your opinions freely.",
     "write": "Write",
+    "author": "Author",
+    "date": "Date",
+    "views": "Views",
     "title": "Title",
     "titlePlaceholder": "Enter the title of your post.",
     "content": "Content",
@@ -132,13 +169,14 @@
     }
   },
   "home": {
-    "news": "WIS Newsletter",
+    "newsletterTitle": "WIS Newsletter",
     "newsDescription": "Get the latest news about the exhibition and IT trends in your inbox first.",
     "subscribe": "Subscribe",
     "email": "Enter your email address",
     "announcements": "Announcements",
     "announcementsDescription": "Get the latest news about WIS 2025.",
     "pressReleases": "Press Releases",
+    "pressReleasesDescription": "World IT Show in the Media",
     "viewAll": "View All",
     "quickLinks": {
       "exhibitor": "Register as Exhibitor",
@@ -155,6 +193,12 @@
     "news": {
       "title1": "WIS 2025 - The Complete Collection of AI and Digital Transformation",
       "title2": "Global Tech Giants Confirmed to Attend WIS 2025 in Large Numbers",
+      "notices": {
+        "title1": "World IT Show 2025 Exhibitor Recruitment Notice",
+        "title2": "WIS 2024 Results Report and Photo Archive Update",
+        "title3": "Directions and Parking Guide for the Exhibition Hall (COEX)",
+        "title4": "WIS Innovation Awards Application Guide"
+      },
       "category": {
         "notice": "Notice",
         "data": "Resources",
@@ -162,6 +206,27 @@
         "event": "Event"
       }
     }
+  },
+  "footer": {
+    "address": "(06164) 511 Yeongdong-daero, Gangnam-gu, Seoul (Samseong-dong) COEX",
+    "businessNumber": "Business Registration Number : 123-45-78910",
+    "representative": "Representative : COEX",
+    "inquiry": "Exhibition Inquiry",
+    "exhibitorInquiry": "Exhibitor Inquiry",
+    "visitorInquiry": "Visitor Inquiry",
+    "email": "Email",
+    "relatedSites": "Related Sites",
+    "koreanICT": "Korean Information and Communications Technology Association",
+    "koreanTrade": "Korea Trade Association",
+    "coex": "COEX",
+    "electronicTimes": "Electronic Times",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "emailSpamRefusal": "Email Spam Refusal",
+    "copyright": "© WIC 2020. All Rights Reserved."
+  },
+  "pagination": {
+    "summary": "Showing {{start}}-{{end}} of {{total}} items"
   },
   "validation": {
     "required": "This is a required field.",
