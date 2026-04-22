@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Globe, Menu, Search, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { APP_STYLES } from '@/constants/theme';
@@ -40,8 +41,10 @@ interface SiteHeaderProps {
 }
 
 export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: SiteHeaderProps) {
+  const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isNavHovered, setIsNavHovered] = useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,6 +63,12 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: 
     navigate('/');
   };
 
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('language', lang);
+    setIsLanguageMenuOpen(false);
+  };
+
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || isNavHovered ? 'bg-white shadow-lg' : 'bg-white/90 backdrop-blur-sm'}`}
@@ -68,28 +77,49 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: 
     >
       <div className="bg-[#f8f9fa] border-b border-slate-200 py-2 hidden md:block">
         <div className="container mx-auto px-4 flex justify-end items-center space-x-6 text-[11px] font-bold text-[#666]">
-          <div className="flex items-center space-x-1 cursor-pointer hover:text-brand-primary">
-            <Globe size={12} />
-            <span>KOR / ENG</span>
+          <div className="relative">
+            <button
+              onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+              className="flex items-center space-x-1 cursor-pointer hover:text-brand-primary transition-colors"
+            >
+              <Globe size={12} />
+              <span>{i18n.language === 'en' ? t('navigation.english') : t('navigation.korean')}</span>
+            </button>
+            {isLanguageMenuOpen && (
+              <div className="absolute top-full right-0 mt-1 bg-white border border-slate-200 rounded-md shadow-lg z-50">
+                <button
+                  onClick={() => handleLanguageChange('ko')}
+                  className={`block w-full text-left px-4 py-2 text-xs font-bold transition-colors ${i18n.language === 'ko' ? 'bg-blue-100 text-brand-primary' : 'hover:bg-slate-100'}`}
+                >
+                  {t('navigation.korean')}
+                </button>
+                <button
+                  onClick={() => handleLanguageChange('en')}
+                  className={`block w-full text-left px-4 py-2 text-xs font-bold transition-colors ${i18n.language === 'en' ? 'bg-blue-100 text-brand-primary' : 'hover:bg-slate-100'}`}
+                >
+                  {t('navigation.english')}
+                </button>
+              </div>
+            )}
           </div>
           <div className="flex items-center space-x-4">
             {isLoggedIn ? (
               <>
                 <Link to="/profile" className="cursor-pointer hover:text-brand-primary">
-                  마이페이지
+                  {t('navigation.mypage')}
                 </Link>
                 <button type="button" onClick={handleLogout} className="cursor-pointer hover:text-brand-primary flex items-center gap-1">
                   <LogOut size={11} />
-                  로그아웃
+                  {t('navigation.logout')}
                 </button>
               </>
             ) : (
               <>
                 <Link to="/login" className="cursor-pointer hover:text-brand-primary">
-                  로그인
+                  {t('navigation.login')}
                 </Link>
                 <Link to="/signup" className="cursor-pointer hover:text-brand-primary">
-                  회원가입
+                  {t('navigation.signup')}
                 </Link>
               </>
             )}

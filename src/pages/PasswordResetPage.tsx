@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,7 @@ import AppDialog from '@/components/shared/AppDialog';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 export default function PasswordResetPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
@@ -27,22 +29,22 @@ export default function PasswordResetPage() {
     if (isRegistered) {
       setDialog({
         isOpen: true,
-        title: '인증 이메일 발송',
-        message: '가입하신 이메일로 비밀번호 재설정 링크를 보냈습니다.',
+        title: t('auth.emailVerification'),
+        message: t('auth.emailVerificationSent'),
         isValid: true,
       });
     } else if (isValidEmail) {
       setDialog({
         isOpen: true,
-        title: '가입되지 않은 이메일',
-        message: '입력하신 이메일로 가입된 계정이 없습니다.',
+        title: t('auth.emailNotRegistered'),
+        message: t('auth.emailNotRegisteredMessage'),
         isValid: false,
       });
     } else {
       setDialog({
         isOpen: true,
-        title: '올바른 이메일 입력',
-        message: '올바른 이메일 주소를 입력해주세요.',
+        title: t('auth.invalidEmail'),
+        message: t('auth.invalidEmailMessage'),
         isValid: false,
       });
     }
@@ -69,16 +71,16 @@ export default function PasswordResetPage() {
       />
       <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-          <h1 className={APP_THEME.classes.authFormTitle}>비밀번호 재설정</h1>
-          <p className="text-slate-500 mb-6">
-            {step === 1 ? '이메일을 입력해 주세요.' : '새로운 비밀번호를 입력해 주세요.'}
+<h1 className={APP_THEME.classes.authFormTitle}>{t('auth.passwordReset')}</h1>
+        <p className="text-slate-500 mb-6">
+          {step === 1 ? t('auth.enterEmail') : t('auth.enterNewPassword')}
           </p>
 
           <div className="space-y-4">
             {step === 1 ? (
               <>
                 <Input
-                  placeholder="이메일 주소"
+                  placeholder={t('auth.email')}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -88,34 +90,34 @@ export default function PasswordResetPage() {
                   style={APP_STYLES.primaryButton}
                   onClick={handleResetRequest}
                 >
-                  재설정
+                  {t('auth.resetPassword')}
                 </Button>
               </>
             ) : (
               <>
-                <Input placeholder="새로운 비밀번호" type="password" />
-                <Input placeholder="비밀번호 확인" type="password" />
+                <Input placeholder={t('auth.newPassword')} type="password" />
+                <Input placeholder={t('auth.passwordConfirm')} type="password" />
                 <Button
                   className="w-full h-11 text-white font-bold"
                   style={APP_STYLES.primaryButton}
                   onClick={() => {
                     setDialog({
                       isOpen: true,
-                      title: '비밀번호 재설정 완료',
-                      message: '비밀번호가 안전하게 재설정되었습니다.',
+                      title: t('auth.passwordResetComplete'),
+                      message: t('auth.passwordResetCompleteMessage'),
                       isValid: true,
                     });
                     setStep(1);
                   }}
                 >
-                  재설정하기
+                  {t('auth.resetPasswordComplete')}
                 </Button>
                 <Button
                   variant="outline"
                   className="w-full h-11 font-bold"
                   onClick={() => setStep(1)}
                 >
-                  이전
+                  {t('common.back')}
                 </Button>
               </>
             )}

@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { UserCircle2 } from 'lucide-react';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
@@ -9,6 +10,7 @@ import AppDialog from '@/components/shared/AppDialog';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 export default function SignupPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dialog, setDialog] = useState<{ isOpen: boolean; message: string; title: string }>({
@@ -20,8 +22,8 @@ export default function SignupPage() {
   const handleSignup = () => {
     setDialog({
       isOpen: true,
-      title: '회원가입 완료',
-      message: '입력하신 이메일 주소로 인증 링크가 포함된 메일이 발송되었습니다. 받은 편지함, 스팸함, 또는 프로모션 탭을 확인하여 인증을 완료해 주시기 바랍니다.',
+      title: t('auth.signupComplete'),
+      message: t('auth.signupCompleteMessage'),
     });
   };
 
@@ -38,8 +40,8 @@ export default function SignupPage() {
       />
       <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-          <h1 className={APP_THEME.classes.authFormTitle}>회원가입</h1>
-          <p className="text-slate-500 mb-6">회원 정보를 입력해 가입을 완료하세요.</p>
+          <h1 className={APP_THEME.classes.authFormTitle}>{t('auth.signup')}</h1>
+          <p className="text-slate-500 mb-6">{t('auth.enterEmail')}</p>
           <div className="space-y-4">
             <div className="flex flex-col items-center gap-2">
               <button
@@ -49,7 +51,7 @@ export default function SignupPage() {
               >
                 <UserCircle2 size={40} />
               </button>
-              <span className="text-xs text-slate-500">프로필 이미지 등록</span>
+              <span className="text-xs text-slate-500">{t('auth.profileImageUpload')}</span>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -58,13 +60,13 @@ export default function SignupPage() {
               />
             </div>
 
-            <Input placeholder="닉네임" />
-            <Input placeholder="이메일" type="email" />
-            <Input placeholder="비밀번호" type="password" />
-            <Input placeholder="비밀번호 확인" type="password" />
+            <Input placeholder={t('auth.nickname')} />
+            <Input placeholder={t('auth.email')} type="email" />
+            <Input placeholder={t('auth.password')} type="password" />
+            <Input placeholder={t('auth.passwordConfirm')} type="password" />
 
             <Button className="w-full h-11 text-white font-bold" style={APP_STYLES.primaryButton} onClick={handleSignup}>
-              가입하기
+              {t('auth.signup')}
             </Button>
           </div>
         </div>

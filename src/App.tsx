@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import '@/i18n/config';
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';

@@ -1,0 +1,172 @@
+{
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "submit": "Submit"
+  },
+  "navigation": {
+    "language": "KOR / ENG",
+    "korean": "KOR",
+    "english": "ENG",
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign Up",
+    "mypage": "My Page",
+    "forum": "Forum",
+    "freeBoard": "Free Board"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "passwordReset": "Password Reset",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirm": "Password Confirm",
+    "newPassword": "New Password",
+    "currentPassword": "Current Password",
+    "nickname": "Nickname",
+    "profileImage": "Profile Image",
+    "profileImageUpload": "Upload Profile Image",
+    "forgotPassword": "Forgot Password",
+    "signupComplete": "Sign Up Complete",
+    "signupCompleteMessage": "Sign up is complete. A verification email has been sent to the email address you entered. Please check the inbox, spam folder, or promotions tab of that email to complete the verification.",
+    "emailVerification": "Email Verification",
+    "emailVerificationSent": "A password reset link has been sent to your registered email.",
+    "emailNotRegistered": "Email Not Registered",
+    "emailNotRegisteredMessage": "There is no account registered with the email address you entered.",
+    "invalidEmail": "Enter Valid Email",
+    "invalidEmailMessage": "Please enter a valid email address.",
+    "passwordResetComplete": "Password Reset Complete",
+    "passwordResetCompleteMessage": "Your password has been securely reset.",
+    "resetPassword": "Reset",
+    "resetPasswordComplete": "Complete Reset",
+    "enterEmail": "Please enter your email.",
+    "enterNewPassword": "Please enter your new password."
+  },
+  "profile": {
+    "profileInfo": "Profile Information",
+    "role": "Role",
+    "member": "General Member",
+    "changePassword": "Change Password",
+    "passwordChangeConfirm": "Password Change Confirmation",
+    "withdraw": "Withdraw Membership",
+    "withdrawMessage": "Are you sure you want to withdraw? This action cannot be undone."
+  },
+  "forum": {
+    "forum": "Forum",
+    "forumGuide": "Forum Guide",
+    "forumCreate": "Create Forum",
+    "theme": "Theme",
+    "selectTheme": "Select a theme.",
+    "date": "Date",
+    "location": "Location",
+    "selectLocation": "Select a location.",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter a description for the forum.",
+    "register": "Register",
+    "apply": "Apply",
+    "speaker": "Speaker",
+    "applicantStatus": "Application Status",
+    "status": "Status",
+    "applicationStatus": "Application Status",
+    "themes": {
+      "AI": "AI",
+      "startup": "Startup",
+      "cloud": "Cloud",
+      "security": "Security",
+      "data": "Data",
+      "networking": "Networking",
+      "DX": "DX",
+      "robotics": "Robotics",
+      "smartFactory": "Smart Factory",
+      "fintech": "Fintech"
+    },
+    "places": {
+      "COEX": "COEX",
+      "samsung": "Samsung Electronics Seocho Campus",
+      "hyundai": "Hyundai Motor Research Institute"
+    },
+    "statuses": {
+      "OPEN": "Recruiting",
+      "CLOSED": "Recruitment Closed",
+      "UPCOMING": "Upcoming",
+      "IN_PROGRESS": "In Progress",
+      "ENDED": "Ended"
+    }
+  },
+  "freeBoard": {
+    "freeBoard": "Free Board",
+    "write": "Write",
+    "title": "Title",
+    "titlePlaceholder": "Enter the title of your post.",
+    "content": "Content",
+    "contentPlaceholder": "Enter the content of your post.",
+    "post": "Post",
+    "edit": "Edit",
+    "delete": "Delete",
+    "list": "List",
+    "editor": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "strikethrough": "Strikethrough",
+      "underline": "Underline",
+      "link": "Link",
+      "unlinkLink": "Remove Link",
+      "horizontalRule": "Horizontal Rule",
+      "image": "Image",
+      "fontFamily": "Default Font",
+      "fontSize": "Font Size",
+      "textColor": "Text Color",
+      "backgroundColor": "Background Color",
+      "enterLinkUrl": "Enter link URL.",
+      "enterImageUrl": "Enter image URL."
+    }
+  },
+  "home": {
+    "news": "WIS Newsletter",
+    "newsDescription": "Get the latest news about the exhibition and IT trends in your inbox first.",
+    "subscribe": "Subscribe",
+    "email": "Enter your email address",
+    "announcements": "Announcements",
+    "announcementsDescription": "Get the latest news about WIS 2025.",
+    "pressReleases": "Press Releases",
+    "viewAll": "View All",
+    "quickLinks": {
+      "exhibitor": "Register as Exhibitor",
+      "exhibitorDesc": "Exhibitor",
+      "visitor": "Register as Visitor",
+      "visitorDesc": "Visitor",
+      "forumList": "Forum List",
+      "forumListDesc": "Forum List",
+      "userList": "Exhibitor List",
+      "userListDesc": "Exhibitor List",
+      "announcements": "Announcements",
+      "announcementsDesc": "Notice"
+    },
+    "news": {
+      "title1": "WIS 2025 - The Complete Collection of AI and Digital Transformation",
+      "title2": "Global Tech Giants Confirmed to Attend WIS 2025 in Large Numbers",
+      "category": {
+        "notice": "Notice",
+        "data": "Resources",
+        "guide": "Guide",
+        "event": "Event"
+      }
+    }
+  },
+  "validation": {
+    "required": "This is a required field.",
+    "invalidEmail": "Invalid email address.",
+    "passwordTooShort": "Password must be at least 8 characters.",
+    "passwordMismatch": "Passwords do not match."
+  }
+}
