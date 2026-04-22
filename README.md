@@ -65,6 +65,16 @@ npm run preview
 - `@google/genai`: Google GenAI API 연동을 위한 SDK입니다.
 - `dotenv`: 환경변수(`.env`)를 로드합니다.
 - `express`: Node.js 웹 서버 및 API 라우팅을 위한 프레임워크입니다.
+- `@tiptap/react`: React에서 TipTap 에디터를 사용할 수 있게 하는 React 바인딩입니다.
+- `@tiptap/starter-kit`: 기본 에디터 기능(텍스트 서식, 단락 등)을 포함한 확장 패키지입니다.
+- `@tiptap/extension-placeholder`: 에디터 입력 필드에 플레이스홀더 텍스트를 표시합니다.
+- `@tiptap/extension-underline`: 텍스트 밑줄 기능을 에디터에 추가합니다.
+- `@tiptap/extension-link`: 하이퍼링크 삽입 및 관리 기능을 제공합니다.
+- `@tiptap/extension-highlight`: 텍스트에 배경색(하이라이트) 처리 기능을 추가합니다.
+- `@tiptap/extension-image`: 에디터에 이미지 삽입 기능을 제공합니다.
+- `@tiptap/extension-text-style`: 텍스트 스타일(폰트, 크기 등) 속성을 관리합니다.
+- `@tiptap/extension-color`: 텍스트 색상 변경 기능을 제공합니다.
+- `@tiptap/extension-font-family`: 폰트 패밀리 변경 기능을 제공합니다.
 
 ### DevDependencies
 
