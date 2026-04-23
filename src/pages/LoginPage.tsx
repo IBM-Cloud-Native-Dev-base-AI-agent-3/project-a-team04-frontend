@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Eye, EyeOff } from 'lucide-react';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,8 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState('user1@example.com');
-  const [password, setPassword] = useState('password1');
+  const [password, setPassword] = useState('password');
+  const [showPassword, setShowPassword] = useState(false);
   const [alert, setAlert] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 
   const handleLogin = () => {
@@ -42,7 +44,22 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
           {alert && <AppAlert tone={alert.tone} message={alert.message} />}
           <div className="space-y-4">
             <Input placeholder={t('auth.email')} type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-            <Input placeholder={t('auth.password')} type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+            <div className="relative">
+              <input
+                placeholder={t('auth.password')}
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="w-full h-11 px-4 pr-12 text-base border border-slate-200 rounded-lg outline-none focus:border-blue-500"
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-900 transition-colors"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
             <button
               className="text-sm font-semibold text-brand-primary hover:underline"
               onClick={() => navigate('/password-reset')}
