@@ -9,13 +9,13 @@ export const DUMMY_USERS: DummyUser[] = [
   {
     id: 1,
     email: 'user1@example.com',
-    password: 'password1',
+    password: 'password',
     name: 'User One',
   },
   {
     id: 2,
     email: 'user2@example.com',
-    password: 'password2',
+    password: 'password',
     name: 'User Two',
   },
 ];
