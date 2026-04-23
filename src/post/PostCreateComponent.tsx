@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Extension } from '@tiptap/core';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -30,9 +29,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
-interface FreeBoardCreatePageProps {
+interface PostCreateComponentProps {
   isLoggedIn: boolean;
   onLogout?: () => void;
+  loading: boolean;
+  error: string | null;
+  onBack: () => void;
+  onSubmit: (params: { title: string; content: string }) => void;
 }
 
 const FontSize = Extension.create({
@@ -66,8 +69,14 @@ const FontSize = Extension.create({
   },
 });
 
-export default function FreeBoardCreatePage({ isLoggedIn, onLogout }: FreeBoardCreatePageProps) {
-  const navigate = useNavigate();
+export default function PostCreateComponent({
+  isLoggedIn,
+  onLogout,
+  loading,
+  error,
+  onBack,
+  onSubmit,
+}: PostCreateComponentProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState('');
   const [toolbarTick, setToolbarTick] = useState(0);
@@ -198,14 +207,16 @@ export default function FreeBoardCreatePage({ isLoggedIn, onLogout }: FreeBoardC
     };
     reader.readAsDataURL(file);
 
-    // Reset input value so the same file can be selected again
     e.target.value = '';
   };
 
-  const handleSubmit = () => {
-    const htmlContent = editor?.getHTML() ?? '';
-    void htmlContent;
-    navigate('/free-board');
+  const handleSubmitClick = () => {
+    const plainContent = editor?.getText().trim() ?? '';
+    if (!title.trim() || !plainContent) {
+      return;
+    }
+
+    onSubmit({ title: title.trim(), content: plainContent });
   };
 
   return (
@@ -213,7 +224,7 @@ export default function FreeBoardCreatePage({ isLoggedIn, onLogout }: FreeBoardC
       <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-4xl mx-auto">
-          <BackButton onClick={() => navigate('/free-board')} />
+          <BackButton onClick={onBack} />
 
           <h1 className="text-3xl font-black text-slate-900 mb-2">글쓰기</h1>
           <p className="text-slate-500 mb-8">자유게시판에 새로운 글을 작성해주세요.</p>
@@ -358,10 +369,12 @@ export default function FreeBoardCreatePage({ isLoggedIn, onLogout }: FreeBoardC
                   <Button
                     className="w-full h-11 text-white font-bold"
                     style={APP_STYLES.primaryButton}
-                    onClick={handleSubmit}
+                    onClick={handleSubmitClick}
+                    disabled={loading}
                   >
-                    작성하기
+                    {loading ? '작성 중...' : '작성하기'}
                   </Button>
+                  {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
                 </div>
               </div>
             </CardContent>

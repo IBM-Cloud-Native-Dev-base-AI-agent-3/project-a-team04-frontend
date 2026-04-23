@@ -43,7 +43,7 @@ const NAV_ITEMS = [
   },
   {
     titleKey: 'navigation.freeBoard',
-    path: '/free-board',
+    path: '/post',
     items: ['navigation.freeBoard'],
   },
 ];

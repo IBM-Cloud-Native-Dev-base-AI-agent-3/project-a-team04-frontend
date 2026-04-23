@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-interface PostTableProps {
+interface PostTableComponentProps {
   posts: Array<{
     id: number;
     title: string;
@@ -11,7 +11,7 @@ interface PostTableProps {
   onRowClick: (id: number) => void;
 }
 
-export default function PostTable({ posts, onRowClick }: PostTableProps) {
+export default function PostTableComponent({ posts, onRowClick }: PostTableComponentProps) {
   const { t } = useTranslation();
 
   return (

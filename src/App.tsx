@@ -9,19 +9,21 @@ import ProfilePage from '@/pages/ProfilePage';
 import ForumGuidePage from '@/pages/ForumGuidePage';
 import ForumDetailPage from '@/pages/ForumDetailPage';
 import ForumCreatePage from '@/pages/ForumCreatePage';
-import FreeBoardPage from '@/pages/FreeBoardPage';
-import FreeBoardDetailPage from '@/pages/FreeBoardDetailPage';
-import FreeBoardCreatePage from '@/pages/FreeBoardCreatePage';
+import { type DummyUser } from '@/data/dummyUsers';
+import PostListContainer from '@/post/PostListContainer';
+import PostDetailContainer from '@/post/PostDetailContainer';
+import PostCreateContainer from '@/post/PostCreateContainer';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<DummyUser | null>(null);
+  const isLoggedIn = currentUser !== null;
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
+  const handleLogin = (user: DummyUser) => {
+    setCurrentUser(user);
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    setCurrentUser(null);
   };
 
   return (
@@ -38,15 +40,21 @@ function App() {
       <Route path="/forum/:id" element={<ForumDetailPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
       <Route path="/forum/create" element={<ForumCreatePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
-      {/* Free Board Routes */}
-      <Route path="/free-board" element={<FreeBoardPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
-      <Route path="/free-board/:id" element={<FreeBoardDetailPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
-      <Route path="/free-board/create" element={<FreeBoardCreatePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      {/* Post Routes */}
+      <Route path="/post" element={<PostListContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/post/:id" element={<PostDetailContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route
+        path="/post/create"
+        element={<PostCreateContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} currentUserId={currentUser?.id ?? null} />}
+      />
 
       {/* Backward-compatible legacy freeboard routes */}
-      <Route path="/freeboard" element={<Navigate to="/free-board" replace />} />
-      <Route path="/freeboard/create" element={<Navigate to="/free-board/create" replace />} />
-      <Route path="/freeboard/:id" element={<FreeBoardDetailPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/free-board" element={<Navigate to="/post" replace />} />
+      <Route path="/free-board/create" element={<Navigate to="/post/create" replace />} />
+      <Route path="/free-board/:id" element={<PostDetailContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/freeboard" element={<Navigate to="/post" replace />} />
+      <Route path="/freeboard/create" element={<Navigate to="/post/create" replace />} />
+      <Route path="/freeboard/:id" element={<PostDetailContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
     </Routes>
   );
 }
