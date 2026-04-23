@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Extension } from '@tiptap/core';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -34,6 +34,9 @@ interface PostCreateComponentProps {
   onLogout?: () => void;
   loading: boolean;
   error: string | null;
+  isEditMode?: boolean;
+  initialTitle?: string;
+  initialContent?: string;
   onBack: () => void;
   onSubmit: (params: { title: string; content: string }) => void;
 }
@@ -74,11 +77,14 @@ export default function PostCreateComponent({
   onLogout,
   loading,
   error,
+  isEditMode = false,
+  initialTitle = '',
+  initialContent = '',
   onBack,
   onSubmit,
 }: PostCreateComponentProps) {
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(initialTitle);
   const [toolbarTick, setToolbarTick] = useState(0);
   const [backgroundColor, setBackgroundColor] = useState('#ffff00');
 
@@ -108,7 +114,7 @@ export default function PostCreateComponent({
         placeholder: '글의 내용을 입력해 주세요.',
       }),
     ],
-    content: '<p></p>',
+    content: initialContent || '<p></p>',
     editorProps: {
       attributes: {
         class:
@@ -118,6 +124,16 @@ export default function PostCreateComponent({
     onSelectionUpdate: () => setToolbarTick((value) => value + 1),
     onTransaction: () => setToolbarTick((value) => value + 1),
   });
+
+  useEffect(() => {
+    setTitle(initialTitle);
+  }, [initialTitle]);
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(initialContent || '<p></p>');
+    }
+  }, [editor, initialContent]);
 
   const currentFontFamily = editor?.getAttributes('textStyle').fontFamily ?? 'inherit';
   const currentFontSize = editor?.getAttributes('textStyle').fontSize ?? 'inherit';
@@ -226,8 +242,8 @@ export default function PostCreateComponent({
         <div className="max-w-4xl mx-auto">
           <BackButton onClick={onBack} />
 
-          <h1 className="text-3xl font-black text-slate-900 mb-2">글쓰기</h1>
-          <p className="text-slate-500 mb-8">자유게시판에 새로운 글을 작성해주세요.</p>
+          <h1 className="text-3xl font-black text-slate-900 mb-2">{isEditMode ? '글 수정하기' : '글쓰기'}</h1>
+          <p className="text-slate-500 mb-8">{isEditMode ? '글을 수정해주세요.' : '자유게시판에 새로운 글을 작성해주세요.'}</p>
 
           <Card className="border border-slate-200 shadow-sm">
             <CardContent className="p-8">
@@ -372,7 +388,7 @@ export default function PostCreateComponent({
                     onClick={handleSubmitClick}
                     disabled={loading}
                   >
-                    {loading ? '작성 중...' : '작성하기'}
+                    {loading ? (isEditMode ? '수정 중...' : '작성 중...') : (isEditMode ? '수정하기' : '작성하기')}
                   </Button>
                   {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
                 </div>

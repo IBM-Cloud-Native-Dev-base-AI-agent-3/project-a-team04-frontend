@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearPostResult } from '@/redux/postSlice';
-import { postRegisterThunk } from '@/service/postThunk';
+import { postRegisterThunk, updatePostThunk, fetchPostDetailThunk } from '@/service/postThunk';
 import PostCreateComponent from '@/post/PostCreateComponent';
 
 interface PostCreateContainerProps {
@@ -14,14 +14,23 @@ interface PostCreateContainerProps {
 export default function PostCreateContainer({ isLoggedIn, onLogout, currentUserId }: PostCreateContainerProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
-  const { loading, error, result } = useSelector((state: any) => state.post);
+  const { id } = useParams();
+  const { loading, error, result, currentPostDetail } = useSelector((state: any) => state.post);
+
+  const isEditMode = !!id;
+
+  useEffect(() => {
+    if (isEditMode && id) {
+      dispatch(fetchPostDetailThunk(Number(id)));
+    }
+  }, [isEditMode, id, dispatch]);
 
   useEffect(() => {
     if (result === 1) {
       dispatch(clearPostResult());
-      navigate('/post');
+      navigate(isEditMode ? `/post/${id}` : '/post');
     }
-  }, [result, dispatch, navigate]);
+  }, [result, dispatch, navigate, isEditMode, id]);
 
   const handleSubmit = ({ title, content }: { title: string; content: string }) => {
     if (!currentUserId) {
@@ -29,13 +38,24 @@ export default function PostCreateContainer({ isLoggedIn, onLogout, currentUserI
       return;
     }
 
-    dispatch(
-      postRegisterThunk({
-        userId: currentUserId,
-        title,
-        content,
-      })
-    );
+    if (isEditMode && id) {
+      dispatch(
+        updatePostThunk({
+          postId: Number(id),
+          userId: currentUserId,
+          title,
+          content,
+        })
+      );
+    } else {
+      dispatch(
+        postRegisterThunk({
+          userId: currentUserId,
+          title,
+          content,
+        })
+      );
+    }
   };
 
   return (
@@ -44,7 +64,10 @@ export default function PostCreateContainer({ isLoggedIn, onLogout, currentUserI
       onLogout={onLogout}
       loading={loading}
       error={error}
-      onBack={() => navigate('/post')}
+      isEditMode={isEditMode}
+      initialTitle={isEditMode && currentPostDetail ? currentPostDetail.title : ''}
+      initialContent={isEditMode && currentPostDetail ? (currentPostDetail.content ?? currentPostDetail.body ?? '') : ''}
+      onBack={() => navigate(isEditMode ? `/post/${id}` : '/post')}
       onSubmit={handleSubmit}
     />
   );
