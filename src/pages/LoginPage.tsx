@@ -7,21 +7,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AppAlert from '@/components/shared/AppAlert';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
+import { DUMMY_USERS, type DummyUser } from '@/data/dummyUsers';
 
 interface LoginPageProps {
-  onLogin: () => void;
+  onLogin: (user: DummyUser) => void;
 }
 
 export default function LoginPage({ onLogin }: LoginPageProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('user@example.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('user1@example.com');
+  const [password, setPassword] = useState('password1');
   const [alert, setAlert] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 
   const handleLogin = () => {
-    if (email === 'user@example.com' && password === 'password') {
-      onLogin();
+    const matchedUser = DUMMY_USERS.find((user) => user.email === email && user.password === password);
+
+    if (matchedUser) {
+      onLogin(matchedUser);
       navigate('/');
       return;
     }
