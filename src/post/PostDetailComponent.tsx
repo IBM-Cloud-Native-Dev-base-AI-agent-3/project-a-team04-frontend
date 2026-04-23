@@ -18,13 +18,19 @@ interface PostDetailComponentProps {
   isLoggedIn: boolean;
   onLogout?: () => void;
   post: PostDetail | null;
+  currentUserId: number | null;
+  loading: boolean;
+  detailError: string | null;
   onBack: () => void;
+  onEdit: (postId: number) => void;
+  onDelete: (postId: number) => void;
 }
 
-export default function PostDetailComponent({ isLoggedIn, onLogout, post, onBack }: PostDetailComponentProps) {
+export default function PostDetailComponent({ isLoggedIn, onLogout, post, currentUserId, loading, detailError, onBack, onEdit, onDelete }: PostDetailComponentProps) {
   const { t } = useTranslation();
+  const isAuthor = post && currentUserId && post.userId === currentUserId;
 
-  if (!post) {
+  if (loading) {
     return (
       <div className={APP_THEME.classes.pageShellMuted}>
         <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
@@ -33,7 +39,26 @@ export default function PostDetailComponent({ isLoggedIn, onLogout, post, onBack
             <BackButton onClick={onBack} />
             <Card className="border border-slate-200 shadow-sm mb-8">
               <CardContent className="p-8">
-                <p className="text-slate-700">게시글을 찾을 수 없습니다.</p>
+                <p className="text-slate-700">로딩 중...</p>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!post || detailError) {
+    return (
+      <div className={APP_THEME.classes.pageShellMuted}>
+        <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
+        <main className="container mx-auto px-4 pt-44 pb-20">
+          <div className="max-w-4xl mx-auto">
+            <BackButton onClick={onBack} />
+            <Card className="border border-slate-200 shadow-sm mb-8">
+              <CardContent className="p-8">
+                <p className="text-slate-700">{detailError || '게시글을 찾을 수 없습니다.'}</p>
               </CardContent>
             </Card>
           </div>
@@ -70,14 +95,26 @@ export default function PostDetailComponent({ isLoggedIn, onLogout, post, onBack
                 <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{post.content ?? post.body ?? ''}</p>
               </div>
 
-              <div className="flex gap-3 mb-8">
-                <Button variant="outline" className="h-11 px-6 font-bold">
-                  {t('common.edit')}
-                </Button>
-                <Button variant="outline" className="h-11 px-6 font-bold text-red-600 border-red-200">
-                  {t('common.delete')}
-                </Button>
-              </div>
+              {isAuthor && (
+                <div className="flex gap-3 mb-8">
+                  <Button 
+                    variant="outline" 
+                    className="h-11 px-6 font-bold"
+                    onClick={() => onEdit(post.id)}
+                    disabled={loading}
+                  >
+                    {t('common.edit')}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="h-11 px-6 font-bold text-red-600 border-red-200"
+                    onClick={() => onDelete(post.id)}
+                    disabled={loading}
+                  >
+                    {t('common.delete')}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

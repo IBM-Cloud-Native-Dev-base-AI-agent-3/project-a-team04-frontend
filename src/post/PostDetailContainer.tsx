@@ -1,28 +1,57 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostsThunk } from '@/service/postThunk';
+import { fetchPostDetailThunk, deletePostThunk } from '@/service/postThunk';
+import { clearPostResult } from '@/redux/postSlice';
 import PostDetailComponent from '@/post/PostDetailComponent';
 
 interface PostDetailContainerProps {
   isLoggedIn: boolean;
   onLogout?: () => void;
+  currentUserId: number | null;
 }
 
-export default function PostDetailContainer({ isLoggedIn, onLogout }: PostDetailContainerProps) {
+export default function PostDetailContainer({ isLoggedIn, onLogout, currentUserId }: PostDetailContainerProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
   const { id } = useParams();
-  const { posts } = useSelector((state: any) => state.post);
+  const { currentPostDetail, detailLoading, detailError, loading, result } = useSelector((state: any) => state.post);
 
   useEffect(() => {
-    if (!posts.length) {
-      dispatch(fetchPostsThunk());
+    if (id) {
+      dispatch(fetchPostDetailThunk(Number(id)));
     }
-  }, [dispatch, posts.length]);
+  }, [id, dispatch]);
 
-  const postId = Number(id);
-  const post = posts.find((item: any) => item.id === postId) ?? null;
+  useEffect(() => {
+    if (result === 1) {
+      dispatch(clearPostResult());
+      navigate('/post');
+    }
+  }, [result, dispatch, navigate]);
 
-  return <PostDetailComponent isLoggedIn={isLoggedIn} onLogout={onLogout} post={post} onBack={() => navigate('/post')} />;
+  const handleDelete = (postId: number) => {
+    if (confirm('정말 삭제하시겠습니까?')) {
+      if (!currentUserId) return;
+      dispatch(deletePostThunk({ postId, userId: currentUserId }));
+    }
+  };
+
+  const handleEdit = (postId: number) => {
+    navigate(`/post/${postId}/edit`);
+  };
+
+  return (
+    <PostDetailComponent
+      isLoggedIn={isLoggedIn}
+      onLogout={onLogout}
+      post={currentPostDetail}
+      currentUserId={currentUserId}
+      loading={loading || detailLoading}
+      detailError={detailError}
+      onBack={() => navigate('/post')}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
+    />
+  );
 }
