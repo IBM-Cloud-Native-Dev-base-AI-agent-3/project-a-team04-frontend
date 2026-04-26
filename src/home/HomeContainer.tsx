@@ -1,7 +1,7 @@
 import SiteHeader from '@/components/SiteHeader';
-import HeroSection from '@/components/home/HeroSection';
-import QuickLinksSection from '@/components/home/QuickLinksSection';
-import NoticeAndNewsSection from '@/components/home/NoticeAndNewsSection';
+import HeroSection from './HeroSection';
+import QuickLinksSection from './QuickLinksSection';
+import NoticeAndNewsSection from './NoticeAndNewsSection';
 import Footer from '@/components/layout/Footer';
 import { APP_THEME } from '@/constants/theme';
 

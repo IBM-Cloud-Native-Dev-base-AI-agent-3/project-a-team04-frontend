@@ -3,7 +3,7 @@ import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/shared/PageHeader';
 import Pagination from '@/components/shared/Pagination';
-import ForumCard from '@/components/forum/ForumCard';
+import ForumCard from './ForumCard';
 import { APP_THEME } from '@/constants/theme';
 
 interface ForumListComponentProps {
