@@ -232,6 +232,7 @@
     "required": "This is a required field.",
     "invalidEmail": "Invalid email address.",
     "passwordTooShort": "Password must be at least 8 characters.",
-    "passwordMismatch": "Passwords do not match."
+    "passwordMismatch": "Passwords do not match.",
+    "serverError": "A server error occurred. Please try again later."
   }
 }
