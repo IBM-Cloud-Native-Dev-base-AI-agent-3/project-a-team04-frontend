@@ -62,7 +62,7 @@ export default function ForumListComponent({
                     place={forum.location}
                     status={forum.status}
                     thumbnail={forum.thumbnailUrl}
-                    speaker="-"
+                    speaker={forum.speaker}
                     applicantCount={0}
                     maxParticipants={forum.maxParticipants}
                     onClick={() => onForumClick(forum.id)}
