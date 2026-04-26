@@ -23,7 +23,7 @@ export default function PostListContainer({ isLoggedIn, onLogout }: PostListCont
   const mappedPosts = posts.map((post: any) => ({
     id: post.id,
     title: post.title,
-    author: post.nickname ?? `user-${post.userId ?? 'unknown'}`,
+    author: post.nickname ?? post.user?.nickname ?? '-',
     views: post.viewCount ?? 0,
     date: post.createdAt ? new Date(post.createdAt).toLocaleDateString() : '-',
   }));

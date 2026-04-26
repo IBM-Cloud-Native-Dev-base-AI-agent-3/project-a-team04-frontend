@@ -84,7 +84,7 @@ export default function PostDetailComponent({ isLoggedIn, onLogout, post, curren
 
               <div className="flex flex-wrap items-center gap-4 pb-6 border-b border-slate-200">
                 <span className="text-sm text-slate-600 font-medium">
-                  {t('freeBoard.author')}: <span className="font-bold text-slate-800">{post.nickname ?? `user-${post.userId}`}</span>
+                  {t('freeBoard.author')}: <span className="font-bold text-slate-800">{post.nickname ?? (post as any).user?.nickname ?? '-'}</span>
                 </span>
                 <span className="text-sm text-slate-600 font-medium">
                   {t('freeBoard.date')}: <span className="font-bold text-slate-800">{new Date(post.createdAt).toLocaleDateString()}</span>
