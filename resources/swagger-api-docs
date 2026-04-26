@@ -888,6 +888,9 @@
             "type": "integer",
             "format": "int64"
           },
+          "nickname": {
+            "type": "string"
+          },
           "title": {
             "type": "string"
           },
