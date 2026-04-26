@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginThunk } from '@/service/authThunk';
+import { loginThunk } from '@/auth/authThunk';
 import LoginComponent from './LoginComponent';
 
 interface User {
