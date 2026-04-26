@@ -404,35 +404,6 @@
       }
     },
     "/posts/{postId}": {
-      "get": {
-        "tags": [
-          "post-controller"
-        ],
-        "operationId": "getPostDetail",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
-              }
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "post-controller"
@@ -648,6 +619,37 @@
             "bearerAuth": []
           }
         ]
+      }
+    },
+    "/posts/{postId}/view": {
+      "get": {
+        "tags": [
+          "post-controller"
+        ],
+        "operationId": "getPostDetail",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/forums": {
