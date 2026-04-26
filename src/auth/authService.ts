@@ -10,6 +10,15 @@ export interface TokenResponse {
   refreshToken: string;
 }
 
+export interface SendPasswordResetRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  newPassword?: string;
+}
+
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
@@ -94,5 +103,29 @@ export async function logout(): Promise<void> {
     }
   } finally {
     clearTokens();
+  }
+}
+
+export async function requestPasswordReset(request: SendPasswordResetRequest): Promise<void> {
+  const response = await fetch(`${service_path}/auth/password-reset/request`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(`POST /auth/password-reset/request failed: ${response.status}`);
+  }
+}
+
+export async function confirmPasswordReset(request: ResetPasswordRequest): Promise<void> {
+  const response = await fetch(`${service_path}/auth/password-reset/confirm`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(`POST /auth/password-reset/confirm failed: ${response.status}`);
   }
 }
