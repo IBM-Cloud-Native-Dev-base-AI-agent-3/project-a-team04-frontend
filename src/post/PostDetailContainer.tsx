@@ -33,7 +33,7 @@ export default function PostDetailContainer({ isLoggedIn, onLogout, currentUserI
   const handleDelete = (postId: number) => {
     if (confirm('정말 삭제하시겠습니까?')) {
       if (!currentUserId) return;
-      dispatch(deletePostThunk({ postId, userId: currentUserId }));
+      dispatch(deletePostThunk({ postId }));
     }
   };
 

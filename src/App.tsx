@@ -13,7 +13,7 @@ import PasswordResetContainer from '@/auth/PasswordResetContainer';
 interface User {
   id: number;
   email: string;
-  name: string;
+  nickname: string;
 }
 import PostListContainer from '@/post/PostListContainer';
 import PostDetailContainer from '@/post/PostDetailContainer';

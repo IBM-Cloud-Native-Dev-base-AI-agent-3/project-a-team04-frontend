@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginThunk } from '@/auth/authThunk';
+import { fetchMyProfileThunk } from '@/user/userThunk';
 import LoginComponent from './LoginComponent';
 
 interface User {
   id: number;
   email: string;
-  name: string;
+  nickname: string;
 }
 
 interface LoginContainerProps {
@@ -37,10 +38,13 @@ export default function LoginContainer({ onLogin }: LoginContainerProps) {
         })
       ).unwrap();
 
+      // Fetch actual profile to get the real userId
+      const profile = await dispatch(fetchMyProfileThunk()).unwrap();
+
       const user: User = {
-        id: 1,
-        email,
-        name: email.split('@')[0],
+        id: profile.id,
+        email: profile.email,
+        nickname: profile.nickname,
       };
 
       onLogin(user);

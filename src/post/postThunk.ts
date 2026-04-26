@@ -14,14 +14,12 @@ interface ApiPost {
 }
 
 interface PostRegisterParams {
-  userId: number;
   title: string;
   content: string;
 }
 
 interface PostUpdateParams {
   postId: number;
-  userId: number;
   title: string;
   content: string;
 }
@@ -53,9 +51,9 @@ export const fetchPostsThunk = createAsyncThunk<ApiPost[], void, { rejectValue: 
 
 export const postRegisterThunk = createAsyncThunk<ApiPost, PostRegisterParams, { rejectValue: string }>(
   'post/register',
-  async ({ userId, title, content }, { rejectWithValue }) => {
+  async ({ title, content }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${service_path}/posts?userId=${userId}`, {
+      const response = await fetch(`${service_path}/posts`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({ title, content }),
@@ -91,9 +89,9 @@ export const fetchPostDetailThunk = createAsyncThunk<ApiPost, number, { rejectVa
 
 export const updatePostThunk = createAsyncThunk<ApiPost, PostUpdateParams, { rejectValue: string }>(
   'post/update',
-  async ({ postId, userId, title, content }, { rejectWithValue }) => {
+  async ({ postId, title, content }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${service_path}/posts/${postId}?userId=${userId}`, {
+      const response = await fetch(`${service_path}/posts/${postId}`, {
         method: 'PATCH',
         headers: getAuthHeaders(),
         body: JSON.stringify({ title, content }),
@@ -112,15 +110,14 @@ export const updatePostThunk = createAsyncThunk<ApiPost, PostUpdateParams, { rej
 
 interface PostDeleteParams {
   postId: number;
-  userId: number;
 }
 
 export const deletePostThunk = createAsyncThunk<number, PostDeleteParams, { rejectValue: string }>(
   'post/delete',
-  async ({ postId, userId }, { rejectWithValue }) => {
+  async ({ postId }, { rejectWithValue }) => {
     try {
       const token = getAccessToken();
-      const response = await fetch(`${service_path}/posts/${postId}?userId=${userId}`, {
+      const response = await fetch(`${service_path}/posts/${postId}`, {
         method: 'DELETE',
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });

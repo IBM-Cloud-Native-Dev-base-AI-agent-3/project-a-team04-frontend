@@ -42,7 +42,6 @@ export default function PostCreateContainer({ isLoggedIn, onLogout, currentUserI
       dispatch(
         updatePostThunk({
           postId: Number(id),
-          userId: currentUserId,
           title,
           content,
         })
@@ -50,7 +49,6 @@ export default function PostCreateContainer({ isLoggedIn, onLogout, currentUserI
     } else {
       dispatch(
         postRegisterThunk({
-          userId: currentUserId,
           title,
           content,
         })
