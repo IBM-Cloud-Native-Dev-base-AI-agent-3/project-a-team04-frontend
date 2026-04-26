@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserCircle2, Camera } from 'lucide-react';
+import { UserCircle2 } from 'lucide-react';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import AppDialog from '@/components/shared/AppDialog';
@@ -12,7 +12,6 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
 import { fetchMyProfileThunk, updateProfileThunk, withdrawThunk } from '@/user/userThunk';
-import { uploadFile } from '@/user/userService';
 
 interface ProfileContainerProps {
   isLoggedIn: boolean;
@@ -25,9 +24,7 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
   const dispatch = useDispatch<any>();
   const { profile, profileLoading, profileError, withdrawLoading, withdrawError } = useSelector((state: any) => state.user);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [nickname, setNickname] = useState('');
-  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
   const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
   const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
@@ -44,18 +41,6 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
     setProfileImagePreview(profile?.profileImageUrl ?? null);
   }, [profile]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setProfileImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSaveProfile = async () => {
     const trimmedNickname = nickname.trim();
 
@@ -68,22 +53,13 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
     }
 
     try {
-      let profileImageUrl = profile?.profileImageUrl;
-
-      if (profileImage) {
-        const uploadRes = await uploadFile(profileImage);
-        profileImageUrl = uploadRes.url;
-      }
-
       await dispatch(
         updateProfileThunk({
           nickname: trimmedNickname,
-          profileImageUrl,
         })
       ).unwrap();
 
       setSaveSuccessMessage('프로필이 저장되었습니다.');
-      setProfileImage(null);
     } catch (error) {
       const message = typeof error === 'string' ? error : error instanceof Error ? error.message : t('validation.serverError');
       setSaveErrorMessage(message || t('validation.serverError'));
@@ -144,27 +120,17 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
             <CardContent className="p-8">
               <h2 className="text-2xl font-black mb-6">{t('profile.profileInfo')}</h2>
               <div className="flex flex-col items-center text-center mb-8">
-                <div className="relative group">
-                  <div className="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border-2 border-slate-200">
-                    {profileImagePreview ? (
-                      isEmoji(profileImagePreview) ? (
-                        <span className="text-4xl">{profileImagePreview}</span>
-                      ) : (
-                        <img src={profileImagePreview} alt="Profile" className="w-full h-full object-cover" />
-                      )
+                <div className="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border-2 border-slate-200">
+                  {profileImagePreview ? (
+                    isEmoji(profileImagePreview) ? (
+                      <span className="text-4xl">{profileImagePreview}</span>
                     ) : (
-                      <UserCircle2 size={48} className="text-slate-400" />
-                    )}
-                  </div>
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="absolute bottom-0 right-0 w-8 h-8 bg-brand-primary rounded-full flex items-center justify-center text-white shadow-md hover:bg-brand-primary/90 transition-colors"
-                  >
-                    <Camera size={16} />
-                  </button>
-                  <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                      <img src={profileImagePreview} alt="Profile" className="w-full h-full object-cover" />
+                    )
+                  ) : (
+                    <UserCircle2 size={48} className="text-slate-400" />
+                  )}
                 </div>
-                <p className="mt-2 text-xs text-slate-500">{t('auth.profileImageUpload')}</p>
               </div>
 
               <div className="space-y-6">

@@ -11,6 +11,7 @@ interface SignupComponentProps {
   email: string;
   password: string;
   passwordConfirm: string;
+  profileImagePreview: string | null;
   loading: boolean;
   alert: { tone: 'success' | 'error'; message: string } | null;
   dialog: { isOpen: boolean; message: string; title: string };
@@ -19,6 +20,7 @@ interface SignupComponentProps {
   onEmailChange: (value: string) => void;
   onPasswordChange: (value: string) => void;
   onPasswordConfirmChange: (value: string) => void;
+  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onOpenFilePicker: () => void;
   onSubmit: () => void;
   onDialogPrimaryClick: () => void;
@@ -32,6 +34,7 @@ export default function SignupComponent({
   email,
   password,
   passwordConfirm,
+  profileImagePreview,
   loading,
   alert,
   dialog,
@@ -40,6 +43,7 @@ export default function SignupComponent({
   onEmailChange,
   onPasswordChange,
   onPasswordConfirmChange,
+  onFileChange,
   onOpenFilePicker,
   onSubmit,
   onDialogPrimaryClick,
@@ -76,10 +80,14 @@ export default function SignupComponent({
                 onClick={onOpenFilePicker}
                 className="w-20 h-20 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 hover:border-brand-primary hover:text-brand-primary transition-colors overflow-hidden"
               >
-                <UserCircle2 size={40} />
+                {profileImagePreview ? (
+                  <img src={profileImagePreview} alt="profile" className="w-full h-full object-cover" />
+                ) : (
+                  <UserCircle2 size={40} />
+                )}
               </button>
               <span className="text-xs text-slate-500">{t('auth.profileImageUpload')}</span>
-              <input ref={fileInputRef} type="file" accept="image/*" className="hidden" />
+              <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={onFileChange} />
             </div>
 
             <Input placeholder={t('auth.nickname')} value={nickname} onChange={(event) => onNicknameChange(event.target.value)} />

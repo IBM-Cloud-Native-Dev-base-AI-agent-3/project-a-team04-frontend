@@ -56,30 +56,12 @@ async function parseErrorMessage(response: Response): Promise<string> {
 }
 
 export async function uploadFile(file: File): Promise<{ url: string }> {
-  const formData = new FormData();
-  formData.append('file', file);
-
-  const accessToken = getAccessToken();
-  const headers: Record<string, string> = {};
-  
-  // 토큰이 있을 때만 Authorization 헤더 추가
-  if (accessToken) {
-    headers['Authorization'] = `Bearer ${accessToken}`;
-  }
-
-  const response = await fetch(`${service_path}/files/upload`, {
-    method: 'POST',
-    headers: headers, // FormData를 보낼 때는 Content-Type을 절대 수동으로 넣지 마세요.
-    body: formData,
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve({ url: reader.result as string });
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
   });
-
-  if (!response.ok) {
-    const errorBody = await response.text();
-    console.error('Upload Error:', errorBody);
-    throw new Error(`File upload failed: ${response.status} ${errorBody}`);
-  }
-
-  return await response.json();
 }
 
 export async function signup(request: SignupRequest & { profileImageUrl?: string }): Promise<ProfileResponse> {
