@@ -1,4 +1,4 @@
-import { service_path } from './service_ip_port';
+import { service_path } from '@/service/service_ip_port';
 
 interface LoginRequest {
   email: string;
