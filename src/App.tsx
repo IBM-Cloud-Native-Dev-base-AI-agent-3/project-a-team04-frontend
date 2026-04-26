@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '@/i18n/config';
 import LoginContainer from '@/auth/LoginContainer';
 import SignupContainer from '@/user/SignupContainer';
@@ -9,6 +9,8 @@ import ForumListContainer from '@/forum/ForumListContainer';
 import ForumDetailContainer from '@/forum/ForumDetailContainer';
 import HomeContainer from '@/home/HomeContainer';
 import PasswordResetContainer from '@/auth/PasswordResetContainer';
+import { fetchMyProfileThunk } from '@/user/userThunk';
+import { getAccessToken } from '@/auth/authService';
 
 interface User {
   id: number;
@@ -24,6 +26,28 @@ function App() {
   const dispatch = useDispatch<any>();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const isLoggedIn = currentUser !== null;
+  const { profile } = useSelector((state: any) => state.user);
+
+  // Re-hydrate user state on refresh
+  useEffect(() => {
+    const token = getAccessToken();
+    if (token && !profile) {
+      dispatch(fetchMyProfileThunk());
+    }
+  }, [dispatch, profile]);
+
+  // Sync profile from Redux to App's local currentUser state
+  useEffect(() => {
+    if (profile) {
+      setCurrentUser({
+        id: profile.id,
+        email: profile.email,
+        nickname: profile.nickname,
+      });
+    } else {
+      setCurrentUser(null);
+    }
+  }, [profile]);
 
   const handleLogin = (user: User) => {
     setCurrentUser(user);
