@@ -9,16 +9,21 @@ import ProfilePage from '@/pages/ProfilePage';
 import ForumGuidePage from '@/pages/ForumGuidePage';
 import ForumDetailPage from '@/pages/ForumDetailPage';
 import ForumCreatePage from '@/pages/ForumCreatePage';
-import { type DummyUser } from '@/data/dummyUsers';
+
+interface User {
+  id: number;
+  email: string;
+  name: string;
+}
 import PostListContainer from '@/post/PostListContainer';
 import PostDetailContainer from '@/post/PostDetailContainer';
 import PostCreateContainer from '@/post/PostCreateContainer';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<DummyUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const isLoggedIn = currentUser !== null;
 
-  const handleLogin = (user: DummyUser) => {
+  const handleLogin = (user: User) => {
     setCurrentUser(user);
   };
 

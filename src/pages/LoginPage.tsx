@@ -8,10 +8,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AppAlert from '@/components/shared/AppAlert';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
-import { DUMMY_USERS, type DummyUser } from '@/data/dummyUsers';
+import { login, saveTokens } from '@/service/authService';
+
+interface User {
+  id: number;
+  email: string;
+  name: string;
+}
 
 interface LoginPageProps {
-  onLogin: (user: DummyUser) => void;
+  onLogin: (user: User) => void;
 }
 
 export default function LoginPage({ onLogin }: LoginPageProps) {
@@ -20,18 +26,30 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   const [email, setEmail] = useState('user1@example.com');
   const [password, setPassword] = useState('password');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 
-  const handleLogin = () => {
-    const matchedUser = DUMMY_USERS.find((user) => user.email === email && user.password === password);
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      setAlert(null);
 
-    if (matchedUser) {
-      onLogin(matchedUser);
+      const tokens = await login({ email, password });
+      saveTokens(tokens);
+
+      const user: User = {
+        id: 1,
+        email,
+        name: email.split('@')[0],
+      };
+
+      onLogin(user);
       navigate('/');
-      return;
+    } catch {
+      setAlert({ tone: 'error', message: t('validation.invalidEmail') });
+    } finally {
+      setLoading(false);
     }
-
-    setAlert({ tone: 'error', message: t('validation.invalidEmail') });
   };
 
   return (
@@ -71,8 +89,9 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               className="w-full h-11 text-white font-bold" 
               style={APP_STYLES.primaryButton}
               onClick={handleLogin}
+              disabled={loading}
             >
-              {t('auth.login')}
+              {loading ? t('common.loading') : t('auth.login')}
             </Button>
           </div>
         </div>
