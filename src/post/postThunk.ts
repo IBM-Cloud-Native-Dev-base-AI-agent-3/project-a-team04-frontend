@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { service_path } from './service_ip_port';
+import { service_path } from '@/service/service_ip_port';
 
 interface ApiPost {
   userId?: number;

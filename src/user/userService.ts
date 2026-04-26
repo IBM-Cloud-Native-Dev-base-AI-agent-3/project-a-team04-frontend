@@ -1,5 +1,5 @@
-import { service_path } from './service_ip_port';
-import { getAccessToken } from './authService';
+import { service_path } from '@/service/service_ip_port';
+import { getAccessToken } from '@/auth/authService';
 
 export type UserRole = 'ROLE_USER' | 'ROLE_ADMIN';
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchMyProfileThunk, signupThunk } from '@/service/userThunk';
+import { fetchMyProfileThunk, signupThunk } from '@/user/userThunk';
 
 const initialState = {
   profile: null,

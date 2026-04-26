@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearPostResult } from '@/redux/postSlice';
-import { postRegisterThunk, updatePostThunk, fetchPostDetailThunk } from '@/service/postThunk';
+import { clearPostResult } from '@/post/postSlice';
+import { postRegisterThunk, updatePostThunk, fetchPostDetailThunk } from '@/post/postThunk';
 import PostCreateComponent from '@/post/PostCreateComponent';
 
 interface PostCreateContainerProps {

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostDetailThunk, deletePostThunk } from '@/service/postThunk';
-import { clearPostResult } from '@/redux/postSlice';
+import { fetchPostDetailThunk, deletePostThunk } from '@/post/postThunk';
+import { clearPostResult } from '@/post/postSlice';
 import PostDetailComponent from '@/post/PostDetailComponent';
 
 interface PostDetailContainerProps {

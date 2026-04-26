@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
-import { fetchMyProfileThunk } from '@/service/userThunk';
+import { fetchMyProfileThunk } from '@/user/userThunk';
 
 interface ProfileContainerProps {
   isLoggedIn: boolean;

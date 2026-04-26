@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchPostsThunk, postRegisterThunk, fetchPostDetailThunk, updatePostThunk, deletePostThunk } from '@/service/postThunk';
+import { fetchPostsThunk, postRegisterThunk, fetchPostDetailThunk, updatePostThunk, deletePostThunk } from '@/post/postThunk';
 
 const initialState = {
   posts: [],

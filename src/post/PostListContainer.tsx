@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostsThunk } from '@/service/postThunk';
+import { fetchPostsThunk } from '@/post/postThunk';
 import PostListComponent from '@/post/PostListComponent';
 
 interface PostListContainerProps {

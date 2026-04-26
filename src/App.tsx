@@ -7,9 +7,9 @@ import PasswordResetPage from '@/pages/PasswordResetPage';
 import ForumGuidePage from '@/pages/ForumGuidePage';
 import ForumDetailPage from '@/pages/ForumDetailPage';
 import ForumCreatePage from '@/pages/ForumCreatePage';
-import LoginContainer from '@/login/LoginContainer';
-import SignupContainer from '@/signup/SignupContainer';
-import ProfileContainer from '@/profile/ProfileContainer';
+import LoginContainer from '@/auth/LoginContainer';
+import SignupContainer from '@/user/SignupContainer';
+import ProfileContainer from '@/user/ProfileContainer';
 
 interface User {
   id: number;
@@ -19,7 +19,7 @@ interface User {
 import PostListContainer from '@/post/PostListContainer';
 import PostDetailContainer from '@/post/PostDetailContainer';
 import PostCreateContainer from '@/post/PostCreateContainer';
-import { logoutThunk } from '@/service/authThunk';
+import { logoutThunk } from '@/auth/authThunk';
 
 function App() {
   const dispatch = useDispatch<any>();
