@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { signupThunk } from '@/service/userThunk';
+import { signupThunk } from '@/user/userThunk';
 import SignupComponent from './SignupComponent';
 
 export default function SignupContainer() {
