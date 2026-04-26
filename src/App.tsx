@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import '@/i18n/config';
-import HomePage from '@/pages/HomePage';
-import PasswordResetPage from '@/pages/PasswordResetPage';
 import LoginContainer from '@/auth/LoginContainer';
 import SignupContainer from '@/user/SignupContainer';
 import ProfileContainer from '@/user/ProfileContainer';
 import ForumListContainer from '@/forum/ForumListContainer';
 import ForumDetailContainer from '@/forum/ForumDetailContainer';
+import HomeContainer from '@/home/HomeContainer';
+import PasswordResetContainer from '@/auth/PasswordResetContainer';
 
 interface User {
   id: number;
@@ -37,10 +37,10 @@ function App() {
   return (
     <Routes>
       {/* Home & Authentication Routes */}
-      <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/" element={<HomeContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
       <Route path="/login" element={<LoginContainer onLogin={handleLogin} />} />
       <Route path="/signup" element={<SignupContainer />} />
-      <Route path="/password-reset" element={<PasswordResetPage />} />
+      <Route path="/password-reset" element={<PasswordResetContainer />} />
       <Route path="/profile" element={<ProfileContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Forum Routes */}

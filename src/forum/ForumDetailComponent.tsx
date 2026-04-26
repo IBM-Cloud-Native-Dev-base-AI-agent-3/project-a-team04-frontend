@@ -5,7 +5,7 @@ import BackButton from '@/components/shared/BackButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
-import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from '@/constants/forum';
+import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from './forumConstants';
 
 interface ForumDetailComponentProps {
   isLoggedIn: boolean;

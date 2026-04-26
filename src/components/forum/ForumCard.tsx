@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from '@/constants/forum';
+import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from '@/forum/forumConstants';
 import { useTranslation } from 'react-i18next';
 
 interface ForumCardProps {
