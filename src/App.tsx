@@ -4,12 +4,11 @@ import { useDispatch } from 'react-redux';
 import '@/i18n/config';
 import HomePage from '@/pages/HomePage';
 import PasswordResetPage from '@/pages/PasswordResetPage';
-import ForumGuidePage from '@/pages/ForumGuidePage';
-import ForumDetailPage from '@/pages/ForumDetailPage';
-import ForumCreatePage from '@/pages/ForumCreatePage';
 import LoginContainer from '@/auth/LoginContainer';
 import SignupContainer from '@/user/SignupContainer';
 import ProfileContainer from '@/user/ProfileContainer';
+import ForumListContainer from '@/forum/ForumListContainer';
+import ForumDetailContainer from '@/forum/ForumDetailContainer';
 
 interface User {
   id: number;
@@ -45,9 +44,8 @@ function App() {
       <Route path="/profile" element={<ProfileContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Forum Routes */}
-      <Route path="/forum-guide" element={<ForumGuidePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
-      <Route path="/forum/:id" element={<ForumDetailPage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
-      <Route path="/forum/create" element={<ForumCreatePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/forum-guide" element={<ForumListContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/forum/:id" element={<ForumDetailContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Post Routes */}
       <Route path="/post" element={<PostListContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
