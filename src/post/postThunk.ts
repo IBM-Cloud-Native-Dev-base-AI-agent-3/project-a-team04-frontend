@@ -5,11 +5,12 @@ import { getAccessToken } from '@/auth/authService';
 interface ApiPost {
   id: number;
   userId: number;
+  nickname?: string;
   title: string;
   content: string;
-  viewCount?: number;
-  createdAt?: string;
-  updatedAt?: string;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface PostRegisterParams {

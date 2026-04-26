@@ -23,9 +23,9 @@ export default function PostListContainer({ isLoggedIn, onLogout }: PostListCont
   const mappedPosts = posts.map((post: any) => ({
     id: post.id,
     title: post.title,
-    author: `user-${post.userId ?? 'unknown'}`,
-    views: post.views ?? 0,
-    date: post.date ?? '-',
+    author: post.nickname ?? `user-${post.userId ?? 'unknown'}`,
+    views: post.viewCount ?? 0,
+    date: post.createdAt ? new Date(post.createdAt).toLocaleDateString() : '-',
   }));
 
   const totalPages = Math.max(1, Math.ceil(mappedPosts.length / itemsPerPage));
