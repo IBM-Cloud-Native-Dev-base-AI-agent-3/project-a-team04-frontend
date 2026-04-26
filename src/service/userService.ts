@@ -1,4 +1,5 @@
 import { service_path } from './service_ip_port';
+import { getAccessToken } from './authService';
 
 export type UserRole = 'ROLE_USER' | 'ROLE_ADMIN';
 
@@ -30,6 +31,27 @@ export async function signup(request: SignupRequest): Promise<ProfileResponse> {
 
   if (!response.ok) {
     throw new Error(`POST /users/signup failed: ${response.status}`);
+  }
+
+  return (await response.json()) as ProfileResponse;
+}
+
+export async function getMyProfile(): Promise<ProfileResponse> {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error('No access token available');
+  }
+
+  const response = await fetch(`${service_path}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`GET /users/me failed: ${response.status}`);
   }
 
   return (await response.json()) as ProfileResponse;

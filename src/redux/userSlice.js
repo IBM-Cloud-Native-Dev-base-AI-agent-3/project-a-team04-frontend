@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signupThunk } from '@/service/userThunk';
+import { fetchMyProfileThunk, signupThunk } from '@/service/userThunk';
 
 const initialState = {
   profile: null,
+  profileLoading: false,
+  profileError: null,
   signupResult: 0,
   signupLoading: false,
   signupError: null,
@@ -33,6 +35,18 @@ const userSlice = createSlice({
         state.signupLoading = false;
         state.signupResult = 0;
         state.signupError = action.payload || action.error.message || 'Failed to sign up';
+      })
+      .addCase(fetchMyProfileThunk.pending, (state) => {
+        state.profileLoading = true;
+        state.profileError = null;
+      })
+      .addCase(fetchMyProfileThunk.fulfilled, (state, action) => {
+        state.profileLoading = false;
+        state.profile = action.payload;
+      })
+      .addCase(fetchMyProfileThunk.rejected, (state, action) => {
+        state.profileLoading = false;
+        state.profileError = action.payload || action.error.message || 'Failed to fetch my profile';
       });
   },
 });
