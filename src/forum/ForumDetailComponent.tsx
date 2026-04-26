@@ -5,7 +5,6 @@ import BackButton from '@/components/shared/BackButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
-import { FORUM_STATUS_MAP, DEFAULT_STATUS_BADGE } from './forumConstants';
 
 interface ForumDetailComponentProps {
   isLoggedIn: boolean;
@@ -30,15 +29,22 @@ export default function ForumDetailComponent({
   onApply,
   applyLoading,
 }: ForumDetailComponentProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (loading) return <div className="text-center py-20">Loading...</div>;
   if (error || !forum) return <div className="text-center py-20 text-red-500">{error || 'Forum not found'}</div>;
 
-  const statusBadge = FORUM_STATUS_MAP[forum.status] ?? DEFAULT_STATUS_BADGE;
   const statusLabel = forum.statusLabel || forum.status || '-';
-  const description = forum.description || forum.content || '-';
+  const locale = i18n.language.split('-')[0].toLowerCase();
+  const selectedTranslation =
+    forum.translations?.find((tr: any) => (tr.locale || '').toLowerCase() === locale) || forum.translations?.[0];
+
+  const displayTitle = selectedTranslation?.title || forum.title || '-';
+  const description = selectedTranslation?.description || forum.description || forum.content || '-';
+  const displayLocation = selectedTranslation?.location || forum.location || '-';
+  const displaySpeakers = selectedTranslation?.speakers || forum.speakers || '-';
   const acceptedCount = forum.acceptedCount ?? forum.applicantCount ?? 0;
+  const sortedMedia = [...(forum.media || [])].sort((a: any, b: any) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
 
   // 신청 버튼 상태 렌더링 함수
   const renderApplyButton = () => {
@@ -85,9 +91,23 @@ export default function ForumDetailComponent({
   };
 
   const getYouTubeEmbedUrl = (url: string) => {
-    if (url.includes('watch?v=')) return url.replace('watch?v=', 'embed/');
-    if (url.includes('youtu.be/')) return `https://www.youtube.com/embed/${url.split('youtu.be/')[1].split('?')[0]}`;
-    return url;
+    let embedUrl = url;
+
+    if (url.includes('watch?v=')) {
+      embedUrl = url.replace('watch?v=', 'embed/');
+    } else if (url.includes('youtu.be/')) {
+      embedUrl = `https://www.youtube.com/embed/${url.split('youtu.be/')[1].split('?')[0]}`;
+    }
+
+    try {
+      const parsed = new URL(embedUrl);
+      parsed.searchParams.set('autoplay', '1');
+      parsed.searchParams.set('mute', '1');
+      parsed.searchParams.set('playsinline', '1');
+      return parsed.toString();
+    } catch {
+      return embedUrl;
+    }
   };
 
   return (
@@ -99,32 +119,26 @@ export default function ForumDetailComponent({
 
           <Card className="border border-slate-200 shadow-sm mb-8">
             <CardContent className="p-8">
-              <h1 className="text-3xl font-black text-slate-900 mb-4">{forum.title}</h1>
+              <h1 className="text-3xl font-black text-slate-900 mb-4">{displayTitle}</h1>
 
               <div className="mb-8">
-                <h2 className="text-xl font-bold mb-4">포럼 제목</h2>
-                <div className="text-slate-900 font-semibold mb-4">{forum.title}</div>
                 <div className="text-slate-700 leading-relaxed whitespace-pre-wrap mb-6">{description}</div>
 
-                <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-2">
-                  <div className="text-sm font-medium text-slate-700">
-                    상태: <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ml-1 ${statusBadge.className}`}>{statusLabel}</span>
-                  </div>
+                <div className="space-y-2">
+                  <div className="text-sm text-slate-700">상태: {statusLabel}</div>
                   <div className="text-sm text-slate-700">{t('forum.date')}: {forum.eventDate || '-'}</div>
-                  <div className="text-sm text-slate-700">{t('forum.location')}: {forum.location || '-'}</div>
-                  <div className="text-sm text-slate-700">{t('forum.speaker')}: {forum.speakers || '-'}</div>
-                  <div className="text-sm text-slate-700">
-                    {t('forum.applicantStatus')}: {acceptedCount} / {forum.maxParticipants ?? '-'}
-                  </div>
+                  <div className="text-sm text-slate-700">{t('forum.location')}: {displayLocation}</div>
+                  <div className="text-sm text-slate-700">{t('forum.speaker')}: {displaySpeakers}</div>
+                  <div className="text-sm text-slate-700">{t('forum.applicantStatus')}: {acceptedCount} / {forum.maxParticipants ?? '-'}</div>
                 </div>
               </div>
 
               {/* Media Section */}
-              {forum.media && forum.media.length > 0 && (
+              {sortedMedia.length > 0 && (
                 <div className="mb-8 space-y-4">
-                  {forum.media.map((m: any, idx: number) => (
+                  {sortedMedia.map((m: any, idx: number) => (
                     <div key={idx} className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-                      {m.type === 'youtube' || m.url?.includes('youtube.com') || m.url?.includes('youtu.be') ? (
+                      {(m.mediaType || m.type || '').toUpperCase() === 'YOUTUBE' || m.url?.includes('youtube.com') || m.url?.includes('youtu.be') ? (
                         <iframe
                           title={`forum-media-${idx}`}
                           src={getYouTubeEmbedUrl(m.url)}

@@ -33,7 +33,20 @@ export interface ForumDetailResponse {
   applicantCount?: number;
   media?: Array<{
     type?: string;
+    mediaType?: 'YOUTUBE' | 'IMAGE' | string;
+    sortOrder?: number;
     url: string;
+  }>;
+  translations?: Array<{
+    id?: number;
+    forumId?: number;
+    locale?: string;
+    title?: string;
+    description?: string;
+    location?: string;
+    speakers?: string;
+    createdAt?: string;
+    updatedAt?: string;
   }>;
   viewCount?: number;
   createdAt?: string;
