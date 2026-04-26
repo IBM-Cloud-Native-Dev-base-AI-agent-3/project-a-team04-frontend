@@ -56,8 +56,13 @@ export default function SignupContainer() {
 
       let profileImageUrl = '👤'; // Default person emoji
       if (profileImage) {
-        const uploadRes = await uploadFile(profileImage);
-        profileImageUrl = uploadRes.url;
+        try {
+          const uploadRes = await uploadFile(profileImage);
+          profileImageUrl = uploadRes.url;
+        } catch (uploadError) {
+          console.error('Initial profile image upload failed, proceeding with default emoji:', uploadError);
+          // If upload fails (e.g., 401), we just use the default emoji instead of blocking signup
+        }
       }
 
       await dispatch(

@@ -61,18 +61,22 @@ export async function uploadFile(file: File): Promise<{ url: string }> {
 
   const accessToken = getAccessToken();
   const headers: Record<string, string> = {};
+  
+  // 토큰이 있을 때만 Authorization 헤더 추가
   if (accessToken) {
-    headers.Authorization = `Bearer ${accessToken}`;
+    headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
   const response = await fetch(`${service_path}/files/upload`, {
     method: 'POST',
-    headers: headers,
+    headers: headers, // FormData를 보낼 때는 Content-Type을 절대 수동으로 넣지 마세요.
     body: formData,
   });
 
   if (!response.ok) {
-    throw new Error(`File upload failed: ${response.status}`);
+    const errorBody = await response.text();
+    console.error('Upload Error:', errorBody);
+    throw new Error(`File upload failed: ${response.status} ${errorBody}`);
   }
 
   return await response.json();
