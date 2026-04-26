@@ -23,6 +23,8 @@ export default function SignupContainer() {
     title: '',
   });
 
+  const isWithdrawalRestrictionError = (message: string) => /USER_WITHDRAWALS|30일|30 days|withdrawal/i.test(message);
+
   const handleSignup = async () => {
     if (!nickname || !email || !password || !passwordConfirm) {
       setAlert({ tone: 'error', message: t('validation.required') });
@@ -51,8 +53,15 @@ export default function SignupContainer() {
         title: t('auth.signupComplete'),
         message: t('auth.signupCompleteMessage'),
       });
-    } catch {
-      setAlert({ tone: 'error', message: t('validation.serverError') });
+    } catch (error) {
+      const message = typeof error === 'string' ? error : error instanceof Error ? error.message : '';
+
+      if (isWithdrawalRestrictionError(message)) {
+        setAlert({ tone: 'error', message: t('auth.signupWithdrawalRestricted') });
+        return;
+      }
+
+      setAlert({ tone: 'error', message: message || t('validation.serverError') });
     }
   };
 

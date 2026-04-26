@@ -64,7 +64,7 @@ export default function ForumListComponent({
                     statusLabel={forum.statusLabel}
                     thumbnail={forum.thumbnailUrl}
                     speaker={forum.speakers}
-                    applicantCount={0}
+                    applicantCount={forum.acceptedCount ?? 0}
                     maxParticipants={forum.maxParticipants}
                     onClick={() => onForumClick(forum.id)}
                   />

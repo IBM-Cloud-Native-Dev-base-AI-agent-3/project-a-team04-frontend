@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getMyProfile, signup, updateProfile, type ProfileResponse, type SignupRequest, type UpdateProfileRequest } from './userService';
+import { getMyProfile, signup, updateProfile, withdraw, type ProfileResponse, type SignupRequest, type UpdateProfileRequest, type WithdrawalRequest } from './userService';
 
 export const signupThunk = createAsyncThunk<ProfileResponse, SignupRequest, { rejectValue: string }>(
   'user/signup',
@@ -30,6 +30,17 @@ export const updateProfileThunk = createAsyncThunk<ProfileResponse, UpdateProfil
       return await updateProfile(request);
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Failed to update profile');
+    }
+  }
+);
+
+export const withdrawThunk = createAsyncThunk<void, WithdrawalRequest, { rejectValue: string }>(
+  'user/withdraw',
+  async (request, { rejectWithValue }) => {
+    try {
+      await withdraw(request);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to withdraw');
     }
   }
 );

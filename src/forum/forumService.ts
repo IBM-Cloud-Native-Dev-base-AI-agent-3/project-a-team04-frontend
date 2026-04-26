@@ -9,6 +9,7 @@ export interface ForumListResponse {
   eventDate: string;
   thumbnailUrl: string;
   maxParticipants: number;
+  acceptedCount: number;
   title: string;
   location: string;
   speakers: string;

@@ -61,6 +61,7 @@
     "forgotPassword": "Forgot Password",
     "signupComplete": "Sign Up Complete",
     "signupCompleteMessage": "Sign up is complete. A verification email has been sent to the email address you entered. Please check the inbox, spam folder, or promotions tab of that email to complete the verification.",
+    "signupWithdrawalRestricted": "You cannot sign up again until 30 days have passed since withdrawal.",
     "emailVerification": "Email Verification",
     "emailVerificationSent": "A password reset link has been sent to your registered email.",
     "emailNotRegistered": "Email Not Registered",
@@ -83,8 +84,10 @@
     "changePassword": "Change Password",
     "passwordChangeConfirm": "Password Change Confirmation",
     "withdraw": "Withdraw Membership",
-    "withdrawMessage": "Are you sure you want to withdraw? This action cannot be undone.",
-    "withdrawDescription": "When you withdraw as a member, all personal information and posts you have written will be deleted. This action cannot be undone."
+    "withdrawMessage": "Are you sure you want to withdraw? Re-registering may be difficult for 30 days.",
+    "withdrawDescription": "When you withdraw as a member, all personal information and posts you have written will be deleted. You cannot re-register with the same email for 30 days.",
+    "withdrawalReason": "Withdrawal reason",
+    "withdrawalReasonPlaceholder": "Enter your reason for withdrawal"
   },
   "forum": {
     "forum": "Forum",

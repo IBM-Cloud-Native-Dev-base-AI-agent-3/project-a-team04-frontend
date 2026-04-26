@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchMyProfileThunk, signupThunk, updateProfileThunk } from '@/user/userThunk';
+import { fetchMyProfileThunk, signupThunk, updateProfileThunk, withdrawThunk } from '@/user/userThunk';
 
 const initialState = {
   profile: null,
@@ -8,6 +8,9 @@ const initialState = {
   signupResult: 0,
   signupLoading: false,
   signupError: null,
+  withdrawLoading: false,
+  withdrawResult: 0,
+  withdrawError: null,
 };
 
 const userSlice = createSlice({
@@ -17,6 +20,10 @@ const userSlice = createSlice({
     clearSignupState(state) {
       state.signupResult = 0;
       state.signupError = null;
+    },
+    clearWithdrawState(state) {
+      state.withdrawResult = 0;
+      state.withdrawError = null;
     },
   },
   extraReducers: (builder) => {
@@ -59,9 +66,24 @@ const userSlice = createSlice({
       .addCase(updateProfileThunk.rejected, (state, action) => {
         state.profileLoading = false;
         state.profileError = action.payload || action.error.message || 'Failed to update profile';
+      })
+      .addCase(withdrawThunk.pending, (state) => {
+        state.withdrawLoading = true;
+        state.withdrawError = null;
+        state.withdrawResult = 0;
+      })
+      .addCase(withdrawThunk.fulfilled, (state) => {
+        state.withdrawLoading = false;
+        state.withdrawResult = 1;
+        state.profile = null;
+      })
+      .addCase(withdrawThunk.rejected, (state, action) => {
+        state.withdrawLoading = false;
+        state.withdrawResult = -1;
+        state.withdrawError = action.payload || action.error.message || 'Failed to withdraw';
       });
   },
 });
 
-export const { clearSignupState } = userSlice.actions;
+export const { clearSignupState, clearWithdrawState } = userSlice.actions;
 export default userSlice.reducer;

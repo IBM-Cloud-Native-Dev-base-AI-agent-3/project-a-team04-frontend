@@ -27,6 +27,34 @@ export interface UpdateProfileRequest {
   profileImageUrl?: string;
 }
 
+export interface WithdrawalRequest {
+  password?: string;
+  reason: string;
+}
+
+async function parseErrorMessage(response: Response): Promise<string> {
+  try {
+    const contentType = response.headers.get('content-type') || '';
+
+    if (contentType.includes('application/json')) {
+      const data = await response.json();
+
+      if (typeof data === 'string') {
+        return data;
+      }
+
+      if (data && typeof data === 'object') {
+        return data.message || data.error || data.detail || data.code || `Request failed with status ${response.status}`;
+      }
+    }
+
+    const text = await response.text();
+    return text || `Request failed with status ${response.status}`;
+  } catch {
+    return `Request failed with status ${response.status}`;
+  }
+}
+
 export async function signup(request: SignupRequest): Promise<ProfileResponse> {
   const response = await fetch(`${service_path}/users/signup`, {
     method: 'POST',
@@ -35,7 +63,7 @@ export async function signup(request: SignupRequest): Promise<ProfileResponse> {
   });
 
   if (!response.ok) {
-    throw new Error(`POST /users/signup failed: ${response.status}`);
+    throw new Error(await parseErrorMessage(response));
   }
 
   return (await response.json()) as ProfileResponse;
@@ -56,7 +84,7 @@ export async function getMyProfile(): Promise<ProfileResponse> {
   });
 
   if (!response.ok) {
-    throw new Error(`GET /users/me failed: ${response.status}`);
+    throw new Error(await parseErrorMessage(response));
   }
 
   return (await response.json()) as ProfileResponse;
@@ -78,8 +106,28 @@ export async function updateProfile(request: UpdateProfileRequest): Promise<Prof
   });
 
   if (!response.ok) {
-    throw new Error(`PATCH /users/me failed: ${response.status}`);
+    throw new Error(await parseErrorMessage(response));
   }
 
   return (await response.json()) as ProfileResponse;
+}
+
+export async function withdraw(request: WithdrawalRequest): Promise<void> {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error('No access token available');
+  }
+
+  const response = await fetch(`${service_path}/users/me`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseErrorMessage(response));
+  }
 }

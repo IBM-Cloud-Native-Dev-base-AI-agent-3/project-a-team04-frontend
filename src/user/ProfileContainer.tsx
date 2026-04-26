@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
-import { fetchMyProfileThunk } from '@/user/userThunk';
+import { fetchMyProfileThunk, withdrawThunk } from '@/user/userThunk';
 
 interface ProfileContainerProps {
   isLoggedIn: boolean;
@@ -22,11 +22,13 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
-  const { profile, profileLoading, profileError } = useSelector((state: any) => state.user);
+  const { profile, profileLoading, profileError, withdrawLoading, withdrawError } = useSelector((state: any) => state.user);
 
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [withdrawalReason, setWithdrawalReason] = useState('');
+
   const profileAvatarStyle = {
     background: `linear-gradient(135deg, ${APP_THEME.colors.logoBlue}, ${APP_THEME.colors.primary})`,
   };
@@ -37,10 +39,26 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
     }
   }, [dispatch, isLoggedIn]);
 
-  const handleWithdraw = () => {
-    if (window.confirm(t('profile.withdrawMessage'))) {
+  const handleWithdraw = async () => {
+    const reason = withdrawalReason.trim();
+    if (!reason) {
+      return;
+    }
+
+    if (!window.confirm(t('profile.withdrawMessage'))) {
+      return;
+    }
+
+    try {
+      await dispatch(
+        withdrawThunk({
+          reason,
+        })
+      ).unwrap();
       onLogout();
       navigate('/');
+    } catch {
+      // error message is surfaced via redux state
     }
   };
 
@@ -139,8 +157,22 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
               <div>
                 <h3 className="text-lg font-black mb-4 text-slate-900">{t('profile.withdraw')}</h3>
                 <p className="text-sm text-slate-600 mb-4">{t('profile.withdrawDescription')}</p>
-                <Button className="w-full h-11 text-white font-bold" style={APP_STYLES.dangerButton} onClick={handleWithdraw}>
-                  {t('profile.withdraw')}
+                {withdrawError && <AppAlert tone="error" message={withdrawError} />}
+                <div className="mb-4">
+                  <Input
+                    className={APP_THEME.classes.formInput}
+                    placeholder={t('profile.withdrawalReasonPlaceholder')}
+                    value={withdrawalReason}
+                    onChange={(e) => setWithdrawalReason(e.target.value)}
+                  />
+                </div>
+                <Button
+                  className="w-full h-11 text-white font-bold"
+                  style={APP_STYLES.dangerButton}
+                  onClick={handleWithdraw}
+                  disabled={withdrawLoading || !withdrawalReason.trim()}
+                >
+                  {withdrawLoading ? '...' : t('profile.withdraw')}
                 </Button>
               </div>
             </CardContent>
