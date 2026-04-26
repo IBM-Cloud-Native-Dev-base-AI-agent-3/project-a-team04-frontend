@@ -54,7 +54,19 @@ export default function ForumListComponent({
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
               {forums.map((forum) => (
                 <div key={forum.id}>
-                  <ForumCard {...forum} onClick={() => onForumClick(forum.id)} />
+                  <ForumCard
+                    id={forum.id.toString()}
+                    title={forum.title}
+                    desc={forum.slug}
+                    date={forum.eventDate}
+                    place={forum.location}
+                    status={forum.status}
+                    thumbnail={forum.thumbnailUrl}
+                    speaker="-"
+                    applicantCount={0}
+                    maxParticipants={forum.maxParticipants}
+                    onClick={() => onForumClick(forum.id)}
+                  />
                 </div>
               ))}
             </div>

@@ -34,7 +34,7 @@ const NAV_ITEMS = [
   },
   {
     titleKey: 'navigation.forumGuide',
-    path: '/forum-guide',
+    path: '/forum-list',
     items: ['navigation.forumGuide'],
   },
   {

@@ -44,7 +44,7 @@ function App() {
       <Route path="/profile" element={<ProfileContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Forum Routes */}
-      <Route path="/forum-guide" element={<ForumListContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/forum-list" element={<ForumListContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
       <Route path="/forum/:id" element={<ForumDetailContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Post Routes */}

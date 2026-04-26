@@ -63,7 +63,7 @@ export default function ForumDetailContainer({ isLoggedIn, onLogout }: ForumDeta
       myRegistration={myRegistration}
       loading={detailLoading}
       error={detailError}
-      onBack={() => navigate('/forum-guide')}
+      onBack={() => navigate('/forum-list')}
       onApply={handleApply}
       applyLoading={applyLoading}
     />
