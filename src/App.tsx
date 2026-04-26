@@ -3,13 +3,13 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import '@/i18n/config';
 import HomePage from '@/pages/HomePage';
-import LoginPage from '@/pages/LoginPage';
-import SignupPage from '@/pages/SignupPage';
 import PasswordResetPage from '@/pages/PasswordResetPage';
-import ProfilePage from '@/pages/ProfilePage';
 import ForumGuidePage from '@/pages/ForumGuidePage';
 import ForumDetailPage from '@/pages/ForumDetailPage';
 import ForumCreatePage from '@/pages/ForumCreatePage';
+import LoginContainer from '@/login/LoginContainer';
+import SignupContainer from '@/signup/SignupContainer';
+import ProfileContainer from '@/profile/ProfileContainer';
 
 interface User {
   id: number;
@@ -39,10 +39,10 @@ function App() {
     <Routes>
       {/* Home & Authentication Routes */}
       <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
-      <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/login" element={<LoginContainer onLogin={handleLogin} />} />
+      <Route path="/signup" element={<SignupContainer />} />
       <Route path="/password-reset" element={<PasswordResetPage />} />
-      <Route path="/profile" element={<ProfilePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
+      <Route path="/profile" element={<ProfileContainer isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
 
       {/* Forum Routes */}
       <Route path="/forum-guide" element={<ForumGuidePage isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
