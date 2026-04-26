@@ -57,7 +57,7 @@ export default function ForumListComponent({
                   <ForumCard
                     id={forum.id.toString()}
                     title={forum.title}
-                    desc={forum.slug}
+                    desc={forum.description}
                     date={forum.eventDate}
                     place={forum.location}
                     status={forum.status}

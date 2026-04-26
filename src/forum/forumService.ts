@@ -4,6 +4,7 @@ import { getAccessToken } from '@/auth/authService';
 export interface ForumListResponse {
   id: number;
   slug: string;
+  description: string;
   status: 'UPCOMING' | 'IN_PROGRESS' | 'CLOSED' | 'FINISHED';
   statusLabel: string;
   eventDate: string;

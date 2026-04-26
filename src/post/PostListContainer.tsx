@@ -43,7 +43,7 @@ export default function PostListContainer({ isLoggedIn, onLogout }: PostListCont
       totalPages={totalPages}
       itemsPerPage={itemsPerPage}
       totalItems={mappedPosts.length}
-      onWrite={() => navigate('/post/create')}
+      onWrite={() => navigate(isLoggedIn ? '/post/create' : '/login')}
       onRowClick={(id) => navigate(`/post/${id}`)}
       onPrevClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
       onNextClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
