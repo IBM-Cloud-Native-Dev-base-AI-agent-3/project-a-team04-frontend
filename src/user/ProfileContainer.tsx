@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Eye, EyeOff } from 'lucide-react';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
-import AppAlert from '@/components/shared/AppAlert';
+import AppDialog from '@/components/shared/AppDialog';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,13 +23,7 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
   const dispatch = useDispatch<any>();
   const { profile, profileLoading, profileError, withdrawLoading, withdrawError } = useSelector((state: any) => state.user);
 
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [nickname, setNickname] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
   const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
   const [withdrawalReason, setWithdrawalReason] = useState('');
@@ -51,7 +44,6 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
 
   const handleSaveProfile = async () => {
     const trimmedNickname = nickname.trim();
-    const hasPasswordInput = Boolean(currentPassword || newPassword || confirmPassword);
 
     setSaveSuccessMessage(null);
     setSaveErrorMessage(null);
@@ -61,28 +53,14 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
       return;
     }
 
-    if (hasPasswordInput && (!currentPassword || !newPassword || !confirmPassword)) {
-      setSaveErrorMessage(t('validation.required'));
-      return;
-    }
-
-    if (hasPasswordInput && newPassword !== confirmPassword) {
-      setSaveErrorMessage(t('validation.passwordMismatch'));
-      return;
-    }
-
     try {
       await dispatch(
         updateProfileThunk({
           nickname: trimmedNickname,
-          ...(hasPasswordInput ? { currentPassword, newPassword } : {}),
         })
       ).unwrap();
 
-      setCurrentPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
-      setSaveSuccessMessage(hasPasswordInput ? '프로필 및 비밀번호가 저장되었습니다.' : '프로필이 저장되었습니다.');
+      setSaveSuccessMessage('프로필이 저장되었습니다.');
     } catch (error) {
       const message = typeof error === 'string' ? error : error instanceof Error ? error.message : t('validation.serverError');
       setSaveErrorMessage(message || t('validation.serverError'));
@@ -114,18 +92,29 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
 
   const avatarText = profile?.nickname ? profile.nickname.slice(0, 2).toUpperCase() : 'ME';
   const profileRoleLabel = profile?.role === 'ROLE_ADMIN' ? 'ADMIN' : t('profile.member');
+  const activeDialogMessage = saveErrorMessage || saveSuccessMessage || profileError || withdrawError || '';
+  const activeDialogTitle = saveErrorMessage || profileError || withdrawError ? '오류' : '알림';
+
+  const handleDialogClose = () => {
+    setSaveErrorMessage(null);
+    setSaveSuccessMessage(null);
+  };
 
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
+      <AppDialog
+        isOpen={Boolean(activeDialogMessage)}
+        title={activeDialogTitle}
+        message={activeDialogMessage}
+        onPrimaryClick={handleDialogClose}
+        onClose={handleDialogClose}
+      />
       <main className="container mx-auto px-4 pt-44 pb-20">
         <div className="max-w-3xl mx-auto">
           <Card className="border border-slate-200 shadow-sm">
             <CardContent className="p-8">
               <h2 className="text-2xl font-black mb-6">{t('profile.profileInfo')}</h2>
-              {profileError && <AppAlert tone="error" message={profileError} />}
-              {saveErrorMessage && <AppAlert tone="error" message={saveErrorMessage} />}
-              {saveSuccessMessage && <AppAlert tone="success" message={saveSuccessMessage} />}
               <div className="flex flex-col items-center text-center mb-8">
                 <div className="w-24 h-24 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4" style={profileAvatarStyle}>
                   {avatarText}
@@ -151,66 +140,6 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
                   <p className="text-sm font-bold text-slate-700 mb-2">{t('profile.role')}</p>
                   <p className={APP_THEME.classes.bodyText}>{profileRoleLabel}</p>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">{t('auth.currentPassword')}</label>
-                  <div className="relative">
-                    <Input
-                      className={`${APP_THEME.classes.formInput} pr-12`}
-                      placeholder={t('auth.currentPassword')}
-                      type={showCurrentPassword ? 'text' : 'password'}
-                      value={currentPassword}
-                      onChange={(event) => setCurrentPassword(event.target.value)}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-800"
-                      onClick={() => setShowCurrentPassword((value) => !value)}
-                      aria-label={showCurrentPassword ? t('auth.hidePassword') : t('auth.showPassword')}
-                    >
-                      {showCurrentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">{t('auth.newPassword')}</label>
-                  <div className="relative">
-                    <Input
-                      className={`${APP_THEME.classes.formInput} pr-12`}
-                      placeholder={t('auth.newPassword')}
-                      type={showNewPassword ? 'text' : 'password'}
-                      value={newPassword}
-                      onChange={(event) => setNewPassword(event.target.value)}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-800"
-                      onClick={() => setShowNewPassword((value) => !value)}
-                      aria-label={showNewPassword ? t('auth.hidePassword') : t('auth.showPassword')}
-                    >
-                      {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">{t('profile.passwordChangeConfirm')}</label>
-                  <div className="relative">
-                    <Input
-                      className={`${APP_THEME.classes.formInput} pr-12`}
-                      placeholder={t('profile.passwordChangeConfirm')}
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      value={confirmPassword}
-                      onChange={(event) => setConfirmPassword(event.target.value)}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-800"
-                      onClick={() => setShowConfirmPassword((value) => !value)}
-                      aria-label={showConfirmPassword ? t('auth.hidePassword') : t('auth.showPassword')}
-                    >
-                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
-                  </div>
-                </div>
                 <Button
                   className="w-full h-11 text-white font-bold"
                   style={APP_STYLES.primaryButton}
@@ -226,7 +155,6 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
               <div>
                 <h3 className="text-lg font-black mb-4 text-slate-900">{t('profile.withdraw')}</h3>
                 <p className="text-sm text-slate-600 mb-4">{t('profile.withdrawDescription')}</p>
-                {withdrawError && <AppAlert tone="error" message={withdrawError} />}
                 <div className="mb-4">
                   <Input
                     className={APP_THEME.classes.formInput}
