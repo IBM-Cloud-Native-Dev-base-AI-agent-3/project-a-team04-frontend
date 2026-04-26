@@ -60,3 +60,39 @@ export async function refresh(): Promise<TokenResponse> {
   saveTokens(tokens);
   return tokens;
 }
+
+export function clearTokens() {
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
+}
+
+export async function logout(): Promise<void> {
+  const refreshToken = getRefreshToken();
+  const accessToken = getAccessToken();
+
+  try {
+    if (!refreshToken) {
+      return;
+    }
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (accessToken) {
+      headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    const response = await fetch(`${service_path}/auth/logout`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`POST /auth/logout failed: ${response.status}`);
+    }
+  } finally {
+    clearTokens();
+  }
+}
