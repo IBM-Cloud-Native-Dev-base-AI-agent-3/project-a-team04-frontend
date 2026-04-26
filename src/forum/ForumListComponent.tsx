@@ -61,6 +61,7 @@ export default function ForumListComponent({
                     date={forum.eventDate}
                     place={forum.location}
                     status={forum.status}
+                    statusLabel={forum.statusLabel}
                     thumbnail={forum.thumbnailUrl}
                     speaker={forum.speakers}
                     applicantCount={0}

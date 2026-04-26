@@ -130,8 +130,8 @@
     },
     "statuses": {
       "OPEN": "모집중",
-      "CLOSED": "모집 완료",
-      "UPCOMING": "예정",
+      "CLOSED": "모집완료",
+      "UPCOMING": "진행예정",
       "IN_PROGRESS": "진행중",
       "ENDED": "종료"
     }

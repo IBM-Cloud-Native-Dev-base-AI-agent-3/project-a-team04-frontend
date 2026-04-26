@@ -36,7 +36,7 @@ export default function ForumDetailComponent({
   if (error || !forum) return <div className="text-center py-20 text-red-500">{error || 'Forum not found'}</div>;
 
   const statusBadge = FORUM_STATUS_MAP[forum.status] ?? DEFAULT_STATUS_BADGE;
-  const statusLabel = t(`forum.statuses.${forum.status}`, { defaultValue: forum.status });
+  const statusLabel = forum.statusLabel || forum.status;
 
   // 신청 버튼 상태 렌더링 함수
   const renderApplyButton = () => {

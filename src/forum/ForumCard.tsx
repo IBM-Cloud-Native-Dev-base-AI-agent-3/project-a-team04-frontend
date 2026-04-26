@@ -9,6 +9,7 @@ interface ForumCardProps {
   date: string;
   place: string;
   status: string;
+  statusLabel: string;
   thumbnail: string;
   speaker: string;
   applicantCount: number;
@@ -22,6 +23,7 @@ export default function ForumCard({
   date,
   place,
   status,
+  statusLabel,
   thumbnail,
   speaker,
   applicantCount,
@@ -30,7 +32,6 @@ export default function ForumCard({
 }: ForumCardProps) {
   const { t } = useTranslation();
   const statusBadge = FORUM_STATUS_MAP[status] ?? DEFAULT_STATUS_BADGE;
-  const statusLabel = t(`forum.statuses.${status}`, { defaultValue: status });
 
   return (
     <Card 
