@@ -1,14 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { service_path } from '@/service/service_ip_port';
+import { getAccessToken } from '@/auth/authService';
 
 interface ApiPost {
-  userId?: number;
   id: number;
+  userId: number;
   title: string;
-  body?: string;
-  content?: string;
-  views?: number;
-  date?: string;
+  content: string;
+  viewCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface PostRegisterParams {
@@ -23,6 +24,14 @@ interface PostUpdateParams {
   title: string;
   content: string;
 }
+
+const getAuthHeaders = () => {
+  const token = getAccessToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+};
 
 export const fetchPostsThunk = createAsyncThunk<ApiPost[], void, { rejectValue: string }>(
   'post/fetchPosts',
@@ -47,8 +56,8 @@ export const postRegisterThunk = createAsyncThunk<ApiPost, PostRegisterParams, {
     try {
       const response = await fetch(`${service_path}/posts?userId=${userId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, title, body: content }),
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ title, content }),
       });
 
       if (!response.ok) {
@@ -85,7 +94,7 @@ export const updatePostThunk = createAsyncThunk<ApiPost, PostUpdateParams, { rej
     try {
       const response = await fetch(`${service_path}/posts/${postId}?userId=${userId}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ title, content }),
       });
 
@@ -109,8 +118,10 @@ export const deletePostThunk = createAsyncThunk<number, PostDeleteParams, { reje
   'post/delete',
   async ({ postId, userId }, { rejectWithValue }) => {
     try {
+      const token = getAccessToken();
       const response = await fetch(`${service_path}/posts/${postId}?userId=${userId}`, {
         method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
 
       if (!response.ok) {
@@ -118,11 +129,10 @@ export const deletePostThunk = createAsyncThunk<number, PostDeleteParams, { reje
         throw new Error(`DELETE /posts/${postId} failed: ${response.status} ${errorText}`);
       }
 
-      // DELETE 응답이 빈 경우 처리
       try {
         await response.json();
       } catch {
-        // JSON 파싱 실패해도 괜찮음
+        // Ignore JSON parse error if response is empty
       }
 
       return postId;
