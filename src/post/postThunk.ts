@@ -74,7 +74,9 @@ export const fetchPostDetailThunk = createAsyncThunk<ApiPost, number, { rejectVa
   'post/fetchDetail',
   async (postId, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${service_path}/posts/${postId}/view`);
+      const response = await fetch(`${service_path}/posts/${postId}/view`, {
+        headers: getAuthHeaders(),
+      });
 
       if (!response.ok) {
         throw new Error(`GET /posts/${postId}/view failed: ${response.status}`);
