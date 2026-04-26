@@ -68,17 +68,6 @@
           "post-controller"
         ],
         "operationId": "insert",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -100,7 +89,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/forums/{forumId}/registrations": {
@@ -418,22 +412,18 @@
               "type": "integer",
               "format": "int64"
             }
-          },
-          {
-            "name": "userId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
@@ -444,15 +434,6 @@
           {
             "name": "postId",
             "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "query",
             "required": true,
             "schema": {
               "type": "integer",
@@ -481,7 +462,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/admin/forums/{forumId}": {
