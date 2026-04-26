@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchForumDetailThunk, fetchMyRegistrationThunk, applyForumThunk, clearApplyResult } from './forumThunk';
+import { fetchForumDetailThunk, fetchMyRegistrationThunk, applyForumThunk } from './forumThunk';
+import { clearApplyResult } from './forumSlice';
 import ForumDetailComponent from './ForumDetailComponent';
 
 interface ForumDetailContainerProps {
