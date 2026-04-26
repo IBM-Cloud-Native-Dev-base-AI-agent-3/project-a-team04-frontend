@@ -83,6 +83,7 @@ export default function SignupContainer() {
       onSubmit={handleSignup}
       onDialogPrimaryClick={() => navigate('/')}
       onDialogClose={() => setDialog({ isOpen: false, message: '', title: '' })}
+      onAlertClose={() => setAlert(null)}
       t={t}
     />
   );

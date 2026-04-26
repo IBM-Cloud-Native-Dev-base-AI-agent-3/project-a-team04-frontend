@@ -3,7 +3,6 @@ import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import AppAlert from '@/components/shared/AppAlert';
 import AppDialog from '@/components/shared/AppDialog';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
@@ -24,6 +23,7 @@ interface SignupComponentProps {
   onSubmit: () => void;
   onDialogPrimaryClick: () => void;
   onDialogClose: () => void;
+  onAlertClose: () => void;
   t: (key: string) => string;
 }
 
@@ -44,11 +44,19 @@ export default function SignupComponent({
   onSubmit,
   onDialogPrimaryClick,
   onDialogClose,
+  onAlertClose,
   t,
 }: SignupComponentProps) {
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={false} />
+      <AppDialog
+        isOpen={Boolean(alert)}
+        title="알림"
+        message={alert?.message || ''}
+        onPrimaryClick={onAlertClose}
+        onClose={onAlertClose}
+      />
       <AppDialog
         isOpen={dialog.isOpen}
         title={dialog.title}
@@ -61,7 +69,6 @@ export default function SignupComponent({
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <h1 className={APP_THEME.classes.authFormTitle}>{t('auth.signup')}</h1>
           <p className="text-slate-500 mb-6">{t('auth.enterEmail')}</p>
-          {alert && <AppAlert tone={alert.tone} message={alert.message} />}
           <div className="space-y-4">
             <div className="flex flex-col items-center gap-2">
               <button

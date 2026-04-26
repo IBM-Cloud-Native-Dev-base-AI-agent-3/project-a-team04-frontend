@@ -3,7 +3,7 @@ import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import AppAlert from '@/components/shared/AppAlert';
+import AppDialog from '@/components/shared/AppDialog';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
 
 interface LoginComponentProps {
@@ -17,6 +17,7 @@ interface LoginComponentProps {
   onToggleShowPassword: () => void;
   onSubmit: () => void;
   onMovePasswordReset: () => void;
+  onAlertClose: () => void;
   t: (key: string) => string;
 }
 
@@ -31,16 +32,23 @@ export default function LoginComponent({
   onToggleShowPassword,
   onSubmit,
   onMovePasswordReset,
+  onAlertClose,
   t,
 }: LoginComponentProps) {
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
       <SiteHeader isLoggedIn={false} />
+      <AppDialog
+        isOpen={Boolean(alert)}
+        title="알림"
+        message={alert?.message || ''}
+        onPrimaryClick={onAlertClose}
+        onClose={onAlertClose}
+      />
       <main className="container mx-auto px-4 min-h-screen pt-28 pb-10 flex items-center justify-center">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <h1 className={APP_THEME.classes.authFormTitle}>{t('auth.login')}</h1>
           <p className="text-slate-500 mb-6">{t('auth.enterEmail')}</p>
-          {alert && <AppAlert tone={alert.tone} message={alert.message} />}
           <div className="space-y-4">
             <Input placeholder={t('auth.enterEmail')} type="email" value={email} onChange={(event) => onEmailChange(event.target.value)} />
             <div className="relative">

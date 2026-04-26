@@ -62,6 +62,7 @@ export default function LoginContainer({ onLogin }: LoginContainerProps) {
       onToggleShowPassword={() => setShowPassword((prev) => !prev)}
       onSubmit={handleLogin}
       onMovePasswordReset={() => navigate('/password-reset')}
+      onAlertClose={() => setAlert(null)}
       t={t}
     />
   );
