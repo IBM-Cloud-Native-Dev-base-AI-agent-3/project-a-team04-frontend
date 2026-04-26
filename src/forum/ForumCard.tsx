@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 interface ForumCardProps {
   id: string;
   title: string;
-  desc: string;
   date: string;
   place: string;
   status: string;
@@ -19,7 +18,6 @@ interface ForumCardProps {
 
 export default function ForumCard({
   title,
-  desc,
   date,
   place,
   status,
@@ -48,8 +46,7 @@ export default function ForumCard({
           />
         </div>
 
-        <h2 className="text-xl font-black text-slate-900 mb-2 leading-snug">{title}</h2>
-        <p className="text-sm text-slate-500 mb-4 flex-1">{desc}</p>
+        <h2 className="text-xl font-black text-slate-900 mb-4 leading-snug">{title}</h2>
 
         <div className="space-y-2 text-sm text-slate-600">
           <div className="flex justify-between gap-3">
