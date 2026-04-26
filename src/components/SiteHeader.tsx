@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Globe, Menu, Search, LogOut } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Globe, Menu, Search, LogOut, UserCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { APP_STYLES } from '@/constants/theme';
 
@@ -59,6 +60,7 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: 
   const [isNavHovered, setIsNavHovered] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { profile } = useSelector((state: any) => state.user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,6 +82,11 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: 
     i18n.changeLanguage(lang);
     localStorage.setItem('language', lang);
     setIsLanguageMenuOpen(false);
+  };
+
+  const isEmoji = (url: string | null) => {
+    if (!url) return false;
+    return url === '👤' || !url.startsWith('http');
   };
 
   return (
@@ -118,7 +125,18 @@ export default function SiteHeader({ isLoggedIn = false, onLogout = () => {} }: 
           <div className="flex items-center space-x-4">
             {isLoggedIn ? (
               <>
-                <Link to="/profile" className="cursor-pointer hover:text-brand-primary">
+                <Link to="/profile" className="cursor-pointer hover:text-brand-primary flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-full overflow-hidden border border-slate-300 flex items-center justify-center bg-slate-200">
+                    {profile?.profileImageUrl ? (
+                      isEmoji(profile.profileImageUrl) ? (
+                        <span className="text-[10px]">{profile.profileImageUrl}</span>
+                      ) : (
+                        <img src={profile.profileImageUrl} alt="Profile" className="w-full h-full object-cover" />
+                      )
+                    ) : (
+                      <UserCircle2 size={12} className="text-slate-500" />
+                    )}
+                  </div>
                   {t('navigation.mypage')}
                 </Link>
                 <button type="button" onClick={handleLogout} className="cursor-pointer hover:text-brand-primary flex items-center gap-1">

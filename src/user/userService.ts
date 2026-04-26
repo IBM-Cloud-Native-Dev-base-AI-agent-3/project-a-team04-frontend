@@ -55,7 +55,30 @@ async function parseErrorMessage(response: Response): Promise<string> {
   }
 }
 
-export async function signup(request: SignupRequest): Promise<ProfileResponse> {
+export async function uploadFile(file: File): Promise<{ url: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const accessToken = getAccessToken();
+  const headers: Record<string, string> = {};
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  const response = await fetch(`${service_path}/files/upload`, {
+    method: 'POST',
+    headers: headers,
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(`File upload failed: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
+export async function signup(request: SignupRequest & { profileImageUrl?: string }): Promise<ProfileResponse> {
   const response = await fetch(`${service_path}/users/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

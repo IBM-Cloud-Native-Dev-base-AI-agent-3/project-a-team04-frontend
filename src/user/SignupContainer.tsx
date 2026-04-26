@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupThunk } from '@/user/userThunk';
+import { uploadFile } from '@/user/userService';
 import SignupComponent from './SignupComponent';
 
 export default function SignupContainer() {
@@ -16,6 +17,8 @@ export default function SignupContainer() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
   const [alert, setAlert] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
   const [dialog, setDialog] = useState<{ isOpen: boolean; message: string; title: string }>({
     isOpen: false,
@@ -24,6 +27,18 @@ export default function SignupContainer() {
   });
 
   const isWithdrawalRestrictionError = (message: string) => /USER_WITHDRAWALS|30일|30 days|withdrawal/i.test(message);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setProfileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSignup = async () => {
     if (!nickname || !email || !password || !passwordConfirm) {
@@ -39,13 +54,20 @@ export default function SignupContainer() {
     try {
       setAlert(null);
 
+      let profileImageUrl = '👤'; // Default person emoji
+      if (profileImage) {
+        const uploadRes = await uploadFile(profileImage);
+        profileImageUrl = uploadRes.url;
+      }
+
       await dispatch(
         signupThunk({
           email,
           password,
           nickname,
           role: 'ROLE_USER',
-        })
+          profileImageUrl,
+        } as any)
       ).unwrap();
 
       setDialog({
@@ -71,6 +93,7 @@ export default function SignupContainer() {
       email={email}
       password={password}
       passwordConfirm={passwordConfirm}
+      profileImagePreview={profileImagePreview}
       loading={signupLoading}
       alert={alert}
       dialog={dialog}
@@ -79,6 +102,7 @@ export default function SignupContainer() {
       onEmailChange={setEmail}
       onPasswordChange={setPassword}
       onPasswordConfirmChange={setPasswordConfirm}
+      onFileChange={handleFileChange}
       onOpenFilePicker={() => fileInputRef.current?.click()}
       onSubmit={handleSignup}
       onDialogPrimaryClick={() => navigate('/')}
