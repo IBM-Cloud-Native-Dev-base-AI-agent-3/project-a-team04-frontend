@@ -25,6 +25,8 @@ export interface ProfileResponse {
 export interface UpdateProfileRequest {
   nickname?: string;
   profileImageUrl?: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 export interface WithdrawalRequest {

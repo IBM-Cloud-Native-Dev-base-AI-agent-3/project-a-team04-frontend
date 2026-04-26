@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
-import { fetchMyProfileThunk, withdrawThunk } from '@/user/userThunk';
+import { fetchMyProfileThunk, updateProfileThunk, withdrawThunk } from '@/user/userThunk';
 
 interface ProfileContainerProps {
   isLoggedIn: boolean;
@@ -27,6 +27,12 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [nickname, setNickname] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [saveSuccessMessage, setSaveSuccessMessage] = useState<string | null>(null);
+  const [saveErrorMessage, setSaveErrorMessage] = useState<string | null>(null);
   const [withdrawalReason, setWithdrawalReason] = useState('');
 
   const profileAvatarStyle = {
@@ -38,6 +44,50 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
       dispatch(fetchMyProfileThunk());
     }
   }, [dispatch, isLoggedIn]);
+
+  useEffect(() => {
+    setNickname(profile?.nickname ?? '');
+  }, [profile?.nickname]);
+
+  const handleSaveProfile = async () => {
+    const trimmedNickname = nickname.trim();
+    const hasPasswordInput = Boolean(currentPassword || newPassword || confirmPassword);
+
+    setSaveSuccessMessage(null);
+    setSaveErrorMessage(null);
+
+    if (!trimmedNickname) {
+      setSaveErrorMessage(t('validation.required'));
+      return;
+    }
+
+    if (hasPasswordInput && (!currentPassword || !newPassword || !confirmPassword)) {
+      setSaveErrorMessage(t('validation.required'));
+      return;
+    }
+
+    if (hasPasswordInput && newPassword !== confirmPassword) {
+      setSaveErrorMessage(t('validation.passwordMismatch'));
+      return;
+    }
+
+    try {
+      await dispatch(
+        updateProfileThunk({
+          nickname: trimmedNickname,
+          ...(hasPasswordInput ? { currentPassword, newPassword } : {}),
+        })
+      ).unwrap();
+
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+      setSaveSuccessMessage(hasPasswordInput ? '프로필 및 비밀번호가 저장되었습니다.' : '프로필이 저장되었습니다.');
+    } catch (error) {
+      const message = typeof error === 'string' ? error : error instanceof Error ? error.message : t('validation.serverError');
+      setSaveErrorMessage(message || t('validation.serverError'));
+    }
+  };
 
   const handleWithdraw = async () => {
     const reason = withdrawalReason.trim();
@@ -74,6 +124,8 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
             <CardContent className="p-8">
               <h2 className="text-2xl font-black mb-6">{t('profile.profileInfo')}</h2>
               {profileError && <AppAlert tone="error" message={profileError} />}
+              {saveErrorMessage && <AppAlert tone="error" message={saveErrorMessage} />}
+              {saveSuccessMessage && <AppAlert tone="success" message={saveSuccessMessage} />}
               <div className="flex flex-col items-center text-center mb-8">
                 <div className="w-24 h-24 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4" style={profileAvatarStyle}>
                   {avatarText}
@@ -83,7 +135,13 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">{t('auth.nickname')}</label>
-                  <Input className={APP_THEME.classes.formInput} placeholder={t('auth.nickname')} value={profile?.nickname ?? ''} readOnly={profileLoading} />
+                  <Input
+                    className={APP_THEME.classes.formInput}
+                    placeholder={t('auth.nickname')}
+                    value={nickname}
+                    onChange={(event) => setNickname(event.target.value)}
+                    disabled={profileLoading}
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">{t('auth.email')}</label>
@@ -100,6 +158,8 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
                       className={`${APP_THEME.classes.formInput} pr-12`}
                       placeholder={t('auth.currentPassword')}
                       type={showCurrentPassword ? 'text' : 'password'}
+                      value={currentPassword}
+                      onChange={(event) => setCurrentPassword(event.target.value)}
                     />
                     <button
                       type="button"
@@ -118,6 +178,8 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
                       className={`${APP_THEME.classes.formInput} pr-12`}
                       placeholder={t('auth.newPassword')}
                       type={showNewPassword ? 'text' : 'password'}
+                      value={newPassword}
+                      onChange={(event) => setNewPassword(event.target.value)}
                     />
                     <button
                       type="button"
@@ -136,6 +198,8 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
                       className={`${APP_THEME.classes.formInput} pr-12`}
                       placeholder={t('profile.passwordChangeConfirm')}
                       type={showConfirmPassword ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={(event) => setConfirmPassword(event.target.value)}
                     />
                     <button
                       type="button"
@@ -147,7 +211,12 @@ export default function ProfileContainer({ isLoggedIn, onLogout }: ProfileContai
                     </button>
                   </div>
                 </div>
-                <Button className="w-full h-11 text-white font-bold" style={APP_STYLES.primaryButton}>
+                <Button
+                  className="w-full h-11 text-white font-bold"
+                  style={APP_STYLES.primaryButton}
+                  onClick={handleSaveProfile}
+                  disabled={profileLoading || !nickname.trim()}
+                >
                   {t('common.save')}
                 </Button>
               </div>
