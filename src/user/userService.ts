@@ -22,6 +22,11 @@ export interface ProfileResponse {
   active: boolean;
 }
 
+export interface UpdateProfileRequest {
+  nickname?: string;
+  profileImageUrl?: string;
+}
+
 export async function signup(request: SignupRequest): Promise<ProfileResponse> {
   const response = await fetch(`${service_path}/users/signup`, {
     method: 'POST',
@@ -52,6 +57,28 @@ export async function getMyProfile(): Promise<ProfileResponse> {
 
   if (!response.ok) {
     throw new Error(`GET /users/me failed: ${response.status}`);
+  }
+
+  return (await response.json()) as ProfileResponse;
+}
+
+export async function updateProfile(request: UpdateProfileRequest): Promise<ProfileResponse> {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error('No access token available');
+  }
+
+  const response = await fetch(`${service_path}/users/me`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(`PATCH /users/me failed: ${response.status}`);
   }
 
   return (await response.json()) as ProfileResponse;

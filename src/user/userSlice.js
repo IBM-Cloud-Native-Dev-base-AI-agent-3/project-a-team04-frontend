@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchMyProfileThunk, signupThunk } from '@/user/userThunk';
+import { fetchMyProfileThunk, signupThunk, updateProfileThunk } from '@/user/userThunk';
 
 const initialState = {
   profile: null,
@@ -47,6 +47,18 @@ const userSlice = createSlice({
       .addCase(fetchMyProfileThunk.rejected, (state, action) => {
         state.profileLoading = false;
         state.profileError = action.payload || action.error.message || 'Failed to fetch my profile';
+      })
+      .addCase(updateProfileThunk.pending, (state) => {
+        state.profileLoading = true;
+        state.profileError = null;
+      })
+      .addCase(updateProfileThunk.fulfilled, (state, action) => {
+        state.profileLoading = false;
+        state.profile = action.payload;
+      })
+      .addCase(updateProfileThunk.rejected, (state, action) => {
+        state.profileLoading = false;
+        state.profileError = action.payload || action.error.message || 'Failed to update profile';
       });
   },
 });

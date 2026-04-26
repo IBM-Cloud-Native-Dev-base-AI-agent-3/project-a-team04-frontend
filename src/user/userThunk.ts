@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getMyProfile, signup, type ProfileResponse, type SignupRequest } from './userService';
+import { getMyProfile, signup, updateProfile, type ProfileResponse, type SignupRequest, type UpdateProfileRequest } from './userService';
 
 export const signupThunk = createAsyncThunk<ProfileResponse, SignupRequest, { rejectValue: string }>(
   'user/signup',
@@ -19,6 +19,17 @@ export const fetchMyProfileThunk = createAsyncThunk<ProfileResponse, void, { rej
       return await getMyProfile();
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Failed to fetch my profile');
+    }
+  }
+);
+
+export const updateProfileThunk = createAsyncThunk<ProfileResponse, UpdateProfileRequest, { rejectValue: string }>(
+  'user/updateProfile',
+  async (request, { rejectWithValue }) => {
+    try {
+      return await updateProfile(request);
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Failed to update profile');
     }
   }
 );
