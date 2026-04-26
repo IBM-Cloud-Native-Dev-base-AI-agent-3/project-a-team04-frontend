@@ -21,8 +21,8 @@ export default function LoginContainer({ onLogin }: LoginContainerProps) {
   const dispatch = useDispatch<any>();
   const { loginLoading } = useSelector((state: any) => state.auth);
 
-  const [email, setEmail] = useState('user1@example.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [alert, setAlert] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 

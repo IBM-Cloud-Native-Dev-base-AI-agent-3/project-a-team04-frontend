@@ -42,10 +42,10 @@ export default function LoginComponent({
           <p className="text-slate-500 mb-6">{t('auth.enterEmail')}</p>
           {alert && <AppAlert tone={alert.tone} message={alert.message} />}
           <div className="space-y-4">
-            <Input placeholder={t('auth.email')} type="email" value={email} onChange={(event) => onEmailChange(event.target.value)} />
+            <Input placeholder={t('auth.enterEmail')} type="email" value={email} onChange={(event) => onEmailChange(event.target.value)} />
             <div className="relative">
               <input
-                placeholder={t('auth.password')}
+                placeholder="비밀번호를 입력해주세요."
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(event) => onPasswordChange(event.target.value)}
