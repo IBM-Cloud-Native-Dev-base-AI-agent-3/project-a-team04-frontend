@@ -9,9 +9,12 @@ import { APP_THEME } from '@/constants/theme';
 interface PostDetail {
   id: number;
   title: string;
-  userId?: number;
-  body?: string;
-  content?: string;
+  userId: number;
+  nickname?: string;
+  content: string;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface PostDetailComponentProps {
@@ -81,18 +84,18 @@ export default function PostDetailComponent({ isLoggedIn, onLogout, post, curren
 
               <div className="flex flex-wrap items-center gap-4 pb-6 border-b border-slate-200">
                 <span className="text-sm text-slate-600 font-medium">
-                  {t('freeBoard.author')}: <span className="font-bold text-slate-800">user-{post.userId ?? 'unknown'}</span>
+                  {t('freeBoard.author')}: <span className="font-bold text-slate-800">{post.nickname ?? `user-${post.userId}`}</span>
                 </span>
                 <span className="text-sm text-slate-600 font-medium">
-                  {t('freeBoard.date')}: <span className="font-bold text-slate-800">-</span>
+                  {t('freeBoard.date')}: <span className="font-bold text-slate-800">{new Date(post.createdAt).toLocaleDateString()}</span>
                 </span>
                 <span className="text-sm text-slate-600 font-medium">
-                  {t('freeBoard.views')}: <span className="font-bold text-slate-800">0</span>
+                  {t('freeBoard.views')}: <span className="font-bold text-slate-800">{post.viewCount}</span>
                 </span>
               </div>
 
               <div className="py-8 mb-8 border-b border-slate-200">
-                <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{post.content ?? post.body ?? ''}</p>
+                <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{post.content}</p>
               </div>
 
               {isAuthor && (
