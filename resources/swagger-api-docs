@@ -1080,11 +1080,18 @@
           "title": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
           "location": {
             "type": "string"
           },
           "speakers": {
             "type": "string"
+          },
+          "acceptedCount": {
+            "type": "integer",
+            "format": "int32"
           },
           "createdAt": {
             "type": "string",
