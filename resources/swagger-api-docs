@@ -103,49 +103,28 @@
         }
       }
     },
-    "/forums": {
-      "get": {
-        "tags": [
-          "forum-controller"
-        ],
-        "operationId": "getList",
-        "parameters": [
-          {
-            "name": "locale",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": "ko"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ListResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
+    "/forums/{forumId}/registrations": {
       "post": {
         "tags": [
           "forum-controller"
         ],
-        "operationId": "create",
+        "operationId": "apply",
+        "parameters": [
+          {
+            "name": "forumId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRequest"
+                "$ref": "#/components/schemas/ApplyRequest"
               }
             }
           },
@@ -292,6 +271,52 @@
             }
           }
         }
+      }
+    },
+    "/admin/forums": {
+      "post": {
+        "tags": [
+          "admin-forum-controller"
+        ],
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ko"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/users/me": {
@@ -462,39 +487,10 @@
         }
       }
     },
-    "/forums/{forumId}": {
-      "get": {
-        "tags": [
-          "forum-controller"
-        ],
-        "operationId": "getDetail",
-        "parameters": [
-          {
-            "name": "forumId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/admin/forums/{forumId}": {
       "delete": {
         "tags": [
-          "forum-controller"
+          "admin-forum-controller"
         ],
         "operationId": "delete_1",
         "parameters": [
@@ -521,7 +517,7 @@
       },
       "patch": {
         "tags": [
-          "forum-controller"
+          "admin-forum-controller"
         ],
         "operationId": "update_1",
         "parameters": [
@@ -532,6 +528,15 @@
             "schema": {
               "type": "integer",
               "format": "int64"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ko"
             }
           }
         ],
@@ -545,6 +550,171 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/admin/forums/{forumId}/registrations/{registrationId}/review": {
+      "patch": {
+        "tags": [
+          "admin-forum-controller"
+        ],
+        "operationId": "review",
+        "parameters": [
+          {
+            "name": "forumId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "registrationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/forums": {
+      "get": {
+        "tags": [
+          "forum-controller"
+        ],
+        "operationId": "getList",
+        "parameters": [
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ko"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forums/{forumId}": {
+      "get": {
+        "tags": [
+          "forum-controller"
+        ],
+        "operationId": "getDetail",
+        "parameters": [
+          {
+            "name": "forumId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ko"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forums/{forumId}/my-registration": {
+      "get": {
+        "tags": [
+          "forum-controller"
+        ],
+        "operationId": "getMyRegistration",
+        "parameters": [
+          {
+            "name": "forumId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -586,6 +756,45 @@
           }
         }
       }
+    },
+    "/admin/forums/{forumId}/registrations": {
+      "get": {
+        "tags": [
+          "admin-forum-controller"
+        ],
+        "operationId": "getRegistrations",
+        "parameters": [
+          {
+            "name": "forumId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Response"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -601,13 +810,6 @@
           },
           "nickname": {
             "type": "string"
-          },
-          "role": {
-            "type": "string",
-            "enum": [
-              "ROLE_USER",
-              "ROLE_ADMIN"
-            ]
           }
         }
       },
@@ -692,43 +894,11 @@
           }
         }
       },
-      "CreateRequest": {
+      "ApplyRequest": {
         "type": "object",
         "properties": {
-          "slug": {
+          "note": {
             "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "UPCOMING",
-              "IN_PROGRESS",
-              "CLOSED",
-              "FINISHED"
-            ]
-          },
-          "eventDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "thumbnailUrl": {
-            "type": "string"
-          },
-          "maxParticipants": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "translations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Request"
-            }
-          },
-          "media": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Request"
-            }
           }
         }
       },
@@ -781,6 +951,46 @@
           }
         }
       },
+      "CreateRequest": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "UPCOMING",
+              "IN_PROGRESS",
+              "CLOSED",
+              "FINISHED"
+            ]
+          },
+          "eventDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          },
+          "maxParticipants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Request"
+            }
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Request"
+            }
+          }
+        }
+      },
       "UpdateProfileRequest": {
         "type": "object",
         "properties": {
@@ -788,6 +998,22 @@
             "type": "string"
           },
           "profileImageUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "ReviewRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "WAITING",
+              "ACCEPTED",
+              "REJECTED"
+            ]
+          },
+          "rejectReason": {
             "type": "string"
           }
         }
@@ -810,6 +1036,9 @@
               "CLOSED",
               "FINISHED"
             ]
+          },
+          "statusLabel": {
+            "type": "string"
           },
           "eventDate": {
             "type": "string",
