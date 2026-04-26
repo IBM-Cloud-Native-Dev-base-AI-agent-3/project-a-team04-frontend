@@ -56,6 +56,11 @@ const postSlice = createSlice({
       .addCase(fetchPostDetailThunk.fulfilled, (state, action) => {
         state.detailLoading = false;
         state.currentPostDetail = action.payload;
+        // Also update the post in the list to reflect the new view count
+        const postIndex = state.posts.findIndex((post) => post.id === action.payload.id);
+        if (postIndex !== -1) {
+          state.posts[postIndex] = action.payload;
+        }
       })
       .addCase(fetchPostDetailThunk.rejected, (state, action) => {
         state.detailLoading = false;
