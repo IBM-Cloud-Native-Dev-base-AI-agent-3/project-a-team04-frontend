@@ -104,7 +104,7 @@ export default function ForumDetailComponent({
                 </span>
                 <span className="text-sm text-slate-600 font-medium">{t('forum.date')}: {forum.eventDate}</span>
                 <span className="text-sm text-slate-600 font-medium">{t('forum.location')}: {forum.location || '-'}</span>
-                <span className="text-sm text-slate-600 font-medium">{t('forum.speaker')}: {forum.speaker || '-'}</span>
+                <span className="text-sm text-slate-600 font-medium">{t('forum.speaker')}: {forum.speakers || '-'}</span>
                 <span className="text-sm text-slate-600 font-medium">
                   {t('forum.applicantStatus')}: {forum.applicantCount || 0} / {forum.maxParticipants}
                 </span>

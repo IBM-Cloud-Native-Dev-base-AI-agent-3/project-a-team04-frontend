@@ -11,7 +11,7 @@ export interface ForumListResponse {
   maxParticipants: number;
   title: string;
   location: string;
-  speaker: string;
+  speakers: string;
   createdAt: string;
 }
 
@@ -21,7 +21,7 @@ export interface ForumDetailResponse {
   title: string;
   content: string;
   viewCount: number;
-  speaker?: string;
+  speakers?: string;
   createdAt: string;
   updatedAt: string;
 }
