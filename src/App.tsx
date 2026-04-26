@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import '@/i18n/config';
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
@@ -18,8 +19,10 @@ interface User {
 import PostListContainer from '@/post/PostListContainer';
 import PostDetailContainer from '@/post/PostDetailContainer';
 import PostCreateContainer from '@/post/PostCreateContainer';
+import { logoutThunk } from '@/service/authThunk';
 
 function App() {
+  const dispatch = useDispatch<any>();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const isLoggedIn = currentUser !== null;
 
@@ -27,7 +30,8 @@ function App() {
     setCurrentUser(user);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await dispatch(logoutThunk());
     setCurrentUser(null);
   };
 

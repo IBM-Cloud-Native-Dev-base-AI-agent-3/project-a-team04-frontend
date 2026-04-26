@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginThunk, refreshThunk } from '@/service/authThunk';
+import { loginThunk, logoutThunk, refreshThunk } from '@/service/authThunk';
 
 const initialState = {
   loginLoading: false,
@@ -8,6 +8,9 @@ const initialState = {
   refreshLoading: false,
   refreshResult: 0,
   refreshError: null,
+  logoutLoading: false,
+  logoutResult: 0,
+  logoutError: null,
 };
 
 const authSlice = createSlice({
@@ -21,6 +24,10 @@ const authSlice = createSlice({
     clearRefreshState(state) {
       state.refreshResult = 0;
       state.refreshError = null;
+    },
+    clearLogoutState(state) {
+      state.logoutResult = 0;
+      state.logoutError = null;
     },
   },
   extraReducers: (builder) => {
@@ -52,9 +59,23 @@ const authSlice = createSlice({
         state.refreshLoading = false;
         state.refreshResult = 0;
         state.refreshError = action.payload || action.error.message || 'Failed to refresh token';
+      })
+      .addCase(logoutThunk.pending, (state) => {
+        state.logoutLoading = true;
+        state.logoutResult = 0;
+        state.logoutError = null;
+      })
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.logoutLoading = false;
+        state.logoutResult = 1;
+      })
+      .addCase(logoutThunk.rejected, (state, action) => {
+        state.logoutLoading = false;
+        state.logoutResult = 0;
+        state.logoutError = action.payload || action.error.message || 'Failed to logout';
       });
   },
 });
 
-export const { clearLoginState, clearRefreshState } = authSlice.actions;
+export const { clearLoginState, clearRefreshState, clearLogoutState } = authSlice.actions;
 export default authSlice.reducer;
