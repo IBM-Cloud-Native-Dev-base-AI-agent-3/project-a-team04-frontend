@@ -19,13 +19,25 @@ export interface ForumListResponse {
 
 export interface ForumDetailResponse {
   id: number;
-  userId: number;
+  userId?: number;
   title: string;
-  content: string;
-  viewCount: number;
+  description?: string;
+  content?: string;
+  status?: 'UPCOMING' | 'IN_PROGRESS' | 'CLOSED' | 'FINISHED';
+  statusLabel?: string;
+  eventDate?: string;
+  location?: string;
   speakers?: string;
-  createdAt: string;
-  updatedAt: string;
+  maxParticipants?: number;
+  acceptedCount?: number;
+  applicantCount?: number;
+  media?: Array<{
+    type?: string;
+    url: string;
+  }>;
+  viewCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ApplyRequest {

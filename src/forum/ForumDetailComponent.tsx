@@ -36,7 +36,9 @@ export default function ForumDetailComponent({
   if (error || !forum) return <div className="text-center py-20 text-red-500">{error || 'Forum not found'}</div>;
 
   const statusBadge = FORUM_STATUS_MAP[forum.status] ?? DEFAULT_STATUS_BADGE;
-  const statusLabel = forum.statusLabel || forum.status;
+  const statusLabel = forum.statusLabel || forum.status || '-';
+  const description = forum.description || forum.content || '-';
+  const acceptedCount = forum.acceptedCount ?? forum.applicantCount ?? 0;
 
   // 신청 버튼 상태 렌더링 함수
   const renderApplyButton = () => {
@@ -84,6 +86,7 @@ export default function ForumDetailComponent({
 
   const getYouTubeEmbedUrl = (url: string) => {
     if (url.includes('watch?v=')) return url.replace('watch?v=', 'embed/');
+    if (url.includes('youtu.be/')) return `https://www.youtube.com/embed/${url.split('youtu.be/')[1].split('?')[0]}`;
     return url;
   };
 
@@ -98,22 +101,21 @@ export default function ForumDetailComponent({
             <CardContent className="p-8">
               <h1 className="text-3xl font-black text-slate-900 mb-4">{forum.title}</h1>
 
-              <div className="flex flex-wrap items-center gap-3 mb-6 pb-6 border-b border-slate-200">
-                <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ${statusBadge.className}`}>
-                  {statusLabel}
-                </span>
-                <span className="text-sm text-slate-600 font-medium">{t('forum.date')}: {forum.eventDate}</span>
-                <span className="text-sm text-slate-600 font-medium">{t('forum.location')}: {forum.location || '-'}</span>
-                <span className="text-sm text-slate-600 font-medium">{t('forum.speaker')}: {forum.speakers || '-'}</span>
-                <span className="text-sm text-slate-600 font-medium">
-                  {t('forum.applicantStatus')}: {forum.applicantCount || 0} / {forum.maxParticipants}
-                </span>
-              </div>
-
               <div className="mb-8">
-                <h2 className="text-xl font-bold mb-4">{t('forum.forumIntroduction')}</h2>
-                <div className="text-slate-700 leading-relaxed whitespace-pre-wrap">
-                  {forum.content}
+                <h2 className="text-xl font-bold mb-4">포럼 제목</h2>
+                <div className="text-slate-900 font-semibold mb-4">{forum.title}</div>
+                <div className="text-slate-700 leading-relaxed whitespace-pre-wrap mb-6">{description}</div>
+
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-2">
+                  <div className="text-sm font-medium text-slate-700">
+                    상태: <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ml-1 ${statusBadge.className}`}>{statusLabel}</span>
+                  </div>
+                  <div className="text-sm text-slate-700">{t('forum.date')}: {forum.eventDate || '-'}</div>
+                  <div className="text-sm text-slate-700">{t('forum.location')}: {forum.location || '-'}</div>
+                  <div className="text-sm text-slate-700">{t('forum.speaker')}: {forum.speakers || '-'}</div>
+                  <div className="text-sm text-slate-700">
+                    {t('forum.applicantStatus')}: {acceptedCount} / {forum.maxParticipants ?? '-'}
+                  </div>
                 </div>
               </div>
 
@@ -122,11 +124,12 @@ export default function ForumDetailComponent({
                 <div className="mb-8 space-y-4">
                   {forum.media.map((m: any, idx: number) => (
                     <div key={idx} className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-                      {m.type === 'youtube' ? (
+                      {m.type === 'youtube' || m.url?.includes('youtube.com') || m.url?.includes('youtu.be') ? (
                         <iframe
                           title={`forum-media-${idx}`}
                           src={getYouTubeEmbedUrl(m.url)}
                           className="h-[420px] w-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />
                       ) : (
