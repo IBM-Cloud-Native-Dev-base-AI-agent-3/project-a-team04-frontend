@@ -39,3 +39,24 @@ export function getAccessToken(): string | null {
 export function getRefreshToken(): string | null {
   return localStorage.getItem(REFRESH_TOKEN_KEY);
 }
+
+export async function refresh(): Promise<TokenResponse> {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) {
+    throw new Error('No refresh token available');
+  }
+
+  const response = await fetch(`${service_path}/auth/refresh`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refreshToken }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`POST /auth/refresh failed: ${response.status}`);
+  }
+
+  const tokens = (await response.json()) as TokenResponse;
+  saveTokens(tokens);
+  return tokens;
+}
