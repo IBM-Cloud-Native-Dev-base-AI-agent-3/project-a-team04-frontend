@@ -27,18 +27,26 @@ export default function PostTableComponent({ posts, onRowClick }: PostTableCompo
             </tr>
           </thead>
           <tbody>
-            {posts.map((post) => (
-              <tr
-                key={post.id}
-                className="border-t border-slate-200 hover:bg-slate-50 cursor-pointer transition-colors"
-                onClick={() => onRowClick(post.id)}
-              >
-                <td className="px-4 py-3 font-medium text-slate-800 hover:text-blue-600">{post.title}</td>
-                <td className="px-4 py-3 text-slate-600">{post.author}</td>
-                <td className="px-4 py-3 text-slate-600">{post.views}</td>
-                <td className="px-4 py-3 text-slate-600">{post.date}</td>
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <tr
+                  key={post.id}
+                  className="border-t border-slate-200 hover:bg-slate-50 cursor-pointer transition-colors"
+                  onClick={() => onRowClick(post.id)}
+                >
+                  <td className="px-4 py-3 font-medium text-slate-800 hover:text-blue-600">{post.title}</td>
+                  <td className="px-4 py-3 text-slate-600">{post.author}</td>
+                  <td className="px-4 py-3 text-slate-600">{post.views}</td>
+                  <td className="px-4 py-3 text-slate-600">{post.date}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="px-4 py-10 text-center text-slate-500 bg-slate-50/50">
+                  {t('freeBoard.noPosts') || '게시글이 없습니다.'}
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

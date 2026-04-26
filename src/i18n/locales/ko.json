@@ -154,6 +154,7 @@
     "edit": "수정하기",
     "delete": "삭제",
     "list": "목록",
+    "noPosts": "게시글이 없습니다.",
     "editor": {
       "bold": "굵게",
       "italic": "기울임",

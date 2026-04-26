@@ -154,6 +154,7 @@
     "edit": "Edit",
     "delete": "Delete",
     "list": "List",
+    "noPosts": "No posts found.",
     "editor": {
       "bold": "Bold",
       "italic": "Italic",
