@@ -22,6 +22,29 @@ export interface ResetPasswordRequest {
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
+async function parseErrorMessage(response: Response): Promise<string> {
+  try {
+    const contentType = response.headers.get('content-type') || '';
+
+    if (contentType.includes('application/json')) {
+      const data = await response.json();
+
+      if (typeof data === 'string') {
+        return data;
+      }
+
+      if (data && typeof data === 'object') {
+        return data.message || data.error || data.detail || data.code || `Request failed with status ${response.status}`;
+      }
+    }
+
+    const text = await response.text();
+    return text || `Request failed with status ${response.status}`;
+  } catch {
+    return `Request failed with status ${response.status}`;
+  }
+}
+
 export async function login(request: LoginRequest): Promise<TokenResponse> {
   const response = await fetch(`${service_path}/auth/login`, {
     method: 'POST',
@@ -30,7 +53,7 @@ export async function login(request: LoginRequest): Promise<TokenResponse> {
   });
 
   if (!response.ok) {
-    throw new Error(`POST /auth/login failed: ${response.status}`);
+    throw new Error(await parseErrorMessage(response));
   }
 
   return (await response.json()) as TokenResponse;

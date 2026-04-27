@@ -28,16 +28,24 @@ export default function LoginContainer({ onLogin }: LoginContainerProps) {
   const [alert, setAlert] = useState<{ tone: 'success' | 'error'; message: string } | null>(null);
 
   const handleLogin = async () => {
+    const normalizedEmail = email.trim();
+
     try {
       setAlert(null);
 
       await dispatch(
         loginThunk({
-          email,
+          email: normalizedEmail,
           password,
         })
       ).unwrap();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : t('validation.invalidEmail');
+      setAlert({ tone: 'error', message });
+      return;
+    }
 
+    try {
       // Fetch actual profile to get the real userId
       const profile = await dispatch(fetchMyProfileThunk()).unwrap();
 
@@ -49,8 +57,9 @@ export default function LoginContainer({ onLogin }: LoginContainerProps) {
 
       onLogin(user);
       navigate('/');
-    } catch {
-      setAlert({ tone: 'error', message: t('validation.invalidEmail') });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : t('validation.serverError');
+      setAlert({ tone: 'error', message });
     }
   };
 
