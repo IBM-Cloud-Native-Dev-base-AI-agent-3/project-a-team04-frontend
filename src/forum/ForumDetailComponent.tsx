@@ -5,6 +5,7 @@ import BackButton from '@/components/shared/BackButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { APP_STYLES, APP_THEME } from '@/constants/theme';
+import { formatForumDate } from './forumDate';
 
 interface ForumDetailComponentProps {
   isLoggedIn: boolean;
@@ -126,7 +127,7 @@ export default function ForumDetailComponent({
 
                 <div className="space-y-2">
                   <div className="text-sm text-slate-700">상태: {statusLabel}</div>
-                  <div className="text-sm text-slate-700">{t('forum.date')}: {forum.eventDate || '-'}</div>
+                  <div className="text-sm text-slate-700">{t('forum.date')}: {formatForumDate(forum.eventDate, i18n.language)}</div>
                   <div className="text-sm text-slate-700">{t('forum.location')}: {displayLocation}</div>
                   <div className="text-sm text-slate-700">{t('forum.speaker')}: {displaySpeakers}</div>
                   <div className="text-sm text-slate-700">{t('forum.applicantStatus')}: {acceptedCount} / {forum.maxParticipants ?? '-'}</div>

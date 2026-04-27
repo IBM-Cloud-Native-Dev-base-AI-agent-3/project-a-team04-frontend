@@ -17,7 +17,7 @@ export default function ForumListContainer({ isLoggedIn, onLogout }: ForumListCo
   const itemsPerPage = 9;
 
   useEffect(() => {
-    dispatch(fetchForumsThunk());
+    dispatch(fetchForumsThunk(undefined));
   }, [dispatch]);
 
   const totalPages = Math.ceil(forums.length / itemsPerPage);

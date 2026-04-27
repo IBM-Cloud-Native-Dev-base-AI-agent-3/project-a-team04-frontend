@@ -5,6 +5,7 @@ import PageHeader from '@/components/shared/PageHeader';
 import Pagination from '@/components/shared/Pagination';
 import ForumCard from './ForumCard';
 import { APP_THEME } from '@/constants/theme';
+import { formatForumDate } from './forumDate';
 
 interface ForumListComponentProps {
   isLoggedIn: boolean;
@@ -37,7 +38,7 @@ export default function ForumListComponent({
   onPrevClick,
   onNextClick,
 }: ForumListComponentProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className={APP_THEME.classes.pageShellMuted}>
@@ -57,7 +58,7 @@ export default function ForumListComponent({
                   <ForumCard
                     id={forum.id.toString()}
                     title={forum.title}
-                    date={forum.eventDate}
+                    date={formatForumDate(forum.eventDate, i18n.language)}
                     place={forum.location}
                     status={forum.status}
                     statusLabel={forum.statusLabel}
