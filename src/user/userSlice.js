@@ -36,7 +36,7 @@ const userSlice = createSlice({
       .addCase(signupThunk.fulfilled, (state, action) => {
         state.signupLoading = false;
         state.signupResult = 1;
-        state.profile = action.payload;
+        state.profile = null;
       })
       .addCase(signupThunk.rejected, (state, action) => {
         state.signupLoading = false;
