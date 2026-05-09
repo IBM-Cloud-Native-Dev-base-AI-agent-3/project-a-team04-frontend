@@ -1,5 +1,5 @@
 # project-a-team04-frontend
-
+  
 WIS 2026 행사 소개 페이지 형태로 구성된 React + Vite 프론트엔드 프로젝트입니다.
 
 ## 사전 요구사항
